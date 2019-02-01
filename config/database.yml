@@ -14,4 +14,4 @@ test:
   database: connorodoherty
 production:
   <<: *default
-  database: <%= ENV['POSTGRES_DB'] %>
+  database: fantasy-baseball-ranker-dev
