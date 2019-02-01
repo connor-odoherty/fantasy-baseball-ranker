@@ -1,3 +1,9 @@
 Rails.application.routes.draw do
-  root 'players#index'
+  get 'static_pages/home'
+
+  get 'static_pages/help'
+
+  root 'static_pages#home'
+
+  resources :players
 end
