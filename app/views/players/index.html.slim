@@ -1,1 +1,29 @@
 h1 Players
+
+.container-fluid
+  - @players.each_with_index do |player, index|
+    .row.player-card
+      .col-xs-1.text-center.ranking-tab
+        = index
+      .col-xs-11.player-info
+        .row
+          .col-xs-12.text-left.card-title
+            ' #{player.display_name} - #{player.display_team}
+        .row.text-left
+          .col-xs-6.player-essential-info
+            .row
+              .col-xs-12
+                ' Age: #{player.display_age}
+            .row
+              .col-xs-12
+                ' Pos: #{player.display_positons}
+            / .row
+            /   .col-xs-12
+            /     ' Depth: #{player.display_depth_chart_position}
+          .col-xs-6.player-fantasy-info
+            .row
+              .col-xs-12
+                ' ADP
+            .row
+              .col-xs-12
+                = link_to 'Fangraphs', player.fg_link, target: :_blank

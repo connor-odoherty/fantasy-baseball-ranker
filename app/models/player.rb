@@ -56,4 +56,24 @@ class Player < ApplicationRecord
   validates :mlb_id, presence: true
   validates :mlb_name, presence: true
   validates :mlb_team, presence: true
+
+  def display_name
+    self.full_name
+  end
+
+  def display_team
+    self.team
+  end
+
+  def display_age
+    2019 - self.birth_year
+  end
+
+  def display_positons
+    self.position
+  end
+
+  def fg_link
+    "https://www.fangraphs.com/statss.aspx?playerid=#{self.fg_id}"
+  end
 end

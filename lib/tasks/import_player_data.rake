@@ -83,7 +83,7 @@ task import_player_data: :environment do
         }
       )
     end
-    
+
     raise "#{source_player.mlb_name} failed to save" if !source_player.save
 
     fantasy_relevant_player_pool.delete(source_player.mlb_name)
