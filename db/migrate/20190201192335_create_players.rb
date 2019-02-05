@@ -3,7 +3,7 @@ class CreatePlayers < ActiveRecord::Migration[5.0]
     create_table :players do |t|
       t.string     :full_name
       t.string     :team
-      t.string     :position
+      t.integer    :positions
       t.string     :slug
       t.datetime   :dob
 

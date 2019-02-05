@@ -84,6 +84,10 @@ task import_player_data: :environment do
       )
     end
 
+    combined_list_of_positions_from_player_model(source_player).each { |position| source_player.positions << position }
+
+    binding.pry
+
     raise "#{source_player.mlb_name} failed to save" if !source_player.save
 
     fantasy_relevant_player_pool.delete(source_player.mlb_name)
@@ -98,4 +102,71 @@ task import_player_data: :environment do
   end
 
   p "#{count} players successfully imported!"
+end
+
+def combined_list_of_positions_from_player_model(player)
+  combined_positions = []
+  combined_positions += parse_positions(player.mlb_pos)
+  combined_positions += parse_positions(player.cbs_pos)
+  combined_positions += parse_positions(player.espn_pos)
+  combined_positions += parse_positions(player.nfbc_pos)
+  combined_positions += parse_positions(player.yahoo_pos)
+  combined_positions += parse_positions(player.ottoneu_pos)
+  combined_positions += parse_positions(player.rotowire_pos)
+  return combined_positions.uniq
+end
+
+def parse_positions(position_string = '')
+  positions = []
+
+  position_string.split('/').each do |pos|
+    case pos
+      when 'C'
+      when 'Catcher'
+        positions << :catcher
+      when '1B'
+      when 'First Base'
+        positions << :first_base
+        positions << :infield
+      when '2B'
+      when 'Second Base'
+        positions << :second_base
+        positions << :infield
+      when '3B'
+      when 'Third Base'
+        positions << :third_base
+        positions << :infield
+      when 'SS'
+      when 'Short Stop'
+        positions << :short_stop
+        positions << :infield
+      when 'LF'
+      when 'Left Field'
+        positions << :left_field
+        positions << :outfield
+      when 'CF'
+      when 'Center Field'
+        positions << :center_field
+        positions << :outfield
+      when 'RF'
+      when 'Right Field'
+        positions << :right_field
+        positions << :outfield
+      when 'OF'
+      when 'Outfield'
+        positions << :outfield
+      when 'U'
+      when 'Util'
+        positions << :utility
+      when 'SP'
+      when 'Starting Pitcher'
+        positions << :starting_pitcher
+        positions << :pitcher
+      else
+        nil
+    end
+  end
+
+  pp 'POSITIONS FOUND:', positions
+  return positions
 end

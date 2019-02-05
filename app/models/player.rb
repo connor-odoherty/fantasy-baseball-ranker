@@ -5,7 +5,7 @@
 #  id            :integer          not null, primary key
 #  full_name     :string
 #  team          :string
-#  position      :string
+#  positions     :integer
 #  slug          :string
 #  dob           :datetime
 #  mlb_id        :string
@@ -57,6 +57,14 @@ class Player < ApplicationRecord
   validates :mlb_name, presence: true
   validates :mlb_team, presence: true
 
+  bitmask :positions,
+          as: %i(
+            catcher first_base second_base third_base short_stop infield
+            left_field center_field right_field outfield utility
+            starting_pitcher relief_pitcher closer middle_relief_pitcher pitcher
+          ),
+          zero_value: :none
+
   def display_name
     self.full_name
   end
@@ -69,7 +77,7 @@ class Player < ApplicationRecord
     2019 - self.birth_year
   end
 
-  def display_positons
+  def display_positions
     self.position
   end
 

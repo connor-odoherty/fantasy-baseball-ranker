@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 20190201192335) do
   create_table "players", force: :cascade do |t|
     t.string   "full_name"
     t.string   "team"
-    t.string   "position"
+    t.integer  "positions"
     t.string   "slug"
     t.datetime "dob"
     t.string   "mlb_id"
