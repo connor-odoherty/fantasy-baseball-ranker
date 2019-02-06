@@ -10,21 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190201192335) do
+ActiveRecord::Schema.define(version: 20190206052242) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "players", force: :cascade do |t|
     t.string   "full_name"
-    t.string   "team"
+    t.integer  "current_team_id"
+    t.integer  "mlb_team_id"
     t.integer  "positions"
     t.string   "slug"
     t.datetime "dob"
     t.string   "mlb_id"
     t.string   "mlb_name"
     t.string   "mlb_pos"
-    t.string   "mlb_team"
+    t.string   "mlb_team_short"
     t.string   "mlb_team_long"
     t.string   "mlb_depth"
     t.string   "bats"
@@ -58,8 +59,18 @@ ActiveRecord::Schema.define(version: 20190201192335) do
     t.string   "rotowire_id"
     t.string   "rotowire_name"
     t.string   "rotowire_pos"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["current_team_id"], name: "index_players_on_current_team_id", using: :btree
+    t.index ["mlb_team_id"], name: "index_players_on_mlb_team_id", using: :btree
   end
 
+  create_table "pro_teams", force: :cascade do |t|
+    t.string "slug"
+    t.string "short_name"
+    t.string "long_name"
+  end
+
+  add_foreign_key "players", "pro_teams", column: "current_team_id"
+  add_foreign_key "players", "pro_teams", column: "mlb_team_id"
 end

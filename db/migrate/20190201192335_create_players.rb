@@ -2,7 +2,8 @@ class CreatePlayers < ActiveRecord::Migration[5.0]
   def change
     create_table :players do |t|
       t.string     :full_name
-      t.string     :team
+      t.integer    :current_team_id
+      t.integer    :mlb_team_id
       t.integer    :positions
       t.string     :slug
       t.datetime   :dob
@@ -10,7 +11,7 @@ class CreatePlayers < ActiveRecord::Migration[5.0]
       t.string :mlb_id
       t.string :mlb_name
       t.string :mlb_pos
-      t.string :mlb_team
+      t.string :mlb_team_short
       t.string :mlb_team_long
       t.string :mlb_depth
 

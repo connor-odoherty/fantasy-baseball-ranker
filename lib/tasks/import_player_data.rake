@@ -1,3 +1,30 @@
+task import_team_data: :environment do
+  team_update_count = 0
+  team_create_count = 0
+  CSV.foreach('mlb_team_master.csv') do |row|
+    # short_name	long_name
+    next if row[0] == "short_name"
+    source_team_data = {
+        slug: row[0],
+        short_name: row[0],
+        long_name: row[1]
+    }
+    team = ProTeam.find_by(slug: source_team_data[:slug])
+
+    if team.present?
+      team.update(source_team_data)
+      team_update_count += 1
+
+    else
+      ProTeam.create(source_team_data)
+      team_create_count += 1
+    end
+  end
+
+  p "#{team_update_count} teams updated" if team_update_count > 0
+  p "#{team_create_count} teams created" if team_create_count > 0
+end
+
 task import_player_data: :environment do
   fantasy_relevant_player_names = []
   count = 0
@@ -16,7 +43,7 @@ task import_player_data: :environment do
       mlb_id: row[0],
       mlb_name: row[1],
       mlb_pos: row[2],
-      mlb_team: row[3],
+      mlb_team_short: row[3],
       mlb_team_long: row[4],
       bats: row[5],
       throws: row[6],
@@ -77,18 +104,23 @@ task import_player_data: :environment do
       source_player = Player.new(source_player_data)
       source_player.assign_attributes(
         {
-          full_name: source_player_data[:mlb_name],
-          team: source_player_data[:mlb_team],
-          position: source_player_data[:mlb_pos]
+          full_name: source_player_data[:mlb_name]
         }
       )
     end
 
+    pp "Working on: #{source_player.full_name}"
+
     combined_list_of_positions_from_player_model(source_player).each { |position| source_player.positions << position }
 
-    binding.pry
-
     raise "#{source_player.mlb_name} failed to save" if !source_player.save
+
+    mlb_team_for_player = ProTeam.find_by(slug: source_player.mlb_team_short)
+
+    raise "No team with slug #{source_player.mlb_team_short} found for player #{source_player.full_name}" if !mlb_team_for_player.present?
+
+    source_player.update_column(:current_team_id, mlb_team_for_player.id)
+    source_player.update_column(:mlb_team_id, mlb_team_for_player.id)
 
     fantasy_relevant_player_pool.delete(source_player.mlb_name)
     p "#{source_player.mlb_name} saved successfully"
@@ -111,62 +143,54 @@ def combined_list_of_positions_from_player_model(player)
   combined_positions += parse_positions(player.espn_pos)
   combined_positions += parse_positions(player.nfbc_pos)
   combined_positions += parse_positions(player.yahoo_pos)
-  combined_positions += parse_positions(player.ottoneu_pos)
+  # combined_positions += parse_positions(player.ottoneu_pos) # Ottoneu lists everyone as RP
   combined_positions += parse_positions(player.rotowire_pos)
   return combined_positions.uniq
 end
 
-def parse_positions(position_string = '')
+def parse_positions(position_string)
   positions = []
+  return positions if !position_string.present?
 
   position_string.split('/').each do |pos|
     case pos
-      when 'C'
-      when 'Catcher'
+      when 'C', 'Catcher'
         positions << :catcher
-      when '1B'
-      when 'First Base'
+      when '1B', 'First Base'
         positions << :first_base
         positions << :infield
-      when '2B'
-      when 'Second Base'
+      when '2B', 'Second Base'
         positions << :second_base
         positions << :infield
-      when '3B'
-      when 'Third Base'
+      when '3B', 'Third Base'
         positions << :third_base
         positions << :infield
-      when 'SS'
-      when 'Short Stop'
+      when 'SS', 'Short Stop'
         positions << :short_stop
         positions << :infield
-      when 'LF'
-      when 'Left Field'
+      when 'LF', 'Left Field'
         positions << :left_field
         positions << :outfield
-      when 'CF'
-      when 'Center Field'
+      when 'CF' 'Center Field'
         positions << :center_field
         positions << :outfield
-      when 'RF'
-      when 'Right Field'
+      when 'RF', 'Right Field'
         positions << :right_field
         positions << :outfield
-      when 'OF'
-      when 'Outfield'
+      when 'OF', 'Outfield'
         positions << :outfield
-      when 'U'
-      when 'Util'
+      when 'U', 'Util'
         positions << :utility
-      when 'SP'
-      when 'Starting Pitcher'
+      when 'SP', 'Starting Pitcher'
         positions << :starting_pitcher
+        positions << :pitcher
+      when 'RP', 'Relief Pitcher'
+        positions << :relief_pitcher
         positions << :pitcher
       else
         nil
     end
   end
 
-  pp 'POSITIONS FOUND:', positions
   return positions
 end
