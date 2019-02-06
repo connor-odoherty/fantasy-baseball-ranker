@@ -91,7 +91,16 @@ class Player < ApplicationRecord
   end
 
   def display_positions
-    self.positions.map {|pos| pos.to_s}.join(' / ')
+    pos_strings = []
+    pos_strings.push('C')  if self.positions.include? :catcher
+    pos_strings.push('1B') if self.positions.include? :first_base
+    pos_strings.push('2B') if self.positions.include? :second_base
+    pos_strings.push('3B') if self.positions.include? :third_base
+    pos_strings.push('SS') if self.positions.include? :short_stop
+    pos_strings.push('OF') if self.positions.include? :outfield
+    pos_strings.push('SP') if self.positions.include? :starting_pitcher
+    pos_strings.push('RP') if self.positions.include? :relief_pitcher
+    pos_strings.join(' / ')
   end
 
   def fg_link
