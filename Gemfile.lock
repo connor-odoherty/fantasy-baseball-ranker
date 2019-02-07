@@ -572,6 +572,8 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rainbow (3.0.0)
     rake (12.3.2)
+    ranked-model (0.4.2)
+      activerecord (>= 4.1.16)
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
@@ -872,6 +874,7 @@ DEPENDENCIES
   rails-controller-testing
   rails3-jquery-autocomplete (~> 1.0.14)
   rails_12factor (~> 0.0.3)
+  ranked-model
   recaptcha (~> 4.3.1)
   redis (~> 4.0.0)
   redis-rails (~> 5.0.2)

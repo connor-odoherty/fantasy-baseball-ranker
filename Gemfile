@@ -1,9 +1,10 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 ruby '2.5.3'
 gem 'dotenv-rails', groups: %i[development test], require: 'dotenv/rails-now'
 
 gem 'autoprefixer-rails', '~> 6.7'
-
 
 gem 'rails', '~> 5.0.7'
 
@@ -32,7 +33,7 @@ gem 'bootstrap-sass', '~> 3.3.6'
 # Once sprockets updates we can update to 4.0 and beyond
 gem 'uglifier', '~> 3.2.0'
 
-gem 'therubyracer',  platforms: :ruby, group: %i[production development test]
+gem 'therubyracer', platforms: :ruby, group: %i[production development test]
 # Enable respond_to / respond_with
 gem 'responders', '~> 2.0'
 
@@ -46,7 +47,7 @@ gem 'turbolinks', '~> 5.1.1'
 # gem 'jbuilder', '~> 2.0'
 
 # bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 0.4.0',          group: :doc
+gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'net-ftp-list', '~> 3.2.9'
 # this gem allows for automatic JS code to add/remove nested form elements
@@ -134,7 +135,6 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw]
 # needed for windows to function now
 gem 'sys-proctable', platforms: %i[mingw mswin x64_mingw]
 
-
 # Enable Heroku platform features
 group :production do
   gem 'flamegraph', '~> 0.9.5'
@@ -145,7 +145,6 @@ end
 
 # Core functionality
 gem 'audited', '~> 4.7.0'
-
 
 gem 'RubySunrise', '~> 0.3.1'
 
@@ -183,8 +182,6 @@ gem 'administrate-field-belongs_to_search', '~>0.4.0'
 gem 'administrate-field-paperclip'
 gem 'jbuilder', '~> 2.0' # seems to be only used for administrate gem
 
-
-
 # Calendaring
 # fullcallendar is currently included in assets since the gem has not been updated to the latest yet
 # gem 'fullcalendar-rails', '~> 3.2.0.0'
@@ -219,7 +216,7 @@ gem 'quickbooks-ruby', '~> 0.4.3'
 gem 'riif', '~> 0.7.0'
 
 # CORS
-gem 'rack-cors', '~> 1.0.1', :require => 'rack/cors'
+gem 'rack-cors', '~> 1.0.1', require: 'rack/cors'
 
 # Javascript
 gem 'data-confirm-modal', git: 'https://github.com/ifad/data-confirm-modal.git'
@@ -277,3 +274,5 @@ gem 'google_places', '~>0.34.2'
 
 gem 'handlebars_assets'
 
+# ranker toolset
+gem 'ranked-model'

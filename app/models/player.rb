@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: players
@@ -71,39 +73,39 @@ class Player < ApplicationRecord
   validates :mlb_name, presence: true
 
   bitmask :positions,
-          as: %i(
+          as: %i[
             catcher first_base second_base third_base short_stop infield
             left_field center_field right_field outfield utility
             starting_pitcher relief_pitcher closer middle_relief_pitcher pitcher
-          ),
+          ],
           zero_value: :none
 
   def display_name
-    self.full_name
+    full_name
   end
 
   def display_team
-    self.mlb_team.long_name
+    mlb_team.long_name
   end
 
   def display_age
-    2019 - self.birth_year
+    2019 - birth_year
   end
 
   def display_positions
     pos_strings = []
-    pos_strings.push('C')  if self.positions.include? :catcher
-    pos_strings.push('1B') if self.positions.include? :first_base
-    pos_strings.push('2B') if self.positions.include? :second_base
-    pos_strings.push('3B') if self.positions.include? :third_base
-    pos_strings.push('SS') if self.positions.include? :short_stop
-    pos_strings.push('OF') if self.positions.include? :outfield
-    pos_strings.push('SP') if self.positions.include? :starting_pitcher
-    pos_strings.push('RP') if self.positions.include? :relief_pitcher
+    pos_strings.push('C')  if positions.include? :catcher
+    pos_strings.push('1B') if positions.include? :first_base
+    pos_strings.push('2B') if positions.include? :second_base
+    pos_strings.push('3B') if positions.include? :third_base
+    pos_strings.push('SS') if positions.include? :short_stop
+    pos_strings.push('OF') if positions.include? :outfield
+    pos_strings.push('SP') if positions.include? :starting_pitcher
+    pos_strings.push('RP') if positions.include? :relief_pitcher
     pos_strings.join(' / ')
   end
 
   def fg_link
-    "https://www.fangraphs.com/statss.aspx?playerid=#{self.fg_id}"
+    "https://www.fangraphs.com/statss.aspx?playerid=#{fg_id}"
   end
 end

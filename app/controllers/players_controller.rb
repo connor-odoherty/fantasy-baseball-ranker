@@ -1,9 +1,9 @@
+# frozen_string_literal: true
+
 class PlayersController < ApplicationController
   before_action :set_players
 
-  def index
-
-  end
+  def index; end
 
   private
 
