@@ -35,4 +35,6 @@ class ProRankingPlayer < ApplicationRecord
   validates :player_id, presence: true
   validates :pro_ranking_set_id, presence: true
   validates :ovr_rank, presence: true
+
+  delegate :display_name, :display_team, :display_age, :display_positions, :fg_link, to: :player
 end

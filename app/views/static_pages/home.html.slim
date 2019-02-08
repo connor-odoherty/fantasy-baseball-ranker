@@ -23,5 +23,5 @@ h2 Pro rankings
           .col-xs-6.player-fantasy-info
             .row
               .col-xs-12.text-right
-                button.btn-primary
-                  | View
+                = button_to pro_ranking_set, method: :get do
+                  ' View

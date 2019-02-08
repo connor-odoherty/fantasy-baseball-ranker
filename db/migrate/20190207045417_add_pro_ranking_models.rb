@@ -9,6 +9,7 @@ class AddProRankingModels < ActiveRecord::Migration[5.0]
       t.string :url
       t.datetime :published_at
       t.string :slug
+      t.index :slug, unique: true
     end
 
     create_table :pro_ranking_players do |t|

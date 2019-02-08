@@ -2,23 +2,26 @@
 
 task import_nfbc_adp: :environment do
   count = 0
-  set_slug = 'nfbc-feb-adp'
+  # set_slug = 'nfbc-feb-adp'
+  #
+  # adp_ranking_set = ProRankingSet.find()
+  # if adp_ranking_set.present?
+  #   adp_ranking_set.pro_ranking_players.destroy_all
+  #   adp_ranking_set.destroy
+  # end
 
-  adp_ranking_set = ProRankingSet.find_by(slug: set_slug)
-  if adp_ranking_set.present?
-    adp_ranking_set.pro_ranking_players.destroy_all
-    adp_ranking_set.destroy
-  end
-
-  adp_ranking_set = ProRankingSet.new(
+  adp_ranking_set = ProRankingSet.create(
     publication_name: 'NFBC',
     ranking_name: 'February ADP',
     ranker_name: 'Site',
     url: 'https://playnfbc.shgn.com/adp',
-    published_at: DateTime.now,
-    slug: set_slug
+    published_at: DateTime.now
   )
-  adp_ranking_set.save
+
+  unless adp_ranking_set.save
+    pp adp_ranking_set.errors.full_messages
+    raise "Pro ranking set failed to save"
+  end
 
   row_count = 0
   CSV.foreach('nfbc_adp_2019_02_06.csv') do |row|
