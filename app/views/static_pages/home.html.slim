@@ -1,2 +1,27 @@
-h1 StaticPages#home
-p Find me in app/views/static_pages/home.html.slim
+h1 Home
+
+
+h2 Pro rankings
+.container-fluid
+  - @pro_ranking_sets.each_with_index do |pro_ranking_set, index|
+    .row.player-card
+      .col-xs-1.text-center.ranking-tab
+        = index
+      .col-xs-11.player-info
+        .row
+          .col-xs-12.text-left.card-title
+            ' #{pro_ranking_set.display_name}
+        .row.text-left
+          .col-xs-6.player-essential-info
+            .row
+              .col-xs-12
+                ' Author: #{pro_ranking_set.ranker_name}
+            .row
+              .col-xs-12
+                a href="#{pro_ranking_set.url}" target=:_blank
+                  | Go to site
+          .col-xs-6.player-fantasy-info
+            .row
+              .col-xs-12.text-right
+                button.btn-primary
+                  | View

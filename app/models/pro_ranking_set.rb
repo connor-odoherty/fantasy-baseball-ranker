@@ -20,4 +20,8 @@ class ProRankingSet < ApplicationRecord
   validates :ranking_name, presence: true
   validates :slug, presence: true
   validates :url, presence: true
+
+  def display_name
+    "#{publication_name} #{ranking_name}"
+  end
 end
