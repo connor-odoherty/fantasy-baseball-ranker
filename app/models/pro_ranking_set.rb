@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: pro_ranking_sets
@@ -25,7 +26,7 @@ class ProRankingSet < ApplicationRecord
   validates :url, presence: true
 
   extend FriendlyId
-  friendly_id :publication_and_name_to_slug, :use => [:slugged, :finders]
+  friendly_id :publication_and_name_to_slug, :use => %i[slugged finders]
 
   def display_name
     "#{publication_name} #{ranking_name}"

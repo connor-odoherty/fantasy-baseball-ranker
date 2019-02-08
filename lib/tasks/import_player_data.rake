@@ -114,10 +114,15 @@ task import_player_data: :environment do
     end
 
     pp "Working on: #{source_player.full_name}"
+    source_player.positions = nil
+    combined_list_of_positions_from_player_model(source_player).each do |position|
+      source_player.positions << position
+    end
 
-    combined_list_of_positions_from_player_model(source_player).each { |position| source_player.positions << position }
-
-    raise "#{source_player.mlb_name} failed to save" unless source_player.save
+    if !source_player.save
+      pp source_player.errors.full_messages
+      raise "#{source_player.mlb_name} failed to save"
+    end
 
     mlb_team_for_player = ProTeam.find_by(slug: source_player.mlb_team_short)
 
@@ -158,40 +163,42 @@ def parse_positions(position_string)
 
   position_string.split('/').each do |pos|
     case pos
-    when 'C', 'Catcher'
-      positions << :catcher
-    when '1B', 'First Base'
-      positions << :first_base
-      positions << :infield
-    when '2B', 'Second Base'
-      positions << :second_base
-      positions << :infield
-    when '3B', 'Third Base'
-      positions << :third_base
-      positions << :infield
-    when 'SS', 'Short Stop'
-      positions << :short_stop
-      positions << :infield
-    when 'LF', 'Left Field'
-      positions << :left_field
-      positions << :outfield
-    when 'CF' 'Center Field'
-      positions << :center_field
-      positions << :outfield
-    when 'RF', 'Right Field'
-      positions << :right_field
-      positions << :outfield
-    when 'OF', 'Outfield'
-      positions << :outfield
-    when 'U', 'Util'
-      positions << :utility
-    when 'SP', 'Starting Pitcher'
-      positions << :starting_pitcher
-      positions << :pitcher
-    when 'RP', 'Relief Pitcher'
-      positions << :relief_pitcher
-      positions << :pitcher
-      end
+      when 'C'
+        positions << :catcher
+      when '1B'
+        positions << :first_base
+        positions << :infield
+      when '2B'
+        positions << :second_base
+        positions << :infield
+      when '3B'
+        positions << :third_base
+        positions << :infield
+      when 'SS'
+        positions << :short_stop
+        positions << :infield
+      when 'LF'
+        positions << :left_field
+        positions << :outfield
+      when 'CF'
+        positions << :center_field
+        positions << :outfield
+      when 'RF'
+        positions << :right_field
+        positions << :outfield
+      when 'OF'
+        positions << :outfield
+      when 'U'
+        positions << :utility
+      when 'SP'
+        positions << :starting_pitcher
+        positions << :pitcher
+      when 'RP'
+        positions << :relief_pitcher
+        positions << :pitcher
+      when 'P'
+        positions << :pitcher
+    end
   end
 
   positions

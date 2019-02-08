@@ -3,9 +3,7 @@
 class StaticPagesController < ApplicationController
   before_action :set_pro_ranking_sets
 
-  def home
-
-  end
+  def home; end
 
   def help; end
 

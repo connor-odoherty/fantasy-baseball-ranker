@@ -2,30 +2,35 @@ h1
   = @pro_ranking_set.display_name
 
 .container-fluid
-  - @pro_ranking_set.pro_ranking_players.each_with_index do |player, index|
-    .row.player-card
-      .col-xs-1.text-center.ranking-tab
-        = index
-      .col-xs-11.player-info
-        .row
-          .col-xs-12.text-left.card-title
-            ' #{player.display_name} - #{player.display_team}
-        .row.text-left
-          .col-xs-6.player-essential-info
-            .row
-              .col-xs-12
-                ' Age: #{player.display_age}
-            .row
-              .col-xs-12
-                ' Pos: #{player.display_positions}
-          / .row
-          /   .col-xs-12
-          /     ' Depth: #{player.display_depth_chart_position}
-          .col-xs-6.player-fantasy-info
-            .row
-              .col-xs-12
-                - if player.adp.present?
-                  ' ADP: #{player.adp}
-            .row
-              .col-xs-12
-                = link_to 'Fangraphs', player.fg_link, target: :_blank
+  .col-xs-8
+    .row.player-list
+      .col-xs-12
+        - @players.each_with_index do |player, index|
+          .row.player-card
+            .col-xs-1.text-center.ranking-tab
+              = index
+            .col-xs-11.player-info
+              .row
+                .col-xs-12.text-left.card-title
+                  ' #{player.display_name} - #{player.display_team}
+              .row.text-left
+                .col-xs-6.player-essential-info
+                  .row
+                    .col-xs-12
+                      ' Age: #{player.display_age}
+                  .row
+                    .col-xs-12
+                      ' Pos: #{player.display_positions}
+                / .row
+                /   .col-xs-12
+                /     ' Depth: #{player.display_depth_chart_position}
+                .col-xs-6.player-fantasy-info
+                  .row
+                    .col-xs-12
+                      - if player.adp.present?
+                        ' ADP: #{player.adp}
+                  .row
+                    .col-xs-12
+                      = link_to 'Fangraphs', player.fg_link, target: :_blank
+  .col-xs-4
+    = render 'players/sidebar_filter', filter_path: pro_ranking_set_path(@pro_ranking_set)

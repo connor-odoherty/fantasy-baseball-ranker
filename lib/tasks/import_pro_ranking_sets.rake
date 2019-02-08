@@ -20,7 +20,7 @@ task import_nfbc_adp: :environment do
 
   unless adp_ranking_set.save
     pp adp_ranking_set.errors.full_messages
-    raise "Pro ranking set failed to save"
+    raise 'Pro ranking set failed to save'
   end
 
   row_count = 0

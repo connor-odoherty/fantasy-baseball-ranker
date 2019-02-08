@@ -1,0 +1,19 @@
+.row
+  .col-xs-12
+    = button_to 'ALL', filter_path, method: :get, params: { position: :all }, class: "btn btn-full-width #{'btn-primary' if @position_filter == :all}"
+  .col-xs-6
+    = button_to 'C', filter_path, method: :get, params: { position: :catcher }, class: "btn btn-full-width #{'btn-primary' if @position_filter == :catcher}"
+  .col-xs-6
+    = button_to '1B', filter_path, method: :get, params: { position: :first_base }, class: "btn btn-full-width #{'btn-primary' if @position_filter == :first_base}"
+  .col-xs-6
+    = button_to '2B', filter_path, method: :get, params: { position: :second_base }, class: "btn btn-full-width #{'btn-primary' if @position_filter == :second_base}"
+  .col-xs-6
+    = button_to 'SS', filter_path, method: :get, params: { position: :short_stop }, class: "btn btn-full-width #{'btn-primary' if @position_filter == :short_stop}"
+  .col-xs-6
+    = button_to '3B', filter_path, method: :get, params: { position: :third_base }, class: "btn btn-full-width #{'btn-primary' if @position_filter == :third_base}"
+  .col-xs-6
+    = button_to 'OF', filter_path, method: :get, params: { position: :outfield }, class: "btn btn-full-width #{'btn-primary' if @position_filter == :outfield}"
+  .col-xs-6
+    = button_to 'SP', filter_path, method: :get, params: { position: :starting_pitcher }, class: "btn btn-full-width #{'btn-primary' if @position_filter == :starting_pitcher}"
+  .col-xs-6
+    = button_to 'RP', filter_path, method: :get, params: { position: :relief_pitcher }, class: "btn btn-full-width #{'btn-primary' if @position_filter == :relief_pitcher}"
