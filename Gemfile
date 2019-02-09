@@ -276,3 +276,8 @@ gem 'handlebars_assets'
 
 # ranker toolset
 gem 'ranked-model'
+
+# calculates ELO ranking
+gem 'elo_rating'
+
+gem 'bcrypt',         '3.1.12'

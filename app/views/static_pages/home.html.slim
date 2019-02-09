@@ -3,6 +3,7 @@ h1 Home
 
 h2 Pro rankings
 .container-fluid
+  = link_to "Sign up now!", signup_path, class: "btn btn-lg btn-primary"
   - @pro_ranking_sets.each_with_index do |pro_ranking_set, index|
     .row.player-card
       .col-xs-1.text-center.ranking-tab
