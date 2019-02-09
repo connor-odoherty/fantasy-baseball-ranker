@@ -30,7 +30,6 @@ task import_nfbc_adp: :environment do
 
     rank = row[0].to_i
     last_then_first = row[1]
-    p 'last_then_first:', last_then_first
     last_name = last_then_first.split(', ')[0]
     first_name = last_then_first.split(', ')[1]
     full_name = first_name + ' ' + last_name

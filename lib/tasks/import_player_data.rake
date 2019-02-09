@@ -1,4 +1,7 @@
-# frozen_string_literal: true
+task import_team_and_player_data: :environment do
+  Rake::Task['import_team_data'].invoke
+  Rake::Task['import_player_data'].invoke
+end
 
 task import_team_data: :environment do
   team_update_count = 0
@@ -32,12 +35,24 @@ task import_player_data: :environment do
   fantasy_relevant_player_names = []
   count = 0
 
-  CSV.foreach('fantasy_players.csv') do |row|
-    # name  status  age  team  pos
-    next if row[0] == 'name'
+  row_count = 0
+  CSV.foreach('nfbc_adp_2019_02_06.csv') do |row|
+    row_count += 1
+    next if row_count == 1
 
-    fantasy_relevant_player_names.push(row[0].downcase)
+    last_then_first = row[1]
+    last_name = last_then_first.split(', ')[0]
+    first_name = last_then_first.split(', ')[1]
+    full_name = first_name + ' ' + last_name
+    fantasy_relevant_player_names.push(full_name.downcase)
   end
+
+  # CSV.foreach('fantasy_players.csv') do |row|
+  #   # name  status  age  team  pos
+  #   next if row[0] == 'name'
+  #
+  #   fantasy_relevant_player_names.push(row[0].downcase)
+  # end
 
   fantasy_relevant_player_pool = fantasy_relevant_player_names.to_set
 
@@ -113,7 +128,7 @@ task import_player_data: :environment do
       )
     end
 
-    pp "Working on: #{source_player.full_name}"
+    # pp "Working on: #{source_player.full_name}"
     source_player.positions = nil
     combined_list_of_positions_from_player_model(source_player).each do |position|
       source_player.positions << position
@@ -132,7 +147,7 @@ task import_player_data: :environment do
     source_player.update_column(:mlb_team_id, mlb_team_for_player.id)
 
     fantasy_relevant_player_pool.delete(source_player.mlb_name)
-    p "#{source_player.mlb_name} saved successfully"
+    # p "#{source_player.mlb_name} saved successfully"
     count += 1
   end
 

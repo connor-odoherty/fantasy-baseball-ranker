@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190209053315) do
+ActiveRecord::Schema.define(version: 20190209082513) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,6 +93,26 @@ ActiveRecord::Schema.define(version: 20190209053315) do
     t.string "long_name"
   end
 
+  create_table "user_ranking_players", force: :cascade do |t|
+    t.integer "player_id"
+    t.integer "user_ranking_set_id"
+    t.integer "ovr_rank"
+    t.integer "elo_score"
+    t.text    "notes"
+    t.index ["elo_score"], name: "index_user_ranking_players_on_elo_score", using: :btree
+    t.index ["ovr_rank"], name: "index_user_ranking_players_on_ovr_rank", using: :btree
+    t.index ["player_id"], name: "index_user_ranking_players_on_player_id", using: :btree
+    t.index ["user_ranking_set_id"], name: "index_user_ranking_players_on_user_ranking_set_id", using: :btree
+  end
+
+  create_table "user_ranking_sets", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "ranking_name"
+    t.integer  "position_rule"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
@@ -106,4 +126,6 @@ ActiveRecord::Schema.define(version: 20190209053315) do
   add_foreign_key "players", "pro_teams", column: "mlb_team_id"
   add_foreign_key "pro_ranking_players", "players"
   add_foreign_key "pro_ranking_players", "pro_ranking_sets"
+  add_foreign_key "user_ranking_players", "players"
+  add_foreign_key "user_ranking_players", "user_ranking_sets"
 end

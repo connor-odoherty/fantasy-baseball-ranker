@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class AddProRankingModels < ActiveRecord::Migration[5.0]
   def change
     create_table :pro_ranking_sets do |t|
