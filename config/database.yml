@@ -14,4 +14,6 @@ test:
   database: connorodoherty
 production:
   <<: *default
-  database: fantasy-baseball-ranker-dev
+  database: duel_rank_production
+  username: duel_rank
+  password: <%= ENV['DATABASE_PASSWORD'] %>
