@@ -16,7 +16,8 @@ Rails.application.routes.draw do
   resources :players
 
   resources :pro_ranking_set
+  resources :user_ranking_set
+  resources :user_ranking_player
 
   resources :users
-
 end

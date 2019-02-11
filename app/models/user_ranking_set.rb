@@ -15,4 +15,8 @@ class UserRankingSet < ApplicationRecord
 
   validates :user_id, presence: true
   validates :ranking_name, presence: true
+
+  def display_name
+    self.ranking_name
+  end
 end
