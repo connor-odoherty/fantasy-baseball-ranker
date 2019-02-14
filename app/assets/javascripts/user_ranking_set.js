@@ -1,2 +1,12 @@
-// Place all the behaviors and hooks related to the matching controller here.
-// All this logic will automatically be available in application.js.
+document.addEventListener("turbolinks:load", function () {
+    $('#player-list').sortable({
+        update: function(e, ui) {
+            $.ajax({
+                url: $(this).data("url"),
+                type: "PATCH",
+                data: $(this).sortable('serialize')
+            });
+            console.log($(this).sortable('serialize'));
+        }
+    });
+});

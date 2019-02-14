@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190209082513) do
+ActiveRecord::Schema.define(version: 20190214064035) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -99,6 +99,7 @@ ActiveRecord::Schema.define(version: 20190209082513) do
     t.integer "ovr_rank"
     t.integer "elo_score"
     t.text    "notes"
+    t.integer "position"
     t.index ["elo_score"], name: "index_user_ranking_players_on_elo_score", using: :btree
     t.index ["ovr_rank"], name: "index_user_ranking_players_on_ovr_rank", using: :btree
     t.index ["player_id"], name: "index_user_ranking_players_on_player_id", using: :btree

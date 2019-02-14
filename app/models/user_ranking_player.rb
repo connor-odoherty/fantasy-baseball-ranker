@@ -8,6 +8,7 @@
 #  ovr_rank            :integer
 #  elo_score           :integer
 #  notes               :text
+#  position            :integer
 #
 # Indexes
 #
@@ -23,8 +24,12 @@
 #
 
 class UserRankingPlayer < ApplicationRecord
+  include RankedModel
+
   belongs_to :user_ranking_set
   belongs_to :player
+
+  acts_as_list scope: :user_ranking_set
 
   ranks :ovr_rank
   ranks :elo_score

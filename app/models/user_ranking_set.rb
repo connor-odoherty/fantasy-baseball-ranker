@@ -11,10 +11,15 @@
 #
 
 class UserRankingSet < ApplicationRecord
-  has_many :user_ranking_players
+  belongs_to :user
+  has_many :user_ranking_players, -> { includes(player: [:mlb_team]).order(position: :asc) }, dependent: :destroy
+  belongs_to :user
+
+  default_scope -> { order(created_at: :asc) }
 
   validates :user_id, presence: true
   validates :ranking_name, presence: true
+
 
   def display_name
     self.ranking_name

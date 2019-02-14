@@ -281,3 +281,6 @@ gem 'ranked-model'
 gem 'elo_rating'
 
 gem 'bcrypt',         '3.1.12'
+
+# lets us drag and drop items in a list
+gem 'acts_as_list'
