@@ -19,9 +19,17 @@ class UserRankingSet < ApplicationRecord
 
   validates :user_id, presence: true
   validates :ranking_name, presence: true
+  validate :no_duplicate_positions
 
+  accepts_nested_attributes_for :user_ranking_players
 
   def display_name
     self.ranking_name
+  end
+
+  def no_duplicate_positions
+    positions_list = self.user_ranking_players.pluck(:position)
+    duplicate = positions_list.detect{ |e| positions_list.count(e) > 1 }
+    self.errors.add(:user_ranking_set, "has duplicates with position #{duplicate}") if duplicate.present?
   end
 end

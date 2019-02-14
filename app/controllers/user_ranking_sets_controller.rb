@@ -1,6 +1,6 @@
 class UserRankingSetsController < ApplicationController
   before_action :set_user_ranking_set, except: [:index, :new, :create]
-  before_action :set_players, only: [:show, :edit]
+  before_action :set_players, only: [:show, :edit, :update]
 
   def show
     @user_ranking_set = UserRankingSet.find(params[:id])
@@ -28,9 +28,21 @@ class UserRankingSetsController < ApplicationController
 
   end
 
+  def update
+    params[:user_ranking_player].each_with_index do |id, index|
+      @user_ranking_set.where(id: id).update_all(position: index)
+    end
+
+    if @user_ranking_set.save
+      redirect_to user_ranking_set_path(@user_ranking_set)
+    else
+      render :edit
+    end
+  end
+
   def sort
     params[:user_ranking_player].each_with_index do |id, index|
-      UserRankingPlayer.find(id).update_column(:position, index)
+      @user_ranking_set.where(id: id).update_all(position: index)
     end
 
     head :ok
