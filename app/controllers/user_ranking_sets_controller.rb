@@ -29,9 +29,11 @@ class UserRankingSetsController < ApplicationController
   end
 
   def update
-    params[:user_ranking_player].each_with_index do |id, index|
-      @user_ranking_set.where(id: id).update_all(position: index)
-    end
+    # params[:user_ranking_player].each_with_index do |id, index|
+    #   @user_ranking_set.where(id: id).update_all(position: index)
+    # end
+    #
+    @user_ranking_set.assign_attributes(user_ranking_set_params)
 
     if @user_ranking_set.save
       redirect_to user_ranking_set_path(@user_ranking_set)
@@ -41,11 +43,12 @@ class UserRankingSetsController < ApplicationController
   end
 
   def sort
-    params[:user_ranking_player].each_with_index do |id, index|
-      @user_ranking_set.where(id: id).update_all(position: index)
-    end
-
-    head :ok
+    # params[:user_ranking_player].each_with_index do |id, index|
+    #   @user_ranking_set.where(id: id).update_all(position: index)
+    #   @user_ranking_set.where(id: id).update_all(position: index)
+    # end
+    #
+    # head :ok
   end
 
   def destroy
@@ -57,7 +60,11 @@ class UserRankingSetsController < ApplicationController
   private
 
   def user_ranking_set_params
-    params.require(:user_ranking_set).permit(:ranking_name)
+    pp 'PARAMS', params
+    params.require(:user_ranking_set).permit(:id, :ranking_name,
+                                             user_ranking_players_attributes: [
+                                                 :id, :notes, :ovr_rank, :position
+                                             ])
   end
 
   def set_user_ranking_set
@@ -65,7 +72,7 @@ class UserRankingSetsController < ApplicationController
   end
 
   def set_players
-    @players = @user_ranking_set.user_ranking_players.order(position: :asc).take(250)
+    @players = @user_ranking_set.user_ranking_players.order(position: :asc)
   end
 
   def associate_default_rankings_with_new_ranking_set
@@ -75,7 +82,8 @@ class UserRankingSetsController < ApplicationController
       new_user_ranking_player = @new_user_ranking_set.user_ranking_players.create(
           player: pro_ranking_player.player,
           ovr_rank: pro_ranking_player.ovr_rank,
-          elo_score: (elo_start_point - pro_ranking_player.ovr_rank)
+          elo_score: (elo_start_point - pro_ranking_player.ovr_rank),
+          position: pro_ranking_player.ovr_rank
       )
       next if new_user_ranking_player
 

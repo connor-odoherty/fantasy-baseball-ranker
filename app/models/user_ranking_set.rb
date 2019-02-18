@@ -12,7 +12,7 @@
 
 class UserRankingSet < ApplicationRecord
   belongs_to :user
-  has_many :user_ranking_players, -> { includes(player: [:mlb_team]).order(position: :asc) }, dependent: :destroy
+  has_many :user_ranking_players, -> { includes(player: [:mlb_team]).order(ovr_rank: :asc).limit(10) }, dependent: :destroy
   belongs_to :user
 
   default_scope -> { order(created_at: :asc) }
@@ -20,6 +20,20 @@ class UserRankingSet < ApplicationRecord
   validates :user_id, presence: true
   validates :ranking_name, presence: true
   validate :no_duplicate_positions
+
+  validate do |user_ranking_set|
+    # TODO: User ranking players is nil at this point
+    p 'I TRIED'
+    return true if !user_ranking_set.user_ranking_players
+    p 'IT WORKED'
+    user_ranking_set.user_ranking_players.each do |player|
+      next if player.valid?
+      player.errors.full_messages.each do |msg|
+        # you can customize the error message here:
+        errors.add_to_base("User ranking player error: #{msg}")
+      end
+    end
+  end
 
   accepts_nested_attributes_for :user_ranking_players
 

@@ -24,19 +24,20 @@
 #
 
 class UserRankingPlayer < ApplicationRecord
-  include RankedModel
+  # include RankedModel
 
   belongs_to :user_ranking_set
   belongs_to :player
 
-  acts_as_list scope: :user_ranking_set
-
-  ranks :ovr_rank
-  ranks :elo_score
+  # TODO: See if there was a sorting issue offsetting from 1
+  # acts_as_list scope: :user_ranking_set
+  #
+  # ranks :ovr_rank
+  # ranks :elo_score
 
   validates :player_id, presence: true
   validates :user_ranking_set_id, presence: true
-  validates :ovr_rank, presence: true
+  validates :ovr_rank, presence: true, numericality: { greater_than: 0 }
 
   delegate :display_name, :display_team, :display_age, :display_positions, :fg_link, to: :player
 end

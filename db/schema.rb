@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190214064035) do
+ActiveRecord::Schema.define(version: 20190209082513) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,8 +98,8 @@ ActiveRecord::Schema.define(version: 20190214064035) do
     t.integer "user_ranking_set_id"
     t.integer "ovr_rank"
     t.integer "elo_score"
-    t.text    "notes"
     t.integer "position"
+    t.text    "notes"
     t.index ["elo_score"], name: "index_user_ranking_players_on_elo_score", using: :btree
     t.index ["ovr_rank"], name: "index_user_ranking_players_on_ovr_rank", using: :btree
     t.index ["player_id"], name: "index_user_ranking_players_on_player_id", using: :btree
@@ -128,5 +128,5 @@ ActiveRecord::Schema.define(version: 20190214064035) do
   add_foreign_key "pro_ranking_players", "players"
   add_foreign_key "pro_ranking_players", "pro_ranking_sets"
   add_foreign_key "user_ranking_players", "players"
-  add_foreign_key "user_ranking_players", "user_ranking_sets"
+  add_foreign_key "user_ranking_players", "user_ranking_sets", on_delete: :cascade
 end
