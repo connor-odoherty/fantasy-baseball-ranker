@@ -10,7 +10,7 @@ class PlayersController < ApplicationController
   end
 
   def edit
-    @player.player_articles.build
+    @player.player_articles.build if @player.player_articles.none?
   end
 
   def update

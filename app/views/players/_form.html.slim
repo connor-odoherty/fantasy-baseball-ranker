@@ -23,16 +23,20 @@
           .col-xs-10
             = f.nested_fields_for :player_articles do |paf|
               .row
-                .col-xs-12
+                .col-xs-10
                   .row
                     .col-xs-3
-                      = paf.text_field :publication, placeholder: 'Publication name'
+                      = paf.text_field :publication, placeholder: 'Publication name', readonly: readonly
                     .col-xs-4
-                      = paf.text_field :title, placeholder: 'Article title'
+                      = paf.text_field :title, placeholder: 'Article title', disabled: readonly
                     .col-xs-5
                       = paf.text_field :article_url, placeholder: 'URL'
                   .row
-                    .col-xs-12
+                    .col-xs-11
                       = paf.text_field :notes, placeholder: 'Player notes'
+                    .col-xs-1
+                      - if !readonly
+                        = paf.remove_nested_fields_link 'X', class: 'btn btn-default', data: { confirm: 'Are you sure you want to remove this article?' }
           .col-xs-2
-            = f.add_nested_fields_link :player_articles, 'Add player'
+            - if !readonly
+              = f.add_nested_fields_link :player_articles, 'Add player'

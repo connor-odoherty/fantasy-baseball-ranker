@@ -24,7 +24,7 @@ class PlayerArticle < ApplicationRecord
   belongs_to :player
 
   def self.acceptable_attributes
-    [:id, :player_id, :title, :publication, :article_url, :notes]
+    [:id, :player_id, :title, :publication, :article_url, :notes, :_destroy]
   end
 
   validates :player_id, presence: true
