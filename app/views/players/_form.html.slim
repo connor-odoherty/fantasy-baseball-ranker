@@ -1,0 +1,38 @@
+.row.player-info-container
+  .col-xs-12
+    = render 'shared/error_messages', object: f.object
+    .row.title
+      .col-xs-8.text-left
+        span.strong
+          = player.display_name
+        span
+          = " - #{player.mlb_team.short_name}"
+      .col-xs-4.text-right
+        span.strong
+          = player.display_positions
+    .row
+      .col-xs-2.text-right.strong
+        ' Notes:
+      .col-xs-10.text-left
+        = f.text_field :notes, readonly: readonly
+    .row
+      .col-xs-2.text-right.strong
+        ' Articles:
+      .col-xs-10.text-left
+        .row
+          .col-xs-10
+            = f.nested_fields_for :player_articles do |paf|
+              .row
+                .col-xs-12
+                  .row
+                    .col-xs-3
+                      = paf.text_field :publication, placeholder: 'Publication name'
+                    .col-xs-4
+                      = paf.text_field :title, placeholder: 'Article title'
+                    .col-xs-5
+                      = paf.text_field :article_url, placeholder: 'URL'
+                  .row
+                    .col-xs-12
+                      = paf.text_field :notes, placeholder: 'Player notes'
+          .col-xs-2
+            = f.add_nested_fields_link :player_articles, 'Add player'

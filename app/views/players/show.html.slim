@@ -1,0 +1,9 @@
+= form_for(@player, url: player_path) do |f|
+  .container-fluid
+    .row
+      .col-xs-10
+        = render 'form', player: @player, readonly: true, f: f
+      .col-xs-2
+        = link_to 'EDIT', edit_player_path(@player)
+
+

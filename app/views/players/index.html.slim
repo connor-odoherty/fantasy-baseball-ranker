@@ -10,7 +10,7 @@ h1 Players
           .col-xs-12.text-left.card-title
             ' #{player.display_name} - #{player.display_team}
         .row.text-left
-          .col-xs-6.player-essential-info
+          .col-xs-5.player-essential-info
             .row
               .col-xs-12
                 ' Age: #{player.display_age}
@@ -20,10 +20,12 @@ h1 Players
           / .row
           /   .col-xs-12
           /     ' Depth: #{player.display_depth_chart_position}
-          .col-xs-6.player-fantasy-info
+          .col-xs-5.player-fantasy-info
             .row
               .col-xs-12
                 ' ADP
             .row
               .col-xs-12
                 = link_to 'Fangraphs', player.fg_link, target: :_blank
+          .col-xs-2
+            = link_to 'EDIT', player_path(player)

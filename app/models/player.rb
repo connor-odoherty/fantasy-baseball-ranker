@@ -1,55 +1,56 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: players
 #
-#  id              :integer          not null, primary key
-#  full_name       :string
-#  current_team_id :integer
-#  mlb_team_id     :integer
-#  positions       :integer
-#  slug            :string
-#  dob             :datetime
-#  mlb_id          :string
-#  mlb_name        :string
-#  mlb_pos         :string
-#  mlb_team_short  :string
-#  mlb_team_long   :string
-#  mlb_depth       :string
-#  bats            :string
-#  throws          :string
-#  birth_year      :integer
-#  debut           :string
-#  bp_id           :string
-#  bref_id         :string
-#  bref_name       :string
-#  cbs_id          :string
-#  cbs_name        :string
-#  cbs_pos         :string
-#  espn_id         :string
-#  espn_name       :string
-#  espn_pos        :string
-#  fg_id           :string
-#  fg_name         :string
-#  fg_pos          :string
-#  lahman_id       :string
-#  nfbc_id         :string
-#  nfbc_name       :string
-#  nfbc_pos        :string
-#  retro_id        :string
-#  retro_name      :string
-#  yahoo_id        :string
-#  yahoo_name      :string
-#  yahoo_pos       :string
-#  ottoneu_id      :string
-#  ottoneu_name    :string
-#  ottoneu_pos     :string
-#  rotowire_id     :string
-#  rotowire_name   :string
-#  rotowire_pos    :string
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
+#  id                        :integer          not null, primary key
+#  full_name                 :string
+#  current_team_id           :integer
+#  mlb_team_id               :integer
+#  positions                 :integer
+#  slug                      :string
+#  dob                       :datetime
+#  mlb_id                    :string
+#  mlb_name                  :string
+#  mlb_pos                   :string
+#  mlb_team_short            :string
+#  mlb_team_long             :string
+#  mlb_depth                 :string
+#  bats                      :string
+#  throws                    :string
+#  birth_year                :integer
+#  debut                     :string
+#  bp_id                     :string
+#  bref_id                   :string
+#  bref_name                 :string
+#  cbs_id                    :string
+#  cbs_name                  :string
+#  cbs_pos                   :string
+#  espn_id                   :string
+#  espn_name                 :string
+#  espn_pos                  :string
+#  fg_id                     :string
+#  fg_name                   :string
+#  fg_pos                    :string
+#  lahman_id                 :string
+#  nfbc_id                   :string
+#  nfbc_name                 :string
+#  nfbc_pos                  :string
+#  retro_id                  :string
+#  retro_name                :string
+#  yahoo_id                  :string
+#  yahoo_name                :string
+#  yahoo_pos                 :string
+#  ottoneu_id                :string
+#  ottoneu_name              :string
+#  ottoneu_pos               :string
+#  rotowire_id               :string
+#  rotowire_name             :string
+#  rotowire_pos              :string
+#  created_at                :datetime         not null
+#  updated_at                :datetime         not null
+#  notes                     :text
+#  autocomplete_search_field :string
 #
 # Indexes
 #
@@ -63,8 +64,13 @@
 #
 
 class Player < ApplicationRecord
+  has_many :player_articles
   belongs_to :mlb_team, class_name: 'ProTeam'
   belongs_to :current_team, class_name: 'ProTeam'
+
+  accepts_nested_attributes_for :player_articles, allow_destroy: true
+
+  before_save :build_autocomplete_search_field
 
   validates :full_name, presence: true
   # validates :team, presence: true
@@ -79,6 +85,10 @@ class Player < ApplicationRecord
             starting_pitcher relief_pitcher closer middle_relief_pitcher pitcher
           ],
           zero_value: :none
+
+  def self.acceptable_admin_params
+    [:notes, player_articles_attributes: PlayerArticle.acceptable_attributes]
+  end
 
   def display_name
     full_name
@@ -107,5 +117,15 @@ class Player < ApplicationRecord
 
   def fg_link
     "https://www.fangraphs.com/statss.aspx?playerid=#{fg_id}"
+  end
+
+  def build_autocomplete_search_field
+    fields = []
+
+    fields << self.full_name
+    fields << self.yahoo_name
+    fields << self.mlb_team.long_name
+
+    fields.select(&:present?).join(' ')
   end
 end

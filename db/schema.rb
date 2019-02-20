@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190220043229) do
+ActiveRecord::Schema.define(version: 20190220045816) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "player_articles", force: :cascade do |t|
+    t.integer  "player_id"
+    t.string   "title"
+    t.string   "publication"
+    t.string   "article_url"
+    t.text     "notes"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["player_id"], name: "index_player_articles_on_player_id", using: :btree
+  end
 
   create_table "players", force: :cascade do |t|
     t.string   "full_name"
@@ -59,8 +70,10 @@ ActiveRecord::Schema.define(version: 20190220043229) do
     t.string   "rotowire_id"
     t.string   "rotowire_name"
     t.string   "rotowire_pos"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.text     "notes"
+    t.string   "autocomplete_search_field"
     t.index ["current_team_id"], name: "index_players_on_current_team_id", using: :btree
     t.index ["mlb_team_id"], name: "index_players_on_mlb_team_id", using: :btree
   end
@@ -125,6 +138,7 @@ ActiveRecord::Schema.define(version: 20190220043229) do
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
   end
 
+  add_foreign_key "player_articles", "players"
   add_foreign_key "players", "pro_teams", column: "current_team_id"
   add_foreign_key "players", "pro_teams", column: "mlb_team_id"
   add_foreign_key "pro_ranking_players", "players"
