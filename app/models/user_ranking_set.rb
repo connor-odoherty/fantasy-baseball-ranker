@@ -2,17 +2,24 @@
 #
 # Table name: user_ranking_sets
 #
-#  id            :integer          not null, primary key
-#  user_id       :integer
-#  ranking_name  :string
-#  position_rule :integer
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
+#  id           :integer          not null, primary key
+#  user_id      :integer
+#  ranking_name :string
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
+# Indexes
+#
+#  index_user_ranking_sets_on_user_id  (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
 #
 
 class UserRankingSet < ApplicationRecord
   belongs_to :user
-  has_many :user_ranking_players, -> { includes(player: [:mlb_team]).order(ovr_rank: :asc).limit(10) }, dependent: :destroy
+  has_many :user_ranking_players, -> { includes(user_player: [player: [:mlb_team]]).order(ovr_rank: :asc).limit(10) }, dependent: :destroy
   belongs_to :user
 
   default_scope -> { order(created_at: :asc) }

@@ -10,21 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190220045816) do
+ActiveRecord::Schema.define(version: 20190220043229) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "player_articles", force: :cascade do |t|
-    t.integer  "player_id"
-    t.string   "title"
-    t.string   "publication"
-    t.string   "article_url"
-    t.text     "notes"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.index ["player_id"], name: "index_player_articles_on_player_id", using: :btree
-  end
 
   create_table "players", force: :cascade do |t|
     t.string   "full_name"
@@ -72,7 +61,6 @@ ActiveRecord::Schema.define(version: 20190220045816) do
     t.string   "rotowire_pos"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.text     "notes"
     t.string   "autocomplete_search_field"
     t.index ["current_team_id"], name: "index_players_on_current_team_id", using: :btree
     t.index ["mlb_team_id"], name: "index_players_on_mlb_team_id", using: :btree
@@ -106,25 +94,45 @@ ActiveRecord::Schema.define(version: 20190220045816) do
     t.string "long_name"
   end
 
+  create_table "user_player_articles", force: :cascade do |t|
+    t.integer  "user_player_id"
+    t.string   "title"
+    t.string   "publication"
+    t.string   "article_url"
+    t.text     "notes"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.index ["user_player_id"], name: "index_user_player_articles_on_user_player_id", using: :btree
+  end
+
+  create_table "user_players", force: :cascade do |t|
+    t.integer  "player_id"
+    t.integer  "user_id"
+    t.text     "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["player_id"], name: "index_user_players_on_player_id", using: :btree
+    t.index ["user_id"], name: "index_user_players_on_user_id", using: :btree
+  end
+
   create_table "user_ranking_players", force: :cascade do |t|
-    t.integer "player_id"
+    t.integer "user_player_id"
     t.integer "user_ranking_set_id"
     t.integer "ovr_rank"
     t.integer "elo_score"
     t.integer "position"
-    t.text    "notes"
     t.index ["elo_score"], name: "index_user_ranking_players_on_elo_score", using: :btree
     t.index ["ovr_rank"], name: "index_user_ranking_players_on_ovr_rank", using: :btree
-    t.index ["player_id"], name: "index_user_ranking_players_on_player_id", using: :btree
+    t.index ["user_player_id"], name: "index_user_ranking_players_on_user_player_id", using: :btree
     t.index ["user_ranking_set_id"], name: "index_user_ranking_players_on_user_ranking_set_id", using: :btree
   end
 
   create_table "user_ranking_sets", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "ranking_name"
-    t.integer  "position_rule"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["user_id"], name: "index_user_ranking_sets_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -138,11 +146,14 @@ ActiveRecord::Schema.define(version: 20190220045816) do
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
   end
 
-  add_foreign_key "player_articles", "players"
   add_foreign_key "players", "pro_teams", column: "current_team_id"
   add_foreign_key "players", "pro_teams", column: "mlb_team_id"
   add_foreign_key "pro_ranking_players", "players"
   add_foreign_key "pro_ranking_players", "pro_ranking_sets"
-  add_foreign_key "user_ranking_players", "players"
+  add_foreign_key "user_player_articles", "user_players"
+  add_foreign_key "user_players", "players"
+  add_foreign_key "user_players", "users"
+  add_foreign_key "user_ranking_players", "user_players"
   add_foreign_key "user_ranking_players", "user_ranking_sets", on_delete: :cascade
+  add_foreign_key "user_ranking_sets", "users"
 end

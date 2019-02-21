@@ -1,6 +1,7 @@
 .row.player-info-container
   .col-xs-12
     = render 'shared/error_messages', object: f.object
+    - player = user_player.player
     .row.title
       .col-xs-8.text-left
         span.strong
@@ -21,7 +22,7 @@
       .col-xs-10.text-left
         .row
           .col-xs-10
-            = f.nested_fields_for :player_articles do |paf|
+            = f.nested_fields_for :user_player_articles do |paf|
               .row
                 .col-xs-10
                   .row
@@ -39,4 +40,4 @@
                         = paf.remove_nested_fields_link 'X', class: 'btn btn-default', data: { confirm: 'Are you sure you want to remove this article?' }
           .col-xs-2
             - if !readonly
-              = f.add_nested_fields_link :player_articles, 'Add player'
+              = f.add_nested_fields_link :user_player_articles, 'Add player'

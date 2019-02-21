@@ -49,7 +49,6 @@
 #  rotowire_pos              :string
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null
-#  notes                     :text
 #  autocomplete_search_field :string
 #
 # Indexes
@@ -64,11 +63,9 @@
 #
 
 class Player < ApplicationRecord
-  has_many :player_articles
   belongs_to :mlb_team, class_name: 'ProTeam'
   belongs_to :current_team, class_name: 'ProTeam'
-
-  accepts_nested_attributes_for :player_articles, allow_destroy: true
+  has_many :user_players
 
   before_save :build_autocomplete_search_field
 
@@ -85,10 +82,6 @@ class Player < ApplicationRecord
             starting_pitcher relief_pitcher closer middle_relief_pitcher pitcher
           ],
           zero_value: :none
-
-  def self.acceptable_admin_params
-    [:notes, player_articles_attributes: PlayerArticle.acceptable_attributes]
-  end
 
   def display_name
     full_name

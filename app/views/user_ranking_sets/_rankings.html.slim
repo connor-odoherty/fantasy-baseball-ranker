@@ -2,16 +2,17 @@
   .col-xs-8
     .row.player-list
       #player-list.col-xs-12 data-url="#{sort_user_ranking_sets_path(id: ranking_set.id)}"
-        = f.fields_for :user_ranking_players do |player_f|
-          - player = player_f.object
+        = f.fields_for :user_ranking_players do |user_ranking_player_f|
+          - user_ranking_player = user_ranking_player_f.object
+          - player = user_ranking_player.user_player.player
           / = player_f.hidden_field :id
           .row.player-card id="#{dom_id(player)}" class='player-ranking-form'
-            = player_f.hidden_field :ovr_rank, class: 'ovr-rank-field'
-            = player_f.hidden_field :position, class: 'position-field'
+            = user_ranking_player_f.hidden_field :ovr_rank, class: 'ovr-rank-field'
+            = user_ranking_player_f.hidden_field :position, class: 'position-field'
             .col-xs-12
               .row
                 .col-xs-1.text-center.ranking-tab
-                  = player.ovr_rank
+                  = user_ranking_player.ovr_rank
                 .col-xs-11.player-info
                   .row
                     .col-xs-12.text-left.card-title
@@ -27,13 +28,14 @@
                     .col-xs-6.player-fantasy-info
                       .row
                         .col-xs-12
-                          - if player.elo_score.present?
-                            ' ELO: #{player.elo_score}
+                          - if user_ranking_player.elo_score.present?
+                            ' ELO: #{user_ranking_player.elo_score}
                       .row
                         .col-xs-12
                           = link_to 'Fangraphs', player.fg_link, target: :_blank
               .row
                 .col-xs-12
-                  = player_f.text_field :notes
+                  = user_ranking_player_f.fields_for :user_player do |user_player_f|
+                    = user_player_f.text_field :notes
   .col-xs-4
     = render 'players/sidebar_filter', filter_path: user_ranking_set_path(ranking_set)

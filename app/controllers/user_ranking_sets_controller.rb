@@ -63,7 +63,9 @@ class UserRankingSetsController < ApplicationController
     pp 'PARAMS', params
     params.require(:user_ranking_set).permit(:id, :ranking_name,
                                              user_ranking_players_attributes: [
-                                                 :id, :notes, :ovr_rank, :position
+                                                 :id, :ovr_rank, :position, user_player_attributes: [
+                                                   :id, :notes
+                                                 ]
                                              ])
   end
 
@@ -79,8 +81,14 @@ class UserRankingSetsController < ApplicationController
     elo_start_point = 2100
     source_ranking_set = nfbc_ranking_set
     source_ranking_set.pro_ranking_players.each do |pro_ranking_player|
+      user_player = current_user.user_players.find_by(player: pro_ranking_player.player)
+      if !user_player.present?
+        user_player = current_user.user_players.build(player: pro_ranking_player.player)
+        user_player.save!
+      end
+
       new_user_ranking_player = @new_user_ranking_set.user_ranking_players.create(
-          player: pro_ranking_player.player,
+          user_player: user_player,
           ovr_rank: pro_ranking_player.ovr_rank,
           elo_score: (elo_start_point - pro_ranking_player.ovr_rank),
           position: pro_ranking_player.ovr_rank

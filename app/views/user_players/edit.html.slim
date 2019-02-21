@@ -1,0 +1,7 @@
+= form_for(@user_player, url: user_player_path) do |f|
+  .container-fluid
+    .row
+      .col-xs-10
+        = render 'form', user_player: @user_player, readonly: false, f: f
+      .col-xs-2
+        = f.submit 'SAVE'
