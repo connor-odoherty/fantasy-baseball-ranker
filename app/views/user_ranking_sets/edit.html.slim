@@ -1,4 +1,4 @@
-= form_for @user_ranking_set, url: user_ranking_set_path do |f|
+= form_for @user_ranking_set, url: user_ranking_set_path(position: @position_filter) do |f|
   = render 'shared/error_messages', object: f.object
   .row
     .col-xs-8
@@ -7,7 +7,7 @@
     .col-xs-2
       = f.button type: 'submit', class: 'btn btn-primary'
         ' Update
-    .col-xs-2
-      / = link_to 'Edit', edit_user_ranking_set_path(@user_ranking_set)
+    / .col-xs-2 style='display: none'
+    /   = button_to 'Edit', edit_user_ranking_set_path(@user_ranking_set)
 
-  = render 'rankings', ranking_set: @user_ranking_set, players: @players, f: f, readonly: false
+  = render 'rankings', ranking_set: @user_ranking_set, user_ranking_players: @user_ranking_players, filter_path: edit_user_ranking_set_path(@user_ranking_set), f: f, readonly: false

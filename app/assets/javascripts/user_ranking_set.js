@@ -18,8 +18,8 @@ function updateOVRRankingValuesAfterReorder() {
         var rank = index + 1;
         var playerRankingForm = $(elem);
         playerRankingForm.find('.ranking-tab').text((rank).toString());
-        playerRankingForm.find('.ovr-rank-field').val(rank);
-        playerRankingForm.find('.position-field').val(rank);
+        // playerRankingForm.find('.ovr-rank-field').val(rank);
+        // playerRankingForm.find('.position-field').val(rank);
         // var formElem  = $(elem);
         // console.log('ELEM:', formElem);
         // console.log('ELEM VALUE BEFORE:', formElem.val());

@@ -1,6 +1,7 @@
 class UserRankingSetsController < ApplicationController
+  before_action :set_position_filer, only: [:show, :edit, :update]
   before_action :set_user_ranking_set, except: [:index, :new, :create]
-  before_action :set_players, only: [:show, :edit, :update]
+  before_action :set_user_ranking_players, only: [:show, :edit, :update]
 
   def show
     @user_ranking_set = UserRankingSet.find(params[:id])
@@ -29,12 +30,20 @@ class UserRankingSetsController < ApplicationController
   end
 
   def update
-    # params[:user_ranking_player].each_with_index do |id, index|
-    #   @user_ranking_set.where(id: id).update_all(position: index)
-    # end
-    #
-    @user_ranking_set.assign_attributes(user_ranking_set_params)
+    ovr_rank_list = []
+    user_ranking_set_params[:user_ranking_players_attributes].each do |_k, user_ranking_player_params|
+      ovr_rank_list.push(user_ranking_player_params[:ovr_rank])
+    end
 
+    ovr_rank_list.sort_by!(&:to_i)
+    new_params = user_ranking_set_params
+    cur_index = 0
+    new_params[:user_ranking_players_attributes].each do |_k, user_ranking_player_params|
+      user_ranking_player_params[:ovr_rank] = ovr_rank_list[cur_index]
+      cur_index += 1
+    end
+
+    @user_ranking_set.assign_attributes(new_params)
     if @user_ranking_set.save
       redirect_to user_ranking_set_path(@user_ranking_set)
     else
@@ -59,6 +68,14 @@ class UserRankingSetsController < ApplicationController
 
   private
 
+  def set_position_filer
+    if filter_params[:position].present? && filter_params[:position] != 'all'
+      @position_filter = filter_params[:position].to_sym
+    else
+      @position_filter = :all
+    end
+  end
+
   def user_ranking_set_params
     pp 'PARAMS', params
     params.require(:user_ranking_set).permit(:id, :ranking_name,
@@ -73,8 +90,13 @@ class UserRankingSetsController < ApplicationController
     @user_ranking_set = current_user.user_ranking_sets.find(params[:id])
   end
 
-  def set_players
-    @players = @user_ranking_set.user_ranking_players.order(position: :asc)
+  def set_user_ranking_players
+    @user_ranking_players = @user_ranking_set.user_ranking_players.order(ovr_rank: :asc).to_a
+    if @position_filter != :all
+      @user_ranking_players = @user_ranking_players.select do |user_ranking_player|
+        user_ranking_player.user_player.player.positions?(@position_filter)
+      end
+    end
   end
 
   def associate_default_rankings_with_new_ranking_set
@@ -106,5 +128,9 @@ class UserRankingSetsController < ApplicationController
 
   def nfbc_ranking_set
     ProRankingSet.find('nfbc-february-adp')
+  end
+
+  def filter_params
+    params.permit(:position)
   end
 end
