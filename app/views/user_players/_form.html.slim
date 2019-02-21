@@ -11,33 +11,34 @@
       .col-xs-4.text-right
         span.strong
           = player.display_positions
-    .row
+    .form-group
       .col-xs-2.text-right.strong
         ' Notes:
       .col-xs-10.text-left
-        = f.text_area :notes, readonly: readonly
-    .row
+        = f.text_area :notes, class: 'form-control'
+    .form-group
       .col-xs-2.text-right.strong
         ' Articles:
       .col-xs-10.text-left
         .row
-          .col-xs-10
+          .col-xs-12
             = f.nested_fields_for :user_player_articles do |paf|
               .row
-                .col-xs-10
+                .col-xs-12
                   .row
                     .col-xs-3
-                      = paf.text_field :publication, placeholder: 'Publication name', readonly: readonly, class: 'form-control'
+                      = paf.text_field :publication, placeholder: 'Publication name', class: 'form-control'
                     .col-xs-4
-                      = paf.text_field :title, placeholder: 'Article title', disabled: readonly
+                      = paf.text_field :title, placeholder: 'Article title', class: 'form-control'
                     .col-xs-5
-                      = paf.text_field :article_url, placeholder: 'URL'
+                      = paf.text_field :article_url, placeholder: 'URL', class: 'form-control'
                   .row
-                    .col-xs-11
-                      = paf.text_field :notes, placeholder: 'Player notes'
-                    .col-xs-1
+                    .col-xs-10
+                      = paf.text_area :notes, placeholder: 'Article notes', class: 'form-control'
+                    .col-xs-2
                       - if !readonly
                         = paf.remove_nested_fields_link 'X', class: 'btn btn-default', data: { confirm: 'Are you sure you want to remove this article?' }
-          .col-xs-2
+        .row
+          .col-xs-12
             - if !readonly
-              = f.add_nested_fields_link :user_player_articles, 'Add player'
+              = f.add_nested_fields_link :user_player_articles, 'Add article', class: 'btn btn-default'

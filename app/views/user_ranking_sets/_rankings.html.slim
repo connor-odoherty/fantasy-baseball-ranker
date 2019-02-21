@@ -4,7 +4,8 @@
       #player-list.col-xs-12 data-url="#{sort_user_ranking_sets_path(id: ranking_set.id)}"
         = f.fields_for :user_ranking_players do |user_ranking_player_f|
           - user_ranking_player = user_ranking_player_f.object
-          - player = user_ranking_player.user_player.player
+          - user_player = user_ranking_player.user_player
+          - player = user_player.player
           / = player_f.hidden_field :id
           .row.player-card id="#{dom_id(player)}" class='player-ranking-form'
             = user_ranking_player_f.hidden_field :ovr_rank, class: 'ovr-rank-field'
@@ -33,9 +34,14 @@
                       .row
                         .col-xs-12
                           = link_to 'Fangraphs', player.fg_link, target: :_blank
+              / .row
+              /   .col-xs-12
+              /     = user_ranking_player_f.fields_for :user_player do |user_player_f|
+              /       = user_player_f.text_field :notes
               .row
-                .col-xs-12
-                  = user_ranking_player_f.fields_for :user_player do |user_player_f|
-                    = user_player_f.text_field :notes
+                .col-xs-1.text-right.strong
+                  | Notes:
+                .col-xs-11
+                  = user_player.notes
   .col-xs-4
     = render 'players/sidebar_filter', filter_path: user_ranking_set_path(ranking_set)
