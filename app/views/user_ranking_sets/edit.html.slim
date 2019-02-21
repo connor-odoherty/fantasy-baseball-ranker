@@ -8,6 +8,6 @@
       = f.button type: 'submit', class: 'btn btn-primary'
         ' Update
     / .col-xs-2 style='display: none'
-    /   = button_to 'Edit', edit_user_ranking_set_path(@user_ranking_set)
+    /   = button_to 'Cancel', user_ranking_set_path(@user_ranking_set, position: @position_filter), method: :get, class: 'btn btn-default'
 
   = render 'rankings', ranking_set: @user_ranking_set, user_ranking_players: @user_ranking_players, filter_path: edit_user_ranking_set_path(@user_ranking_set), f: f, readonly: false

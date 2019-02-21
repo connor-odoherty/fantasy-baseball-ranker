@@ -19,7 +19,7 @@
 
 class UserRankingSet < ApplicationRecord
   belongs_to :user
-  has_many :user_ranking_players, -> { includes(user_player: [player: [:mlb_team]]).order(ovr_rank: :asc).limit(10) }, dependent: :destroy
+  has_many :user_ranking_players, -> { includes(user_player: [player: [:mlb_team]]).order(ovr_rank: :asc).limit(300) }, dependent: :destroy
   belongs_to :user
 
   default_scope -> { order(created_at: :asc) }

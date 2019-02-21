@@ -4,4 +4,4 @@
       .col-xs-10
         = render 'form', user_player: @user_player, readonly: true, f: f
       .col-xs-2
-        = link_to 'EDIT', edit_user_player_path(@user_player)
+        = link_to 'EDIT', edit_user_player_path(@user_player), class: 'btn btn-primary'

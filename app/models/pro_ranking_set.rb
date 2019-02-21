@@ -18,7 +18,7 @@
 #
 
 class ProRankingSet < ApplicationRecord
-  has_many :pro_ranking_players, -> { order(ovr_rank: :asc).limit(10) }
+  has_many :pro_ranking_players, -> { order(ovr_rank: :asc).limit(300) }
 
   validates :publication_name, presence: true
   validates :ranking_name, presence: true
