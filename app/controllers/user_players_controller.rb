@@ -1,6 +1,6 @@
 class UserPlayersController < ApplicationController
   before_action :set_user_players, only: :index
-  before_action :set_user_player, except: :index
+  before_action :set_user_player, except: [:index, :autocomplete]
 
   def index; end
 
@@ -20,6 +20,21 @@ class UserPlayersController < ApplicationController
     end
   end
 
+  def autocomplete
+    matching_user_players = search(params[:term])
+    user_player_options = matching_user_players.map { |user_player| autocomplete_option_for_user_player(user_player) }
+    render json: user_player_options
+  end
+
+  def autocomplete_option_for_user_player(user_player)
+    return {
+      id: user_player.id,
+      label: user_player.player.display_name,
+      value: user_player.player.display_name,
+      navigate_to: user_player_path(user_player)
+    }
+  end
+
   private
 
   def set_user_players
@@ -32,6 +47,16 @@ class UserPlayersController < ApplicationController
 
   def user_player_params
     params.require(:user_player).permit(UserPlayer.acceptable_admin_params)
+  end
+
+  def search(term)
+    return [] if term.blank?
+
+    user_players = UserPlayer.includes(:player)
+                       .where('players.autocomplete_search_field ILIKE ?', "%#{term}%")
+                       .order('players.full_name').limit(10)
+
+    return user_players
   end
 end
 

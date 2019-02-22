@@ -157,7 +157,7 @@ gem 'paperclip', '~> 5.2.0'
 # used to add multiple photos in one download
 gem 'rubyzip', '~> 1.2.1'
 
-gem 'rails3-jquery-autocomplete', '~>1.0.14'
+gem 'rails-jquery-autocomplete'
 
 # Profiling
 gem 'memory_profiler', '~>0.9.8'

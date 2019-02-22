@@ -5,9 +5,9 @@
       h1
         = @user_ranking_set.display_name
     .col-xs-2
-      = f.button type: 'submit', class: 'btn btn-primary'
+      = f.button type: 'submit', class: 'btn btn-primary btn-full-width'
         ' Update
-    .col-xs-2
+    .col-xs-2.text-right
       = link_to 'Cancel', user_ranking_set_path(@user_ranking_set, position: @position_filter), class: 'btn btn-default'
 
   = render 'rankings', ranking_set: @user_ranking_set, user_ranking_players: @user_ranking_players, path_to_filter: edit_user_ranking_set_path(@user_ranking_set), f: f, readonly: false

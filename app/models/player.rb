@@ -119,6 +119,6 @@ class Player < ApplicationRecord
     fields << self.yahoo_name
     fields << self.mlb_team.long_name
 
-    fields.select(&:present?).join(' ')
+    self.autocomplete_search_field = fields.select(&:present?).join(' ')
   end
 end

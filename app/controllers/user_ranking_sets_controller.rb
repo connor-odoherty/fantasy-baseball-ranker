@@ -45,7 +45,7 @@ class UserRankingSetsController < ApplicationController
 
     @user_ranking_set.assign_attributes(new_params)
     if @user_ranking_set.save
-      redirect_to user_ranking_set_path(@user_ranking_set)
+      redirect_to user_ranking_set_path(@user_ranking_set, position: @position_filter)
     else
       render :edit
     end

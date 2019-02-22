@@ -2,7 +2,7 @@ body
   header.navbar.navbar-fixed-top.navbar-inverse
     .container
       nav
-        ul.nav.navbar-nav.navbar-right
+        ul.nav.navbar-nav.navbar-left
           li= link_to "Home", root_path
           li= link_to "Players", user_players_path
           li= link_to "Help", help_path
@@ -20,3 +20,5 @@ body
                   = link_to "Log out", logout_path, method: :delete
           - else
             li= link_to "Log in", login_path
+        ul.nav.navbar-nav.navbar-right
+          = autocomplete_field_tag :user_players_autocomplete_text_input, '', autocomplete_user_players_path, class: 'autocomplete-text-field autocomplete-navigate-to form-control ignore-changes-for-dirty-flag', style: 'margin-top: 6px;', placeholder: 'Search for player....', delay: 0, data: {"auto-focus" => true}

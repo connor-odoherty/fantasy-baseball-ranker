@@ -14,7 +14,9 @@ Rails.application.routes.draw do
   delete '/logout',  to: 'sessions#destroy'
 
   resources :players
-  resources :user_players
+  resources :user_players do
+    get :autocomplete, on: :collection, action: :autocomplete
+  end
 
   resources :pro_ranking_sets
   resources :user_ranking_sets do
