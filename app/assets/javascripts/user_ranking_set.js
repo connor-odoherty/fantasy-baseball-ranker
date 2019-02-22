@@ -1,5 +1,5 @@
 document.addEventListener("turbolinks:load", function () {
-    $('#player-list').sortable({
+    $('.draggable-player-list').sortable({
         update: function(e, ui) {
             updateOVRRankingValuesAfterReorder();
             // $.ajax({

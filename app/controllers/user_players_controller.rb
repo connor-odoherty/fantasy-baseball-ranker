@@ -14,7 +14,7 @@ class UserPlayersController < ApplicationController
   def update
     @user_player.assign_attributes(user_player_params)
     if @user_player.save
-      redirect_to user_players_path(@user_player)
+      redirect_to user_player_path(@user_player)
     else
       render 'edit'
     end

@@ -15,7 +15,7 @@
       .col-xs-2.text-right.strong
         ' Notes:
       .col-xs-10.text-left
-        = f.text_area :notes, class: 'form-control'
+        = f.text_area :notes, class: 'form-control', disabled: readonly
     .form-group
       .col-xs-2.text-right.strong
         ' Articles:
@@ -27,14 +27,14 @@
                 .col-xs-12
                   .row
                     .col-xs-3
-                      = paf.text_field :publication, placeholder: 'Publication name', class: 'form-control'
+                      = paf.text_field :publication, placeholder: 'Publication name', class: 'form-control', disabled: readonly
                     .col-xs-4
-                      = paf.text_field :title, placeholder: 'Article title', class: 'form-control'
+                      = paf.text_field :title, placeholder: 'Article title', class: 'form-control', disabled: readonly
                     .col-xs-5
-                      = paf.text_field :article_url, placeholder: 'URL', class: 'form-control'
+                      = paf.text_field :article_url, placeholder: 'URL', class: 'form-control', disabled: readonly
                   .row
                     .col-xs-10
-                      = paf.text_area :notes, placeholder: 'Article notes', class: 'form-control'
+                      = paf.text_area :notes, placeholder: 'Article notes', class: 'form-control', disabled: readonly
                     .col-xs-2
                       - if !readonly
                         = paf.remove_nested_fields_link 'X', class: 'btn btn-default', data: { confirm: 'Are you sure you want to remove this article?' }

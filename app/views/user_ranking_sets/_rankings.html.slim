@@ -1,7 +1,7 @@
 .container-fluid
   .col-xs-8
     .row.player-list
-      #player-list.col-xs-12 data-url="#{sort_user_ranking_sets_path(id: ranking_set.id)}"
+      .col-xs-12 data-url="#{sort_user_ranking_sets_path(id: ranking_set.id)}" class="#{'draggable-player-list' if !readonly}"
         = f.fields_for :user_ranking_players, user_ranking_players do |user_ranking_player_f|
           - user_ranking_player = user_ranking_player_f.object
           - user_player = user_ranking_player.user_player
