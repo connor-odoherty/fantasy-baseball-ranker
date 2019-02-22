@@ -3,6 +3,10 @@ class UserRankingSetsController < ApplicationController
   before_action :set_user_ranking_set, except: [:index, :new, :create]
   before_action :set_user_ranking_players, only: [:show, :edit, :update]
 
+  def index
+    redirect_to user_ranking_set_path(current_user.user_ranking_sets.order(updated_at: :desc).first)
+  end
+
   def show
     @user_ranking_set = UserRankingSet.find(params[:id])
   end

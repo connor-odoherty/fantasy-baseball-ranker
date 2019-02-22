@@ -4,20 +4,22 @@ body
       nav
         ul.nav.navbar-nav.navbar-left
           li= link_to "Home", root_path
+          li= link_to "Rankings", user_ranking_sets_path
           li= link_to "Players", user_players_path
-          li= link_to "Help", help_path
+          / li= link_to "Help", help_path
           - if logged_in?
-            li= link_to "Users", '#'
-            li.dropdown
-              a.dropdown-toggle data-toggle="dropdown" href="#" 
-                | Account
-                b.caret
-              ul.dropdown-menu
-                li= link_to "Profile", current_user
-                li= link_to "Settings", '#'
-                li.divider
-                li
-                  = link_to "Log out", logout_path, method: :delete
+            / li= link_to "Users", '#'
+            li= link_to "Log out", logout_path, method: :delete
+            / li.dropdown
+            /   a.dropdown-toggle data-toggle="dropdown" href="#"
+            /     | Account
+            /     b.caret
+            /   ul.dropdown-menu
+            /     li= link_to "Profile", current_user
+            /     li= link_to "Settings", '#'
+            /     li.divider
+            /     li
+            /       = link_to "Log out", logout_path, method: :delete
           - else
             li= link_to "Log in", login_path
         ul.nav.navbar-nav.navbar-right

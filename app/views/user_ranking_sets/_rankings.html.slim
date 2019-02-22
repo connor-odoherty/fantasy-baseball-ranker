@@ -14,10 +14,15 @@
               .row
                 .col-xs-1.text-center.ranking-tab
                   = user_ranking_player_f.index + 1
-                .col-xs-10.player-info
+                .col-xs-9.player-info
                   .row
                     .col-xs-12.text-left.card-title
-                      ' #{player.display_name} - #{player.display_team}
+                      span
+                        ' #{player.display_name} - #{player.display_team}
+                      span
+                        |&nbsp;
+                      span
+                        = link_to raw("&nbsp;#{fa_icon 'line-chart'}"), player.fg_link, target: :_blank, class: 'fan-graphs-link'
                   .row.text-left
                     .col-xs-6.player-essential-info
                       .row
@@ -31,15 +36,11 @@
                         .col-xs-12
                           - if user_ranking_player.elo_score.present?
                             ' ELO: #{user_ranking_player.elo_score}
-                      .row
-                        .col-xs-12
-                          = link_to 'Fangraphs', player.fg_link, target: :_blank
-                .col-xs-1.text-right
-                  = user_ranking_player.ovr_rank
-              / .row
-              /   .col-xs-12
-              /     = user_ranking_player_f.fields_for :user_player do |user_player_f|
-              /       = user_player_f.text_field :notes
+                .col-xs-2.text-right
+                  - if readonly
+                    = link_to raw("<i class='fa fa-pencil'></i>"), edit_user_player_path(user_player), class: 'btn btn-default'
+                  - else
+                    i.fa.fa-sort style='padding-top: 30px'
               .row
                 .col-xs-1.text-right.strong
                   | Notes:
