@@ -8,5 +8,4 @@
         ' Delete
     .col-xs-2
       = link_to 'Edit', edit_user_ranking_set_path(@user_ranking_set, position: @position_filter), class: 'btn btn-primary'
-
-  = render 'rankings', ranking_set: @user_ranking_set, user_ranking_players: @user_ranking_players, filter_path: user_ranking_set_path(@user_ranking_set), f: f, readonly: true
+  = render 'rankings', ranking_set: @user_ranking_set, user_ranking_players: @user_ranking_players, path_to_filter: user_ranking_set_path(@user_ranking_set), f: f, readonly: true
