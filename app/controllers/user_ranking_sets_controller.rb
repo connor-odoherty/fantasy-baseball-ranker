@@ -4,7 +4,11 @@ class UserRankingSetsController < ApplicationController
   before_action :set_user_ranking_players, only: [:show, :edit, :update]
 
   def index
-    redirect_to user_ranking_set_path(current_user.user_ranking_sets.order(updated_at: :desc).first)
+    if current_user.user_ranking_sets.any?
+      redirect_to user_ranking_set_path(current_user.user_ranking_sets.order(updated_at: :desc).first)
+    else
+      redirect_to new_user_ranking_set_path
+    end
   end
 
   def show

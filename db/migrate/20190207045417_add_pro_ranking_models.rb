@@ -23,7 +23,7 @@ class AddProRankingModels < ActiveRecord::Migration[5.0]
     add_foreign_key :pro_ranking_players, :players, column: :player_id
     add_index :pro_ranking_players, :player_id
 
-    add_foreign_key :pro_ranking_players, :pro_ranking_sets, column: :pro_ranking_set_id
+    add_foreign_key :pro_ranking_players, :pro_ranking_sets, column: :pro_ranking_set_id, on_delete: :cascade
     add_index :pro_ranking_players, :pro_ranking_set_id
   end
 end

@@ -1,42 +1,58 @@
 .row.player-info-container
   .col-xs-12
     = render 'shared/error_messages', object: f.object
-    .row.title
-      .col-xs-8.text-left
-        span.strong
-          = player.display_name
-        span
-          = " - #{player.mlb_team.short_name}"
-      .col-xs-4.text-right
-        span.strong
-          = player.display_positions
-    .row
-      .col-xs-2.text-right.strong
-        ' Notes:
+    .row.form-group
+      .col-xs-2.text-right
+        = f.label :full_name, 'Name'
       .col-xs-10.text-left
-        = f.text_area :notes, readonly: readonly
-    .row
-      .col-xs-2.text-right.strong
-        ' Articles:
+        = f.text_field :full_name, class: 'form-control', disabled: readonly
+    .row.form-group
+      .col-xs-2.text-right
+        = f.label :mlb_team, 'Team'
       .col-xs-10.text-left
-        .row
-          .col-xs-10
-            = f.nested_fields_for :player_articles do |paf|
-              .row
-                .col-xs-10
-                  .row
-                    .col-xs-3
-                      = paf.text_field :publication, placeholder: 'Publication name', readonly: readonly, class: 'form-control'
-                    .col-xs-4
-                      = paf.text_field :title, placeholder: 'Article title', disabled: readonly
-                    .col-xs-5
-                      = paf.text_field :article_url, placeholder: 'URL'
-                  .row
-                    .col-xs-11
-                      = paf.text_field :notes, placeholder: 'Player notes'
-                    .col-xs-1
-                      - if !readonly
-                        = paf.remove_nested_fields_link 'X', class: 'btn btn-default', data: { confirm: 'Are you sure you want to remove this article?' }
-          .col-xs-2
-            - if !readonly
-              = f.add_nested_fields_link :player_articles, 'Add player'
+        = f.collection_select :mlb_team_id, ProTeam.order(:long_name), :id, :long_name, include_blank: true, class: 'form-control', disabled: readonly
+    .row.form-group
+      .col-xs-2.text-right.strong
+        ' Positions:
+      .col-xs-10
+        - selectable_positions = Player.selectable_postions
+        - (0..selectable_positions.length-1).step(2) do |index|
+          .form-group
+            .col-sm-6
+              - position = selectable_positions[index]
+              span.checkbox.checkbox-primary
+                = check_box_tag 'player[positions][]', position, f.object.positions?(position), id: "user_positions_#{position.to_s}", class: 'role_checkbox checkbox-fade', 'data-position-name' => position.to_s, disabled: readonly
+                label for="user_positions_#{position.to_s}"
+                  = f.object.position_to_s(position)
+            .col-sm-6
+              - if index + 1 < selectable_positions.length
+                - position = selectable_positions[index + 1]
+                span.checkbox.checkbox-primary
+                  = check_box_tag 'player[positions][]', position, f.object.positions?(position), id: "user_positions_#{position.to_s}", class: 'role_checkbox checkbox-fade', 'data-position-name' => position.to_s, disabled: readonly
+                  label for="user_positions_#{position.to_s}"
+                    = f.object.position_to_s(position)
+
+    /
+    / - display_operating_roles = current_user.selectable_operator_roles
+    / - # layout in rows of two  (step(2))
+    / - (0..display_operating_roles.length-1).step(2) do |index|
+    /   .form-group
+    /     .col-sm-3.col-sm-offset-3
+    /       - role = display_operating_roles[index]
+    /       span.checkbox.checkbox-primary class="#{'disable-checkbox' if permissions_readonly}"
+    /         - if permissions_readonly && f.object.has_any_roles?(role)
+    /           - # if the form is submitted, preserve existing roles by using the hidden field
+    /           = hidden_field_tag "user[roles][]", role
+    /         = check_box_tag 'user[roles][]', role, f.object.has_any_roles?(role), disabled: readonly || permissions_readonly, id: "user_roles_#{role.to_s}", class: 'role_checkbox form-control checkbox-fade', 'data-role-name' => role.to_s
+    /         label for="user_roles_#{role.to_s}"
+    /           = f.object.role_to_s(role)
+    /     .col-sm-4
+    /       - if index + 1 < display_operating_roles.length
+    /         - role = display_operating_roles[index+1]
+    /         span.checkbox.checkbox-primary class="#{'disable-checkbox' if permissions_readonly}"
+    /           - if permissions_readonly && f.object.has_any_roles?(role)
+    /             - # if the form is submitted, preserve existing roles by using the hidden field
+    /             = hidden_field_tag "user[roles][]", role
+    /           = check_box_tag 'user[roles][]', role, f.object.has_any_roles?(role), disabled: readonly || permissions_readonly, id: "user_roles_#{role.to_s}", class: 'role_checkbox form-control checkbox-fade', 'data-role-name' => role.to_s
+    /           label for="user_roles_#{role.to_s}"
+    /             = f.object.role_to_s(role)

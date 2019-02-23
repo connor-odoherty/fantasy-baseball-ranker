@@ -46,7 +46,7 @@ class UserPlayersController < ApplicationController
   end
 
   def user_player_params
-    params.require(:user_player).permit(UserPlayer.acceptable_admin_params)
+    params.require(:user_player).permit(UserPlayer.acceptable_params)
   end
 
   def search(term)

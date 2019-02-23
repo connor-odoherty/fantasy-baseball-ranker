@@ -149,7 +149,7 @@ ActiveRecord::Schema.define(version: 20190220043229) do
   add_foreign_key "players", "pro_teams", column: "current_team_id"
   add_foreign_key "players", "pro_teams", column: "mlb_team_id"
   add_foreign_key "pro_ranking_players", "players"
-  add_foreign_key "pro_ranking_players", "pro_ranking_sets"
+  add_foreign_key "pro_ranking_players", "pro_ranking_sets", on_delete: :cascade
   add_foreign_key "user_player_articles", "user_players"
   add_foreign_key "user_players", "players"
   add_foreign_key "user_players", "users"

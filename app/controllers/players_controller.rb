@@ -10,7 +10,6 @@ class PlayersController < ApplicationController
   end
 
   def edit
-    @player.player_articles.build if @player.player_articles.none?
   end
 
   def update
@@ -33,6 +32,6 @@ class PlayersController < ApplicationController
   end
 
   def player_params
-    params.require(:player).permit(Player.acceptable_admin_params)
+    params.require(:player).permit(Player.acceptable_params)
   end
 end

@@ -32,7 +32,7 @@ class UserPlayer < ApplicationRecord
 
   accepts_nested_attributes_for :user_player_articles, allow_destroy: true
 
-  def self.acceptable_admin_params
-    [:notes, user_player_articles_attributes: UserPlayerArticle.acceptable_attributes]
+  def self.acceptable_params
+    [:notes, user_player_articles_attributes: UserPlayerArticle.acceptable_params]
   end
 end

@@ -6,6 +6,8 @@ body
           li= link_to "Home", root_path
           li= link_to "Rankings", user_ranking_sets_path
           li= link_to "Players", user_players_path
+          - if current_user&.admin
+            li= link_to "Admin players", players_path
           / li= link_to "Help", help_path
           - if logged_in?
             / li= link_to "Users", '#'

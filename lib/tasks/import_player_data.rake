@@ -36,7 +36,7 @@ task import_player_data: :environment do
   count = 0
 
   row_count = 0
-  CSV.foreach('nfbc_adp_2019_02_06.csv') do |row|
+  CSV.foreach('nfbc_adp_set.csv') do |row|
     row_count += 1
     next if row_count == 1
 
@@ -46,6 +46,7 @@ task import_player_data: :environment do
     full_name = first_name + ' ' + last_name
     fantasy_relevant_player_names.push(full_name.downcase)
   end
+  fantasy_relevant_player_names.push('vladimir guerrero jr.')
 
   # CSV.foreach('fantasy_players.csv') do |row|
   #   # name  status  age  team  pos
@@ -134,7 +135,7 @@ task import_player_data: :environment do
       source_player.positions << position
     end
 
-    if !source_player.save
+    if !source_player.save || !source_player.save
       pp source_player.errors.full_messages
       raise "#{source_player.mlb_name} failed to save"
     end
