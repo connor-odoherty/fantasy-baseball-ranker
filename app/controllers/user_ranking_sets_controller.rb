@@ -11,9 +11,7 @@ class UserRankingSetsController < ApplicationController
     end
   end
 
-  def show
-    @user_ranking_set = UserRankingSet.find(params[:id])
-  end
+  def show; end
 
   def new
     @new_user_ranking_set = current_user.user_ranking_sets.build
@@ -21,7 +19,6 @@ class UserRankingSetsController < ApplicationController
 
   def create
     @new_user_ranking_set = current_user.user_ranking_sets.build(user_ranking_set_params)
-
     if @new_user_ranking_set.save
       if associate_default_rankings_with_new_ranking_set
         redirect_to @new_user_ranking_set
@@ -44,13 +41,10 @@ class UserRankingSetsController < ApplicationController
     end
 
     ovr_rank_list.sort_by!(&:to_i)
-    p 'OVR RANK LIST FIRST 20', ovr_rank_list[0..20]
     new_params = user_ranking_set_params
     cur_index = 0
     new_params[:user_ranking_players_attributes].each do |_k, user_ranking_player_params|
-      p "Previous rank: #{user_ranking_player_params[:ovr_rank]}" if cur_index < 20
       user_ranking_player_params[:ovr_rank] = ovr_rank_list[cur_index]
-      p "New rank: #{user_ranking_player_params[:ovr_rank]}" if cur_index < 20
       cur_index += 1
     end
 
@@ -109,22 +103,23 @@ class UserRankingSetsController < ApplicationController
   def associate_default_rankings_with_new_ranking_set
     elo_start_point = 2100
     source_ranking_set = nfbc_ranking_set
-    source_ranking_set.pro_ranking_players.each_with_index do |pro_ranking_player, i|
-      user_player = current_user.user_players.find_by(player: pro_ranking_player.player)
+    ovr_rank_count = 1
+    source_ranking_set.pro_ranking_players.find_each do |pro_ranking_player|
+      user_player = current_user.user_players.find_by(player_id: pro_ranking_player.player_id)
       if !user_player.present?
-        user_player = current_user.user_players.build(player: pro_ranking_player.player)
+        user_player = current_user.user_players.create!(player_id: pro_ranking_player.player_id)
         user_player.save!
       end
 
       new_user_ranking_player = @new_user_ranking_set.user_ranking_players.create(
           user_player: user_player,
-          ovr_rank: i + 1,
+          ovr_rank: ovr_rank_count,
           elo_score: (elo_start_point - pro_ranking_player.ovr_rank)
       )
+      ovr_rank_count += 1
       next if new_user_ranking_player
 
       source_ranking_set.destroy_all
-      pp 'Saving errors:', new_user_ranking_player.errors.full_messages
       source_ranking_set.errors.add(:pro_ranking_players, 'failed to save properly')
       return false
     end

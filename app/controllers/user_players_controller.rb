@@ -38,7 +38,7 @@ class UserPlayersController < ApplicationController
   private
 
   def set_user_players
-    @user_players = current_user.user_players.all
+    @user_players = current_user.user_players.includes(player: [:mlb_team]).all
   end
 
   def set_user_player
@@ -52,7 +52,7 @@ class UserPlayersController < ApplicationController
   def search(term)
     return [] if term.blank?
 
-    user_players = UserPlayer.includes(:player)
+    user_players = current_user.user_players.includes(:player)
                        .where('players.autocomplete_search_field ILIKE ?', "%#{term}%")
                        .order('players.full_name').limit(10)
 
