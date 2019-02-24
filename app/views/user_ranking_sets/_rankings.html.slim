@@ -31,14 +31,15 @@
                           = player.mlb_team.short_name
                         .col-xs-6.text-left
                           = "Age #{player.display_age}"
-                    .col-xs-6.player-fantasy-info
+                    .col-xs-7.player-fantasy-info
                       - if user_player.notes.present?
                         .row
-                          .col-xs-1.text-right.strong
-                            | Notes:
-                          .col-xs-11
-                            = user_player.notes
-                    .col-xs-2.text-right
+                          .col-xs-12.text-left.player-notes
+                            / span.strong
+                            /   | Notes: &nbsp
+                            span
+                              = user_player.notes
+                    .col-xs-1.text-right
                       - if readonly
                         = link_to raw("<i class='fa fa-pencil'></i>"), edit_user_player_path(user_player), class: 'btn btn-default'
                       - else
