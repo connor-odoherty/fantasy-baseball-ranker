@@ -22,7 +22,7 @@ class ProRankingSetController < ApplicationController
   end
 
   def set_players
-    @players = ProRankingPlayer.includes(player: [:mlb_team].where(pro_ranking_set: @pro_ranking_set).rank(:ovr_rank).to_a
+    @players = ProRankingPlayer.includes(player: [:mlb_team]).where(pro_ranking_set: @pro_ranking_set).rank(:ovr_rank).to_a
     if @position_filter != :all
       @players = @players.select do |pro_ranking_player|
         pro_ranking_player.player.positions?(@position_filter)
