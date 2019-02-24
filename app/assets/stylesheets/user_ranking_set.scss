@@ -1,8 +1,32 @@
 // Place all the styles related to the UserRankingSet controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import "colors";
 
 .fan-graphs-link {
   //font-size: 14px;
   color: #51a730;
+}
+
+.fa-sort {
+  cursor: grab;
+}
+
+.ui-sortable-helper {
+  border-left: 5px solid $sorting;
+  box-shadow: 3px 3px 4px rgba(116, 116, 116, 0.3);
+  cursor: grabbing;
+  border-radius: 0px !important;
+
+  .fa-sort {
+    cursor: inherit;
+  }
+}
+
+.ui-sortable-placeholder {
+  border-radius: 0px !important;
+  border-top: 2px solid $sorting;
+  border-bottom: 2px solid $sorting;
+  visibility: visible !important;
+  background-color: $surface-light;
 }

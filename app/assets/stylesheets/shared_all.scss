@@ -1,64 +1,9 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "colors";
 
 /* universal */
 /* DB SAYS DON'T ADD MORE COLORS. SIMPLICITY IS BEAUTY. */
-
-$transparent-heavy: .8;
-$transparent: .5;
-$transparent-light: .3;
-
-$light: 20%;
-$lightest: 50%;
-
-// White
-$white: #fff;
-$white-opaque: transparentize($white, $transparent-light);
-
-// Black
-$black: #000;
-
-// Moment blue
-$primary: #182e4d;
-$primary-light: lighten($primary, $light);
-$primary-lightest: lighten($primary, $lightest);
-$primary-opaque: transparentize($primary, $transparent);
-
-// Moment red
-$secondary: #ad384a;
-$secondary-light: lighten($secondary, $light);
-$secondary-lightest: lighten($secondary, $lightest);
-$secondary-opaque: transparentize($secondary, $transparent);
-$on-secondary: $white;
-
-// Moment grey
-$surface: #e6e7e8;
-$surface-extra-dark: darken($surface, 100%);
-$surface-dark: darken($surface, 50%);
-$surface-almost-dark: darken($surface, 20%);
-$surface-light: lighten($surface, 7%);
-$surface-lightest: lighten($surface, $lightest);
-$surface-opaque: transparentize($surface, $transparent);
-$on-surface: $primary;
-
-// Danger
-$danger: #9e3535;
-$danger-light: lighten($danger, $light);
-$danger-lightest: lighten($danger, $lightest);
-
-// Warning
-$warning: #937619;
-$warning-light: lighten($warning, $light);
-$warning-lightest: lighten($warning, $lightest);
-
-// Success
-$success: #1b7751;
-$success-light: lighten($success, $light);
-$success-lightest: lighten($success, $lightest);
-
-// Default body text is dark grey, Header text is primary
-$default-text-color: $surface-dark;
-
 body {
   padding-top: 60px;
   background-color: $surface-light;
