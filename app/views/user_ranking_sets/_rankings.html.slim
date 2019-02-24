@@ -1,49 +1,48 @@
 .container-fluid
-  .col-xs-8
+  .col-xs-10
     .row.player-list
       .col-xs-12 class="#{'draggable-player-list' if !readonly}"
         = f.fields_for :user_ranking_players, @user_ranking_players do |user_ranking_player_f|
           - user_ranking_player = user_ranking_player_f.object
           - user_player = user_ranking_player.user_player
           - player = user_player.player
-          .row.player-card id="#{dom_id(player)}" class='player-ranking-form'
-            = user_ranking_player_f.hidden_field :ovr_rank
-            = user_ranking_player_f.hidden_field :id
-            .col-xs-12
-              .row
-                .col-xs-1.text-center.ranking-tab
-                  = user_ranking_player_f.index + 1
-                .col-xs-9.player-info
+          .row.ranking-row id="#{dom_id(player)}" class='player-ranking-form'
+            .col-xs-1.text-center.ranking-tab
+              = user_ranking_player_f.index + 1
+            .col-xs-11
+              .row.player-card
+                = user_ranking_player_f.hidden_field :ovr_rank
+                = user_ranking_player_f.hidden_field :id
+                .col-xs-12
                   .row
-                    .col-xs-12.text-left.card-title
-                      span
-                        ' #{player.display_name} - #{player.display_team}
-                      span
-                        |&nbsp;
-                      span
-                        = link_to raw("&nbsp;#{fa_icon 'line-chart'}"), player.fg_link, target: :_blank, class: 'fan-graphs-link'
-                  .row.text-left
-                    .col-xs-6.player-essential-info
+                    .col-xs-4.player-info
                       .row
-                        .col-xs-12
-                          ' Age: #{player.display_age}
+                        .col-xs-4.text-right style='padding-right: 0px; padding-top: 4px;'
+                          = player.display_positions
+                          span
+                            ' &nbsp;&nbsp;&nbsp;
+                        .col-xs-8.text-left.card-title style='padding-left: 0px'
+                          span.strong
+                            ' #{player.display_name}
                       .row
-                        .col-xs-12
-                          ' Pos: #{player.display_positions}
+                        .col-xs-4.text-right
+                          = link_to raw("&nbsp;#{fa_icon 'line-chart'}"), player.fg_link, target: :_blank, class: 'fan-graphs-link'
+                        .col-xs-2.text-left.player-essential-info style='padding-left: 0px'
+                          = player.mlb_team.short_name
+                        .col-xs-6.text-left
+                          = "Age #{player.display_age}"
                     .col-xs-6.player-fantasy-info
-                      .row
-                        .col-xs-12
-                          - if user_ranking_player.elo_score.present?
-                            ' ELO: #{user_ranking_player.elo_score}
-                .col-xs-2.text-right
-                  - if readonly
-                    = link_to raw("<i class='fa fa-pencil'></i>"), edit_user_player_path(user_player), class: 'btn btn-default'
-                  - else
-                    i.fa.fa-sort style='padding-top: 30px'
-              .row
-                .col-xs-1.text-right.strong
-                  | Notes:
-                .col-xs-11
-                  = user_player.notes
-  .col-xs-4
+                      - if user_player.notes.present?
+                        .row
+                          .col-xs-1.text-right.strong
+                            | Notes:
+                          .col-xs-11
+                            = user_player.notes
+                    .col-xs-2.text-right
+                      - if readonly
+                        = link_to raw("<i class='fa fa-pencil'></i>"), edit_user_player_path(user_player), class: 'btn btn-default'
+                      - else
+                        i.fa.fa-sort style='padding-top: 10px'
+
+  .col-xs-2
     = render 'players/sidebar_filter', path_to_filter: path_to_filter

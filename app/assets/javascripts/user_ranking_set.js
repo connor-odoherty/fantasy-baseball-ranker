@@ -1,5 +1,15 @@
 document.addEventListener("turbolinks:load", function () {
     $('.draggable-player-list').sortable({
+        items: '.ranking-row',
+        // revert: true,
+        change: function(event, ui) {
+            // updateOVRRankingValuesAfterReorder();
+            $('.ranking-tab:visible').each(function (index, elem) {
+                $(elem).text((index + 1).toString());
+            });
+            var numBefore = $('.ui-sortable-placeholder').prevAll('.ranking-row').length;
+            $('.ui-sortable-placeholder').text(numBefore);
+        },
         update: function(e, ui) {
             updateOVRRankingValuesAfterReorder();
             // $.ajax({

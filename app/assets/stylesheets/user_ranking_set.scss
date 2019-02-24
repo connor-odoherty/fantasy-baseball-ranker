@@ -13,13 +13,22 @@
 }
 
 .ui-sortable-helper {
-  border-left: 5px solid $sorting;
-  box-shadow: 3px 3px 4px rgba(116, 116, 116, 0.3);
-  cursor: grabbing;
-  border-radius: 0px !important;
+
 
   .fa-sort {
     cursor: inherit;
+  }
+
+  .player-card {
+    border-left: 5px solid $sorting;
+    box-shadow: 3px 3px 4px rgba(116, 116, 116, 0.3);
+    cursor: grabbing;
+    border-radius: 0px !important;
+  }
+
+  .ranking-tab {
+    display: none;
+    color: $sorting;
   }
 }
 
@@ -29,4 +38,45 @@
   border-bottom: 2px solid $sorting;
   visibility: visible !important;
   background-color: $surface-light;
+  font-size: 36px;
+  color: $sorting;
+  padding-left: 15px;
 }
+
+.ranking-row {
+  .ranking-tab {
+    font-size: 30px;
+    padding-top: 10px;
+  }
+}
+
+
+
+.player-info-container {
+  background: white;
+
+  .title {
+    font-size: 36px;
+  }
+}
+
+.player-card {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+  background: white;
+  border-radius: 4px;
+
+
+  .player-info {
+
+    .card-title {
+      font-size: 18px;
+    }
+
+    .player-essential-info, .player-fantasy-info {
+
+    }
+  }
+}
+

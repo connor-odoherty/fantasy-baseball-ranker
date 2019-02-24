@@ -122,7 +122,14 @@ class Player < ApplicationRecord
   end
 
   def display_positions
-    positions_to_display.select {|pos| positions.include? pos }.map { |pos| position_to_s(pos) }.join(' / ')
+    position_list = positions_to_display.select {|pos| positions.include? pos }.map { |pos| position_to_s(pos) }
+    if position_list.length > 3
+      'SUPER'
+    elsif position_list.length == 3
+      position_list.join('/')
+    else
+      position_list.join(' / ')
+    end
   end
 
   def fg_link

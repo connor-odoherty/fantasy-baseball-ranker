@@ -1,19 +1,20 @@
+- col_width = 12
 .row
   .col-xs-12
     = link_to 'ALL', filter_path_for_position(path_to_filter, :all), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :all}"
-  .col-xs-6
+  div class="col-xs-#{col_width}"
     = link_to 'C', filter_path_for_position(path_to_filter, :catcher), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :catcher}"
-  .col-xs-6
+  div class="col-xs-#{col_width}"
     = link_to '1B', filter_path_for_position(path_to_filter, :first_base), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :first_base}"
-  .col-xs-6
+  div class="col-xs-#{col_width}"
     = link_to '2B', filter_path_for_position(path_to_filter, :second_base), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :second_base}"
-  .col-xs-6
+  div class="col-xs-#{col_width}"
     = link_to 'SS', filter_path_for_position(path_to_filter, :short_stop), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :short_stop}"
-  .col-xs-6
+  div class="col-xs-#{col_width}"
     = link_to '3B', filter_path_for_position(path_to_filter, :third_base), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :third_base}"
-  .col-xs-6
+  div class="col-xs-#{col_width}"
     = link_to 'OF', filter_path_for_position(path_to_filter, :outfield), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :outfield}"
-  .col-xs-6
+  div class="col-xs-#{col_width}"
     = link_to 'SP', filter_path_for_position(path_to_filter, :starting_pitcher), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :starting_pitcher}"
-  .col-xs-6
+  div class="col-xs-#{col_width}"
     = link_to 'RP', filter_path_for_position(path_to_filter, :relief_pitcher), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :relief_pitcher}"
