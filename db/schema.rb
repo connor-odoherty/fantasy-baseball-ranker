@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190220043229) do
+ActiveRecord::Schema.define(version: 20190224052502) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,6 +94,41 @@ ActiveRecord::Schema.define(version: 20190220043229) do
     t.string "long_name"
   end
 
+  create_table "projected_players", force: :cascade do |t|
+    t.integer  "player_id"
+    t.integer  "projection_system_id"
+    t.float    "games"
+    t.float    "plate_appearances"
+    t.float    "at_bats"
+    t.float    "hits"
+    t.float    "doubles"
+    t.float    "triples"
+    t.float    "home_runs"
+    t.float    "runs"
+    t.float    "rbis"
+    t.float    "batting_walks"
+    t.float    "batting_strikeouts"
+    t.float    "stolen_bases"
+    t.float    "batting_average"
+    t.float    "on_base_percentage"
+    t.float    "slugging_percentage"
+    t.float    "ops"
+    t.float    "woba"
+    t.float    "wrc_plus"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.index ["player_id", "projection_system_id"], name: "index_projected_players_on_player_id_and_projection_system_id", unique: true, using: :btree
+    t.index ["player_id"], name: "index_projected_players_on_player_id", using: :btree
+    t.index ["projection_system_id"], name: "index_projected_players_on_projection_system_id", using: :btree
+  end
+
+  create_table "projection_systems", force: :cascade do |t|
+    t.string   "name"
+    t.string   "slug"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "user_player_articles", force: :cascade do |t|
     t.integer  "user_player_id"
     t.string   "title"
@@ -150,6 +185,8 @@ ActiveRecord::Schema.define(version: 20190220043229) do
   add_foreign_key "players", "pro_teams", column: "mlb_team_id"
   add_foreign_key "pro_ranking_players", "players"
   add_foreign_key "pro_ranking_players", "pro_ranking_sets", on_delete: :cascade
+  add_foreign_key "projected_players", "players"
+  add_foreign_key "projected_players", "projection_systems"
   add_foreign_key "user_player_articles", "user_players"
   add_foreign_key "user_players", "players"
   add_foreign_key "user_players", "users"
