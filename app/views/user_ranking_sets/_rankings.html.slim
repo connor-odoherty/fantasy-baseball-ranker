@@ -1,15 +1,14 @@
 .container-fluid
   .col-xs-8
     .row.player-list
-      .col-xs-12 data-url="#{sort_user_ranking_sets_path(id: ranking_set.id)}" class="#{'draggable-player-list' if !readonly}"
-        = f.fields_for :user_ranking_players, user_ranking_players do |user_ranking_player_f|
+      .col-xs-12 class="#{'draggable-player-list' if !readonly}"
+        = f.fields_for :user_ranking_players, @user_ranking_players do |user_ranking_player_f|
           - user_ranking_player = user_ranking_player_f.object
           - user_player = user_ranking_player.user_player
           - player = user_player.player
-          / = player_f.hidden_field :id
           .row.player-card id="#{dom_id(player)}" class='player-ranking-form'
-            = user_ranking_player_f.hidden_field :ovr_rank, class: 'ovr-rank-field'
-            = user_ranking_player_f.hidden_field :position, class: 'position-field'
+            = user_ranking_player_f.hidden_field :ovr_rank
+            = user_ranking_player_f.hidden_field :id
             .col-xs-12
               .row
                 .col-xs-1.text-center.ranking-tab

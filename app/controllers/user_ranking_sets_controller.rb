@@ -44,10 +44,13 @@ class UserRankingSetsController < ApplicationController
     end
 
     ovr_rank_list.sort_by!(&:to_i)
+    p 'OVR RANK LIST FIRST 20', ovr_rank_list[0..20]
     new_params = user_ranking_set_params
     cur_index = 0
     new_params[:user_ranking_players_attributes].each do |_k, user_ranking_player_params|
+      p "Previous rank: #{user_ranking_player_params[:ovr_rank]}" if cur_index < 20
       user_ranking_player_params[:ovr_rank] = ovr_rank_list[cur_index]
+      p "New rank: #{user_ranking_player_params[:ovr_rank]}" if cur_index < 20
       cur_index += 1
     end
 
@@ -87,11 +90,7 @@ class UserRankingSetsController < ApplicationController
   def user_ranking_set_params
     pp 'PARAMS', params
     params.require(:user_ranking_set).permit(:id, :ranking_name,
-                                             user_ranking_players_attributes: [
-                                                 :id, :ovr_rank, :position, user_player_attributes: [
-                                                   :id, :notes
-                                                 ]
-                                             ])
+                                             user_ranking_players_attributes: [:id, :ovr_rank])
   end
 
   def set_user_ranking_set
@@ -110,7 +109,7 @@ class UserRankingSetsController < ApplicationController
   def associate_default_rankings_with_new_ranking_set
     elo_start_point = 2100
     source_ranking_set = nfbc_ranking_set
-    source_ranking_set.pro_ranking_players.each do |pro_ranking_player|
+    source_ranking_set.pro_ranking_players.each_with_index do |pro_ranking_player, i|
       user_player = current_user.user_players.find_by(player: pro_ranking_player.player)
       if !user_player.present?
         user_player = current_user.user_players.build(player: pro_ranking_player.player)
@@ -119,9 +118,8 @@ class UserRankingSetsController < ApplicationController
 
       new_user_ranking_player = @new_user_ranking_set.user_ranking_players.create(
           user_player: user_player,
-          ovr_rank: pro_ranking_player.ovr_rank,
-          elo_score: (elo_start_point - pro_ranking_player.ovr_rank),
-          position: pro_ranking_player.ovr_rank
+          ovr_rank: i + 1,
+          elo_score: (elo_start_point - pro_ranking_player.ovr_rank)
       )
       next if new_user_ranking_player
 
