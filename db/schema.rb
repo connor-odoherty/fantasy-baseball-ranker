@@ -15,6 +15,62 @@ ActiveRecord::Schema.define(version: 20190224052502) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "batting_projections", force: :cascade do |t|
+    t.integer  "player_id"
+    t.integer  "projection_system_id"
+    t.float    "games"
+    t.float    "plate_appearances"
+    t.float    "at_bats"
+    t.float    "hits"
+    t.float    "doubles"
+    t.float    "triples"
+    t.float    "home_runs"
+    t.float    "runs"
+    t.float    "runs_batted_in"
+    t.float    "batting_walks"
+    t.float    "batting_strikeouts"
+    t.float    "stolen_bases"
+    t.float    "batting_average"
+    t.float    "on_base_percentage"
+    t.float    "slugging_percentage"
+    t.float    "on_base_plus_slugging"
+    t.float    "weighted_on_base"
+    t.float    "wrc_plus"
+    t.float    "wins_above_replacement"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.index ["player_id", "projection_system_id"], name: "index_batting_projection_on_player_and_system", unique: true, using: :btree
+    t.index ["player_id"], name: "index_batting_projections_on_player_id", using: :btree
+    t.index ["projection_system_id"], name: "index_batting_projections_on_projection_system_id", using: :btree
+  end
+
+  create_table "pitching_projections", force: :cascade do |t|
+    t.integer  "player_id"
+    t.integer  "projection_system_id"
+    t.float    "games"
+    t.float    "games_started"
+    t.float    "wins"
+    t.float    "losses"
+    t.float    "saves"
+    t.float    "earned_run_average"
+    t.float    "innings_pitched"
+    t.float    "hits_allowed"
+    t.float    "home_runs_allowed"
+    t.float    "earned_runs_allowed"
+    t.float    "pitching_walks"
+    t.float    "pitching_strikeouts"
+    t.float    "walks_and_hits_per_ip"
+    t.float    "k_per_nine"
+    t.float    "bb_per_nine"
+    t.float    "fielding_independent_pitching"
+    t.float    "wins_above_replacement"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.index ["player_id", "projection_system_id"], name: "index_pitching_projection_on_player_and_system", unique: true, using: :btree
+    t.index ["player_id"], name: "index_pitching_projections_on_player_id", using: :btree
+    t.index ["projection_system_id"], name: "index_pitching_projections_on_projection_system_id", using: :btree
+  end
+
   create_table "players", force: :cascade do |t|
     t.string   "full_name"
     t.integer  "current_team_id"
@@ -94,34 +150,6 @@ ActiveRecord::Schema.define(version: 20190224052502) do
     t.string "long_name"
   end
 
-  create_table "projected_players", force: :cascade do |t|
-    t.integer  "player_id"
-    t.integer  "projection_system_id"
-    t.float    "games"
-    t.float    "plate_appearances"
-    t.float    "at_bats"
-    t.float    "hits"
-    t.float    "doubles"
-    t.float    "triples"
-    t.float    "home_runs"
-    t.float    "runs"
-    t.float    "rbis"
-    t.float    "batting_walks"
-    t.float    "batting_strikeouts"
-    t.float    "stolen_bases"
-    t.float    "batting_average"
-    t.float    "on_base_percentage"
-    t.float    "slugging_percentage"
-    t.float    "ops"
-    t.float    "woba"
-    t.float    "wrc_plus"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-    t.index ["player_id", "projection_system_id"], name: "index_projected_players_on_player_id_and_projection_system_id", unique: true, using: :btree
-    t.index ["player_id"], name: "index_projected_players_on_player_id", using: :btree
-    t.index ["projection_system_id"], name: "index_projected_players_on_projection_system_id", using: :btree
-  end
-
   create_table "projection_systems", force: :cascade do |t|
     t.string   "name"
     t.string   "slug"
@@ -181,12 +209,14 @@ ActiveRecord::Schema.define(version: 20190224052502) do
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
   end
 
+  add_foreign_key "batting_projections", "players"
+  add_foreign_key "batting_projections", "projection_systems"
+  add_foreign_key "pitching_projections", "players"
+  add_foreign_key "pitching_projections", "projection_systems"
   add_foreign_key "players", "pro_teams", column: "current_team_id"
   add_foreign_key "players", "pro_teams", column: "mlb_team_id"
   add_foreign_key "pro_ranking_players", "players"
   add_foreign_key "pro_ranking_players", "pro_ranking_sets", on_delete: :cascade
-  add_foreign_key "projected_players", "players"
-  add_foreign_key "projected_players", "projection_systems"
   add_foreign_key "user_player_articles", "user_players"
   add_foreign_key "user_players", "players"
   add_foreign_key "user_players", "users"

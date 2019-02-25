@@ -66,7 +66,8 @@ class Player < ApplicationRecord
   belongs_to :mlb_team, class_name: 'ProTeam'
   belongs_to :current_team, class_name: 'ProTeam'
   has_many :user_players
-  has_many :projected_players
+  has_many :batting_projections
+  has_many :pitching_projections
 
   before_save :build_autocomplete_search_field
 

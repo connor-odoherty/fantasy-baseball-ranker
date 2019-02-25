@@ -10,5 +10,6 @@
 #
 
 class ProjectionSystem < ApplicationRecord
-  has_many :projected_players
+  has_many :batting_projections
+  has_many :pitching_projections
 end
