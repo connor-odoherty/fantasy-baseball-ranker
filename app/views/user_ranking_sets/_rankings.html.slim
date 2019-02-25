@@ -39,6 +39,47 @@
                             /   | Notes: &nbsp
                             span
                               = user_player.notes
+                      - if player.batting_projections.any?
+                        - projection = player.batting_projections.first
+                        .row
+                          .col-xs-8
+                            table.table.stats-table
+                              thead
+                                tr
+                                  th
+                                    ' System
+                                  th
+                                    ' G
+                                  th
+                                    ' PA
+                                  th
+                                    ' R
+                                  th
+                                    ' RBI
+                                  th
+                                    ' HR
+                                  th
+                                    ' SB
+                                  th
+                                    ' AVG
+                              tbody
+                                tr
+                                  td
+                                    = projection.projection_system.name
+                                  td
+                                    = projection.display_games
+                                  td
+                                    = projection.display_plate_appearances
+                                  td
+                                    = projection.display_runs
+                                  td
+                                    = projection.display_runs_batted_in
+                                  td
+                                    = projection.display_home_runs
+                                  td
+                                    = projection.display_stolen_bases
+                                  td
+                                    = projection.display_batting_average
                     .col-xs-1.text-right
                       - if readonly
                         = link_to raw("<i class='fa fa-pencil'></i>"), edit_user_player_path(user_player), class: 'btn btn-default'

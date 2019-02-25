@@ -141,3 +141,23 @@ input {
 input.autocomplete-text-field {
   margin-bottom: 6px;
 }
+
+table.table.stats-table {
+  table-layout:fixed !important;
+  font-size: 10px;
+
+  th, td {
+    padding: 3px;
+    width: 30px;
+    text-align: center;
+    }
+
+    th {
+      padding-bottom: 1px;
+      border-bottom-width: 1px;
+    }
+
+    td {
+      padding-top: 1px;
+    }
+  }

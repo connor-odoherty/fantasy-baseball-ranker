@@ -40,6 +40,46 @@
 #
 
 class BattingProjection < ApplicationRecord
+  include ActionView::Helpers::NumberHelper
+
   belongs_to :player
   belongs_to :projection_system
+
+  def display_games
+    self.games.to_i.to_s
+  end
+
+  def display_plate_appearances
+    self.plate_appearances.to_i.to_s
+  end
+
+  def display_runs
+    self.runs.to_i.to_s
+  end
+
+  def display_runs_batted_in
+    self.runs_batted_in.to_i.to_s
+  end
+
+  def display_home_runs
+    self.home_runs.to_i.to_s
+  end
+
+  def display_stolen_bases
+    self.stolen_bases.to_i.to_s
+
+  end
+
+  def display_batting_average
+    number_with_precision(self.batting_average, precision: 3).to_s.sub!(/^0+/, "")
+  end
+
+  def display_on_base_percentage
+    number_with_precision(self.on_base_percentage, precision: 3).to_s.sub!(/^0+/, "")
+  end
+
+  def display_slugging_percentage
+    number_with_precision(self.slugging_percentage, precision: 3).to_s.sub!(/^0+/, "")
+  end
+
 end
