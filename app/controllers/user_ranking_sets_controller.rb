@@ -1,7 +1,7 @@
 class UserRankingSetsController < ApplicationController
-  before_action :set_position_filer, only: [:show, :edit, :update]
-  before_action :set_user_ranking_set, except: [:index, :new, :create]
-  before_action :set_user_ranking_players, only: [:show, :edit, :update]
+  before_action :set_position_filer, only: %i[show edit update]
+  before_action :set_user_ranking_set, except: %i[index new create]
+  before_action :set_user_ranking_players, only: %i[show edit update]
 
   def index
     if current_user.user_ranking_sets.any?
@@ -30,9 +30,7 @@ class UserRankingSetsController < ApplicationController
     end
   end
 
-  def edit
-
-  end
+  def edit; end
 
   def update
     ovr_rank_list = []
@@ -67,7 +65,7 @@ class UserRankingSetsController < ApplicationController
 
   def destroy
     @user_ranking_set.destroy
-    flash[:success] = "Ranking deleted"
+    flash[:success] = 'Ranking deleted'
     redirect_to new_user_ranking_set_path
   end
 
@@ -84,7 +82,7 @@ class UserRankingSetsController < ApplicationController
   def user_ranking_set_params
     pp 'PARAMS', params
     params.require(:user_ranking_set).permit(:id, :ranking_name,
-                                             user_ranking_players_attributes: [:id, :ovr_rank])
+                                             user_ranking_players_attributes: %i[id ovr_rank])
   end
 
   def set_user_ranking_set
@@ -106,15 +104,15 @@ class UserRankingSetsController < ApplicationController
     ovr_rank_count = 1
     source_ranking_set.pro_ranking_players.find_each do |pro_ranking_player|
       user_player = current_user.user_players.find_by(player_id: pro_ranking_player.player_id)
-      if !user_player.present?
+      unless user_player.present?
         user_player = current_user.user_players.create!(player_id: pro_ranking_player.player_id)
         user_player.save!
       end
 
       new_user_ranking_player = @new_user_ranking_set.user_ranking_players.create(
-          user_player: user_player,
-          ovr_rank: ovr_rank_count,
-          elo_score: (elo_start_point - pro_ranking_player.ovr_rank)
+        user_player: user_player,
+        ovr_rank: ovr_rank_count,
+        elo_score: (elo_start_point - pro_ranking_player.ovr_rank)
       )
       ovr_rank_count += 1
       next if new_user_ranking_player
@@ -124,7 +122,7 @@ class UserRankingSetsController < ApplicationController
       return false
     end
 
-    return true
+    true
   end
 
   def nfbc_ranking_set

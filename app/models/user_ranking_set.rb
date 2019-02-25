@@ -30,9 +30,11 @@ class UserRankingSet < ApplicationRecord
 
   validate do |user_ranking_set|
     # TODO: User ranking players is nil at this point
-    return true if !user_ranking_set.user_ranking_players
+    return true unless user_ranking_set.user_ranking_players
+
     user_ranking_set.user_ranking_players.each do |player|
       next if player.valid?
+
       player.errors.full_messages.each do |msg|
         # you can customize the error message here:
         user_ranking_set.errors.add(:user_ranking_player, "#{player.user_player.player.display_name} #{msg}")
@@ -43,12 +45,12 @@ class UserRankingSet < ApplicationRecord
   accepts_nested_attributes_for :user_ranking_players
 
   def display_name
-    self.ranking_name
+    ranking_name
   end
 
   def no_duplicate_positions
-    positions_list = self.user_ranking_players.pluck(:position)
-    duplicate = positions_list.detect{ |e| positions_list.count(e) > 1 }
-    self.errors.add(:user_ranking_set, "has duplicates with position #{duplicate}") if duplicate.present?
+    positions_list = user_ranking_players.pluck(:position)
+    duplicate = positions_list.detect { |e| positions_list.count(e) > 1 }
+    errors.add(:user_ranking_set, "has duplicates with position #{duplicate}") if duplicate.present?
   end
 end

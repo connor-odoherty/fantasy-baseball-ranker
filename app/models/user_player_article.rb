@@ -28,6 +28,6 @@ class UserPlayerArticle < ApplicationRecord
   validates :article_url, presence: true
 
   def self.acceptable_params
-    [:id, :user_player_id, :title, :publication, :article_url, :notes, :_destroy]
+    %i[id user_player_id title publication article_url notes _destroy]
   end
 end

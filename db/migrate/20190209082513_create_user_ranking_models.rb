@@ -57,4 +57,3 @@ class CreateUserRankingModels < ActiveRecord::Migration[5.0]
     add_index :user_ranking_players, :elo_score
   end
 end
-

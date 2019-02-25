@@ -179,41 +179,41 @@ def parse_positions(position_string)
 
   position_string.split('/').each do |pos|
     case pos
-      when 'C'
-        positions << :catcher
-      when '1B'
-        positions << :first_base
-        positions << :infield
-      when '2B'
-        positions << :second_base
-        positions << :infield
-      when '3B'
-        positions << :third_base
-        positions << :infield
-      when 'SS'
-        positions << :short_stop
-        positions << :infield
-      when 'LF'
-        positions << :left_field
-        positions << :outfield
-      when 'CF'
-        positions << :center_field
-        positions << :outfield
-      when 'RF'
-        positions << :right_field
-        positions << :outfield
-      when 'OF'
-        positions << :outfield
-      when 'U'
-        positions << :utility
-      when 'SP'
-        positions << :starting_pitcher
-        positions << :pitcher
-      when 'RP'
-        positions << :relief_pitcher
-        positions << :pitcher
-      when 'P'
-        positions << :pitcher
+    when 'C'
+      positions << :catcher
+    when '1B'
+      positions << :first_base
+      positions << :infield
+    when '2B'
+      positions << :second_base
+      positions << :infield
+    when '3B'
+      positions << :third_base
+      positions << :infield
+    when 'SS'
+      positions << :short_stop
+      positions << :infield
+    when 'LF'
+      positions << :left_field
+      positions << :outfield
+    when 'CF'
+      positions << :center_field
+      positions << :outfield
+    when 'RF'
+      positions << :right_field
+      positions << :outfield
+    when 'OF'
+      positions << :outfield
+    when 'U'
+      positions << :utility
+    when 'SP'
+      positions << :starting_pitcher
+      positions << :pitcher
+    when 'RP'
+      positions << :relief_pitcher
+      positions << :pitcher
+    when 'P'
+      positions << :pitcher
     end
   end
 

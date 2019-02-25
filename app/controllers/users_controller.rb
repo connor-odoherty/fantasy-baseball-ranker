@@ -11,7 +11,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       log_in @user
-      flash[:success] = "Welcome to Duel Rank"
+      flash[:success] = 'Welcome to Duel Rank'
       redirect_to root_url
     else
       render 'new'
@@ -25,4 +25,3 @@ class UsersController < ApplicationController
                                  :password_confirmation)
   end
 end
-

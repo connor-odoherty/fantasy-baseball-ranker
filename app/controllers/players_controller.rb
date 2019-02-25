@@ -6,11 +6,9 @@ class PlayersController < ApplicationController
 
   def index; end
 
-  def show
-  end
+  def show; end
 
-  def edit
-  end
+  def edit; end
 
   def update
     @player.assign_attributes(player_params)

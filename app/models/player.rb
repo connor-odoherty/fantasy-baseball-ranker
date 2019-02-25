@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: players
@@ -103,28 +104,28 @@ class Player < ApplicationRecord
 
   def position_to_s(position)
     case position
-      when :catcher          then 'C'
-      when :first_base       then '1B'
-      when :second_base      then '2B'
-      when :third_base       then '3B'
-      when :short_stop       then 'SS'
-      when :outfield         then 'OF'
-      when :starting_pitcher then 'SP'
-      when :relief_pitcher   then 'RP'
-      else 'ERROR: Undefined position'
+    when :catcher          then 'C'
+    when :first_base       then '1B'
+    when :second_base      then '2B'
+    when :third_base       then '3B'
+    when :short_stop       then 'SS'
+    when :outfield         then 'OF'
+    when :starting_pitcher then 'SP'
+    when :relief_pitcher   then 'RP'
+    else 'ERROR: Undefined position'
     end
   end
 
   def positions_to_display
-    [:catcher, :first_base, :second_base, :third_base, :short_stop, :outfield, :starting_pitcher, :relief_pitcher]
+    %i[catcher first_base second_base third_base short_stop outfield starting_pitcher relief_pitcher]
   end
 
   def self.selectable_postions
-    [:catcher, :first_base, :second_base, :third_base, :short_stop, :outfield, :starting_pitcher, :relief_pitcher]
+    %i[catcher first_base second_base third_base short_stop outfield starting_pitcher relief_pitcher]
   end
 
   def display_positions
-    position_list = positions_to_display.select {|pos| positions.include? pos }.map { |pos| position_to_s(pos) }
+    position_list = positions_to_display.select { |pos| positions.include? pos }.map { |pos| position_to_s(pos) }
     if position_list.length > 3
       'SUPER'
     elsif position_list.length == 3
@@ -141,12 +142,10 @@ class Player < ApplicationRecord
   def build_autocomplete_search_field
     fields = []
 
-    fields << self.full_name
-    fields << self.yahoo_name
-    fields << self.mlb_team&.long_name
+    fields << full_name
+    fields << yahoo_name
+    fields << mlb_team&.long_name
 
     self.autocomplete_search_field = fields.select(&:present?).join(' ')
   end
-
-
 end

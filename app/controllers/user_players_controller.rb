@@ -1,11 +1,10 @@
 class UserPlayersController < ApplicationController
   before_action :set_user_players, only: :index
-  before_action :set_user_player, except: [:index, :autocomplete]
+  before_action :set_user_player, except: %i[index autocomplete]
 
   def index; end
 
-  def show
-  end
+  def show; end
 
   def edit
     @user_player.user_player_articles.build if @user_player.user_player_articles.none?
@@ -27,7 +26,7 @@ class UserPlayersController < ApplicationController
   end
 
   def autocomplete_option_for_user_player(user_player)
-    return {
+    {
       id: user_player.id,
       label: user_player.player.display_name,
       value: user_player.player.display_name,
@@ -53,10 +52,9 @@ class UserPlayersController < ApplicationController
     return [] if term.blank?
 
     user_players = current_user.user_players.includes(:player)
-                       .where('players.autocomplete_search_field ILIKE ?', "%#{term}%")
-                       .order('players.full_name').limit(10)
+                               .where('players.autocomplete_search_field ILIKE ?', "%#{term}%")
+                               .order('players.full_name').limit(10)
 
-    return user_players
+    user_players
   end
 end
-
