@@ -1,5 +1,6 @@
 class UserPlayersController < ApplicationController
   before_action :set_user_players, only: :index
+  before_action :set_redirect_to
   before_action :set_user_player, except: %i[index autocomplete]
 
   def index; end
@@ -7,13 +8,13 @@ class UserPlayersController < ApplicationController
   def show; end
 
   def edit
-    @user_player.user_player_articles.build if @user_player.user_player_articles.none?
+    # @user_player.user_player_articles.build if @user_player.user_player_articles.none?
   end
 
   def update
     @user_player.assign_attributes(user_player_params)
     if @user_player.save
-      redirect_to user_player_path(@user_player)
+      redirect_to @redirect_to.present? ? @redirect_to : user_player_path(@user_player)
     else
       render 'edit'
     end
@@ -56,5 +57,11 @@ class UserPlayersController < ApplicationController
                                .order('players.full_name').limit(10)
 
     user_players
+  end
+
+  def set_redirect_to
+    pp params
+    @redirect_to = params[:redirect_to]
+    p 'REDIRECT TO', @redirect_to
   end
 end
