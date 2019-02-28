@@ -106,7 +106,6 @@ class UserRankingSetsController < ApplicationController
       user_player = current_user.user_players.find_by(player_id: pro_ranking_player.player_id)
       unless user_player.present?
         user_player = current_user.user_players.create!(player_id: pro_ranking_player.player_id)
-        user_player.save!
       end
 
       new_user_ranking_player = @new_user_ranking_set.user_ranking_players.create(
