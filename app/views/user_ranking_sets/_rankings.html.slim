@@ -46,7 +46,7 @@
                               thead
                                 tr
                                   th
-                                    ' System
+                                    '
                                   th
                                     ' G
                                   th
@@ -64,21 +64,21 @@
                               tbody
                                 - player.batting_projections.joins(:projection_system).order('projection_systems.order_index').each do |projection|
                                   tr
-                                    td
+                                    td.border-heavy
                                       = projection.projection_system.name
                                     td
                                       = projection.display_games
                                     td
                                       = projection.display_plate_appearances
-                                    td
+                                    td.highlight
                                       = projection.display_runs
-                                    td
+                                    td.highlight
                                       = projection.display_runs_batted_in
-                                    td
+                                    td.highlight
                                       = projection.display_home_runs
-                                    td
+                                    td.highlight
                                       = projection.display_stolen_bases
-                                    td
+                                    td.highlight
                                       = projection.display_batting_average
                       - if player.pitching_projections.any?
                         .row
@@ -87,12 +87,12 @@
                               thead
                                 tr
                                   th
-                                    ' System
+                                    '
                                   th
                                     ' GS
                                   th
                                     ' IP
-                                  th
+                                  th.border-light
                                     ' W
                                   th
                                     ' SV
@@ -113,18 +113,18 @@
                                       = projection.display_games_started
                                     td
                                       = projection.display_innings_pitched
-                                    td
+                                    td.highlight
                                       = projection.display_wins
-                                    td
+                                    td.highlight
                                       = projection.display_saves
-                                    td
+                                    td.highlight
                                       = projection.display_era
-                                    td
+                                    td.highlight
                                       = projection.display_whip
-                                    td
+                                    td.highlight
                                       = projection.display_k_per_nine
-                                    td
-                                      = projection.display_bb_per_nine
+                                    / td
+                                    /   = projection.display_bb_per_nine
                     .col-xs-1.text-right
                       - if readonly
                         = link_to raw("<i class='fa fa-pencil'></i>"), edit_user_player_path(user_player), class: 'btn btn-default'

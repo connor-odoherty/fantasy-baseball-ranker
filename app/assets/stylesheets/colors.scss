@@ -17,6 +17,7 @@ $primary: #182e4d;
 $primary-light: lighten($primary, $light);
 $primary-lightest: lighten($primary, $lightest);
 $primary-opaque: transparentize($primary, $transparent);
+$primary-lightest-opaque: transparentize($primary-lightest, $transparent-heavy);
 
 // Moment red
 $secondary: #ad384a;

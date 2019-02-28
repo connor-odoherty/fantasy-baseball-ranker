@@ -143,8 +143,9 @@ input.autocomplete-text-field {
 }
 
 table.table.stats-table {
-  table-layout:fixed !important;
+  //table-layout:fixed !important;
   font-size: 10px;
+  margin-bottom: 0px;
 
   th, td {
     padding: 3px;
@@ -159,5 +160,17 @@ table.table.stats-table {
 
     td {
       padding-top: 1px;
+    }
+
+    td.highlight {
+      background-color: $primary-lightest-opaque;
+    }
+
+    .border-heavy {
+      border-right: 2px solid $surface;
+    }
+
+    .border-light {
+      border-right: .55px solid $surface;
     }
   }
