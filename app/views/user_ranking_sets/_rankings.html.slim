@@ -80,6 +80,51 @@
                                     = projection.display_stolen_bases
                                   td
                                     = projection.display_batting_average
+                      - if player.pitching_projections.any?
+                        - projection = player.pitching_projections.first
+                        .row
+                          .col-xs-8
+                            table.table.stats-table
+                              thead
+                                tr
+                                  th
+                                    ' System
+                                  th
+                                    ' GS
+                                  th
+                                    ' IP
+                                  th
+                                    ' W
+                                  th
+                                    ' SV
+                                  th
+                                    ' ERA
+                                  th
+                                    ' WHIP
+                                  th
+                                    ' K/9
+                                  th
+                                    ' BB/9
+                              tbody
+                                tr
+                                  td
+                                    = projection.projection_system.name
+                                  td
+                                    = projection.display_games_started
+                                  td
+                                    = projection.display_innings_pitched
+                                  td
+                                    = projection.display_wins
+                                  td
+                                    = projection.display_saves
+                                  td
+                                    = projection.display_era
+                                  td
+                                    = projection.display_whip
+                                  td
+                                    = projection.display_k_per_nine
+                                  td
+                                    = projection.display_bb_per_nine
                     .col-xs-1.text-right
                       - if readonly
                         = link_to raw("<i class='fa fa-pencil'></i>"), edit_user_player_path(user_player), class: 'btn btn-default'

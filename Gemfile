@@ -286,3 +286,5 @@ gem 'bcrypt', '3.1.12'
 gem 'acts_as_list'
 
 gem 'font-awesome-rails'
+
+gem 'smarter_csv'

@@ -14,11 +14,11 @@ class ProRankingSetController < ApplicationController
   end
 
   def set_position_filer
-    if filter_params[:position].present? && filter_params[:position] != 'all'
-      @position_filter = filter_params[:position].to_sym
-    else
-      @position_filter = :all
-    end
+    @position_filter = if filter_params[:position].present? && filter_params[:position] != 'all'
+                         filter_params[:position].to_sym
+                       else
+                         :all
+                       end
   end
 
   def set_players

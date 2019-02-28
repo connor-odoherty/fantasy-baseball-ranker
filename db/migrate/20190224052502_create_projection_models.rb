@@ -3,6 +3,7 @@ class CreateProjectionModels < ActiveRecord::Migration[5.0]
     create_table :projection_systems do |t|
       t.string :name
       t.string :slug
+      t.integer :order_index, default: 999
 
       t.timestamps
     end

@@ -718,6 +718,7 @@ GEM
       actionpack (>= 3.1)
       railties (>= 3.1)
       slim (~> 3.0)
+    smarter_csv (1.2.6)
     source_finder (3.2.1)
     spring (1.6.4)
     sprockets (3.7.2)
@@ -905,6 +906,7 @@ DEPENDENCIES
   shrimp!
   slack-ruby-client
   slim-rails (~> 3.1.2)
+  smarter_csv
   spring (~> 1.6.0)
   sprockets (~> 3.7.2)
   stackprof (~> 0.2.10)

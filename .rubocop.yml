@@ -1,2 +1,11 @@
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+Metrics/LineLength:
+  Max: 150
+
+#Layout/AlignHash:
+#  EnforcedHashRocketStyle: table
+
+Layout/AlignHash:
+  Enabled: false

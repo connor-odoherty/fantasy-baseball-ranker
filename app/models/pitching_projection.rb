@@ -38,6 +38,44 @@
 #
 
 class PitchingProjection < ApplicationRecord
+  include ActionView::Helpers::NumberHelper
+
   belongs_to :player
   belongs_to :projection_system
+
+  def display_games
+    games.to_i.to_s
+  end
+
+  def display_games_started
+    games_started.to_i.to_s
+  end
+
+  def display_innings_pitched
+    innings_pitched.to_i.to_s
+  end
+
+  def display_wins
+    wins.to_i.to_s
+  end
+
+  def display_saves
+    saves.to_i.to_s
+  end
+
+  def display_era
+    earned_run_average.to_s
+  end
+
+  def display_whip
+    walks_and_hits_per_ip.to_s
+  end
+
+  def display_k_per_nine
+    number_with_precision(k_per_nine, precision: 2).to_s
+  end
+
+  def display_bb_per_nine
+    number_with_precision(bb_per_nine, precision: 2).to_s
+  end
 end
