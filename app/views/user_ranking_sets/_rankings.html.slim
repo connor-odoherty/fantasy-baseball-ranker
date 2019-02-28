@@ -85,7 +85,7 @@
                                     ' GS
                                   th
                                     ' IP
-                                  th.border-light
+                                  th
                                     ' W
                                   th
                                     ' SV
@@ -95,12 +95,12 @@
                                     ' WHIP
                                   th
                                     ' K/9
-                                  th
-                                    ' BB/9
+                                  / th
+                                  /   ' BB/9
                               tbody
                                 - player.pitching_projections.joins(:projection_system).order('projection_systems.order_index').each do |projection|
                                   tr
-                                    td
+                                    td.border-heavy
                                       = projection.projection_system.name
                                     td
                                       = projection.display_games_started
