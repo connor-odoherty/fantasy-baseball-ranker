@@ -1,6 +1,8 @@
 document.addEventListener("turbolinks:load", function () {
     $('.draggable-player-list').sortable({
         items: '.ranking-row',
+        containment: 'window',
+        cursorAt: { right: 100 },
         // revert: true,
         change: function(event, ui) {
             // updateOVRRankingValuesAfterReorder();
