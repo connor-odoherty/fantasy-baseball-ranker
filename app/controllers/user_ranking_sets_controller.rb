@@ -72,10 +72,10 @@ class UserRankingSetsController < ApplicationController
   private
 
   def set_position_filer
-    @position_filter = if filter_params[:position].present? && filter_params[:position] != 'all'
+    @position_filter = if filter_params[:position].present?
                          filter_params[:position].to_sym
                        else
-                         :all
+                         :catcher
                        end
   end
 
