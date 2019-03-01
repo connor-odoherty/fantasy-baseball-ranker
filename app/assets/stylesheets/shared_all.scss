@@ -151,26 +151,72 @@ table.table.stats-table {
     padding: 3px;
     width: 30px;
     text-align: center;
-    }
-
-    th {
-      padding-bottom: 1px;
-      border-bottom-width: 1px;
-    }
-
-    td {
-      padding-top: 1px;
-    }
-
-    td.highlight {
-      background-color: $primary-lightest-opaque;
-    }
-
-    .border-heavy {
-      border-right: 2px solid $surface;
-    }
-
-    .border-light {
-      border-right: .55px solid $surface;
-    }
   }
+
+  th {
+    padding-bottom: 1px;
+    border-bottom-width: 1px;
+  }
+
+  td {
+    padding-top: 1px;
+  }
+
+  td.highlight {
+    background-color: $primary-lightest-opaque;
+  }
+
+  .border-heavy {
+    border-right: 2px solid $surface;
+  }
+
+  .border-light {
+    border-right: .55px solid $surface;
+  }
+}
+
+.ranking-tag {
+  font-size: 10px;
+  width: 50px;
+  border-radius: 10px;
+  height: 20px;
+  color: #fff;
+  padding-top: 2px;
+  margin-bottom: 2px;
+  margin-top: 2px;
+  color: $white;
+
+ &.draft_target-tag {
+   background-color: #CA7DF9; //724CF9
+ }
+ &.value_pick-tag {
+   background-color: #7DBBC3;
+ }
+ &.sleeper_pick-tag {
+   background-color: #42CAFD; // 00ABE7
+ }
+ &.high_upside-tag {
+   background-color: #53DD6C; //05F140
+ }
+ &.avoid_player-tag {
+   background-color: #D3AB9E;
+ }
+ &.health_risk-tag {
+   background-color: #FF5A5F;
+ }
+ &.young_potential-tag {
+   background-color: #DAEDBD;
+ }
+ &.risky_pick-tag {
+   background-color: #DC493A;
+ }
+ &.safe_pick-tag {
+   background-color: #DC493A;
+ }
+ &.regression_candidate-tag {
+   background-color: #DC493A;
+ }
+ &.bounceback_candidate-tag {
+   background-color: #DC493A;
+ }
+}

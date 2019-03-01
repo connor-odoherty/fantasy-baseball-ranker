@@ -18,6 +18,28 @@
         = f.text_area :notes, class: 'form-control', disabled: readonly
     .form-group
       .col-xs-2.text-right.strong
+        ' Tags:
+      .col-xs-10
+        - selectable_tags = UserPlayer.selectable_tags
+        - (0..selectable_tags.length- 1).step(2) do |index|
+          .form-group
+            .col-sm-6
+              - tag = selectable_tags[index]
+              span.checkbox.checkbox-primary
+                = check_box_tag 'user_player[tags][]', tag, f.object.tags?(tag), id: "user_player_tags_#{tag.to_s}", class: "role_checkbox checkbox-fade", 'data-tag-name' => tag.to_s, disabled: readonly
+                label for="user_player_tags_#{tag.to_s}"
+                  .ranking-tag.text-center class="#{tag.to_s}-tag"
+                    = f.object.tag_to_s(tag)
+            .col-sm-6
+              - if index + 1 < selectable_tags.length
+                - tag = selectable_tags[index + 1]
+                span.checkbox.checkbox-primary
+                  = check_box_tag 'user_player[tags][]', tag, f.object.tags?(tag), id: "user_player_tags_#{tag.to_s}", class: "role_checkbox checkbox-fade", 'data-tag-name' => tag.to_s, disabled: readonly
+                  label for="user_player_tags_#{tag.to_s}"
+                    .ranking-tag.text-center class="#{tag.to_s}-tag"
+                      = f.object.tag_to_s(tag)
+    .form-group
+      .col-xs-2.text-right.strong
         ' Articles:
       .col-xs-10.text-left
         .row
