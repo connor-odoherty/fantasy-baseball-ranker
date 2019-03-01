@@ -15,7 +15,7 @@
       .col-xs-2.text-right.strong
         ' Notes:
       .col-xs-10.text-left
-        = f.text_area :notes, class: 'form-control', disabled: readonly
+        = f.text_area :notes, class: 'form-control', disabled: readonly, style: 'min-height: 160px'
     .form-group
       .col-xs-2.text-right.strong
         ' Tags:
@@ -45,7 +45,7 @@
         .row
           .col-xs-12
             = f.nested_fields_for :user_player_articles do |paf|
-              .row
+              .row style='margin-bottom: 20px'
                 .col-xs-12
                   .row
                     .col-xs-3
