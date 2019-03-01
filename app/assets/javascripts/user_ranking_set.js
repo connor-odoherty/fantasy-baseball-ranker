@@ -1,11 +1,11 @@
 document.addEventListener("turbolinks:load", function () {
     $('.draggable-player-list').sortable({
         items: '.ranking-row',
-        containment: 'window',
+        containment: 'document',
         cursorAt: { right: 100 },
         // revert: true,
         change: function(event, ui) {
-            // updateOVRRankingValuesAfterReorder();
+            updateOVRRankingValuesAfterReorder();
             $('.ranking-tab:visible').each(function (index, elem) {
                 $(elem).text((index + 1).toString());
             });
@@ -13,6 +13,16 @@ document.addEventListener("turbolinks:load", function () {
             $('.ui-sortable-placeholder').text(numBefore);
         },
         update: function(e, ui) {
+            updateOVRRankingValuesAfterReorder();
+            // $.ajax({
+            //     url: $(this).data("url"),
+            //     type: "PATCH",
+            //     data: $(this).sortable('serialize')
+            // });
+            // console.log($(this).sortable('serialize'));
+
+        },
+        stop: function(e, ui) {
             updateOVRRankingValuesAfterReorder();
             // $.ajax({
             //     url: $(this).data("url"),

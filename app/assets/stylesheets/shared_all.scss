@@ -9,6 +9,10 @@ body {
   background-color: $surface-light;
 }
 
+a {
+  text-decoration: none !important;
+}
+
 section {
   overflow: auto;
 }
@@ -219,4 +223,16 @@ table.table.stats-table {
  &.bounceback_candidate-tag {
    background-color: #DC493A;
  }
+}
+
+a[aria-expanded=true] .before-expand {
+  display: none;
+}
+
+a[aria-expanded=false] .after-expand {
+  display: none;
+}
+
+a:visited[role="button"] {
+  color: black !important;
 }

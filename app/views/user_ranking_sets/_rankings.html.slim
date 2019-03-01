@@ -31,6 +31,14 @@
                           = player.mlb_team.short_name
                         .col-xs-6.text-left
                           = "Age #{player.display_age}"
+                      - if user_player.notes.present? || user_player.user_player_articles.present?
+                        .row
+                          .col-xs-12.text-left style='padding-top: 15px'
+                            a.notes-toggle data-toggle="collapse" href="#collapase_user_player_#{user_player.id}" role="button" aria-expanded="false" aria-controls="collapase_user_player_#{user_player.id}"
+                              .before-expand
+                                | Notes +
+                              .after-expand
+                                | Notes -
                     .col-xs-6.player-fantasy-info
                       - if player.batting_projections.any?
                         .row
@@ -127,13 +135,40 @@
                         = link_to raw("<i class='fa fa-pencil'></i>"), edit_user_player_path(user_player, redirect_to: user_ranking_set_path(@user_ranking_set, position: @position_filter)), class: 'btn btn-default'
                       - else
                         i.fa.fa-sort style='padding-top: 10px'
-                  - if user_player.notes.present?
-                    .row
-                      .col-xs-12.text-left.player-notes
-                        / span.strong
-                        /   | Notes: &nbsp
-                        span
-                          = user_player.notes
+                  .collapse.notes-collapse id="collapase_user_player_#{user_player.id}"
+                    - if user_player.notes.present?
+                      .row
+                        .col-xs-12.text-left.player-notes style='padding-top: 10px'
+                          / span.strong
+                          /   | Notes: &nbsp
+                          span
+                            = user_player.notes
+                    - if user_player.user_player_articles.present?
+                      .row
+                        .col-xs-12.player-article-container.player-notes
+                          - user_player.user_player_articles.each do |article|
+                            .row.player-article style='margin-top: 10px'
+                              .col-xs-3.text-right
+                                - if article.publication.present?
+                                  span
+                                    = article.publication
+                                  span
+                                    ' &nbsp;
+                                span
+                                  ' 2/20
+                              .col-xs-9.text-left
+                                = link_to article.title, article.article_url, target: :_blank
+                                .article-notes
+                                  = article.notes
+
+
+
+
 
   .col-xs-2
     = render 'players/sidebar_filter', path_to_filter: path_to_filter
+
+javascript:
+  // $('.notes-collapse').bind('shown.bs.collapse', function () {
+  //     console.log('Do it')
+  // });

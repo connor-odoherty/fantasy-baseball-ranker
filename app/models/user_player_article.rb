@@ -30,4 +30,10 @@ class UserPlayerArticle < ApplicationRecord
   def self.acceptable_params
     %i[id user_player_id title publication article_url notes _destroy]
   end
+
+  def display_link_text
+    link_text = self.publication.present? ? "(#{self.publication}) " : ''
+    link_text += title
+    return link_text
+  end
 end
