@@ -3,6 +3,7 @@ document.addEventListener("turbolinks:load", function () {
         items: '.ranking-row',
         containment: 'document',
         cursorAt: { right: 100 },
+        handle: ".fa-sort",
         // revert: true,
         change: function(event, ui) {
             updateOVRRankingValuesAfterReorder();

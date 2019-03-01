@@ -21,7 +21,8 @@ class UserRankingSet < ApplicationRecord
   belongs_to :user
   has_many :user_ranking_players, lambda {
                                     includes(user_player:
-                                                    [player: [:mlb_team,
+                                                    [:user_player_articles,
+                                                     player: [:mlb_team,
                                                               batting_projections: [:projection_system],
                                                               pitching_projections: [:projection_system]]]).order(ovr_rank: :asc).limit(500)
                                   }, dependent: :destroy
