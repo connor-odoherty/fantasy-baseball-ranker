@@ -691,6 +691,7 @@ GEM
     scenic (1.4.1)
       activerecord (>= 4.0.0)
       railties (>= 4.0.0)
+    scout_apm (2.4.21)
     sdoc (0.4.2)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
@@ -902,6 +903,7 @@ DEPENDENCIES
   saml_idp (~> 0.7.2)
   sass-rails (~> 5.0.0)
   scenic (~> 1.4.1)
+  scout_apm
   sdoc (~> 0.4.0)
   shrimp!
   slack-ruby-client
