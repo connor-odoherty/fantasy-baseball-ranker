@@ -6,7 +6,7 @@ module StatisticsHelper
     games_started:                 { short_name: 'GS',    import_map: :gs,   display_type: :type, type: :pitching },
     wins:                          { short_name: 'W',     import_map: :w,    display_type: :type, type: :pitching },
     losses:                        { short_name: 'L',     import_map: :l,    display_type: :type, type: :pitching },
-    saves:                         { short_name: 'SV',    import_map: :sv,   display_type: :type, type: :pitching },
+    saves:                         { short_name: 'SV',    import_map: :sv,   display_type: :type, type: :pitching, optional: true },
     earned_run_average:            { short_name: 'ERA',   import_map: :era,  display_type: :type, type: :pitching },
     innings_pitched:               { short_name: 'IP',    import_map: :ip,   display_type: :type, type: :pitching },
     hits_allowed:                  { short_name: 'HA',    import_map: :h,    display_type: :type, type: :pitching },
