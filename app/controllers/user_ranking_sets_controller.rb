@@ -47,6 +47,7 @@ class UserRankingSetsController < ApplicationController
     end
 
     @user_ranking_set.assign_attributes(new_params)
+    @user_ranking_set.updated_at = DateTime.now
     if @user_ranking_set.save
       redirect_to user_ranking_set_path(@user_ranking_set, position: @position_filter)
     else

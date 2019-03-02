@@ -1,8 +1,13 @@
-h1 Home
-
+.row
+  .col-xs-6
+    h1.text-left
+      = "Home"
+  .col-xs-6
+    h4.text-right
+      = "Signed in as: #{current_user.name}"
 
 .container-fluid
-  h2 Your rankings
+  h3.text-left.danger Your rankings
   - @user_ranking_sets&.each_with_index do |user_ranking_set, index|
     .row.player-card
       .col-xs-1.text-center.ranking-tab
@@ -20,8 +25,8 @@ h1 Home
         = button_to user_ranking_set, method: :get, class: 'btn btn-primary btn-full-width' do
           ' View
   .row.player-card
-    .col-xs-11
-    .col-xs-1
+    .col-xs-10
+    .col-xs-2
       = button_to new_user_ranking_set_path, method: :get, class: 'btn btn-primary btn-full-width' do
         ' Create
 
