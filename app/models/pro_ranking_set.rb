@@ -18,7 +18,7 @@
 #
 
 class ProRankingSet < ApplicationRecord
-  has_many :pro_ranking_players, -> { order(ovr_rank: :asc) }
+  has_many :pro_ranking_players
 
   validates :publication_name, presence: true
   validates :ranking_name, presence: true

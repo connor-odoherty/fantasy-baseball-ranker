@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: pro_ranking_players
@@ -17,11 +16,12 @@
 #
 #  index_pro_ranking_players_on_player_id           (player_id)
 #  index_pro_ranking_players_on_pro_ranking_set_id  (pro_ranking_set_id)
+#  index_unique_on_player_and_pro_ranking_set       (player_id,pro_ranking_set_id) UNIQUE
 #
 # Foreign Keys
 #
 #  fk_rails_...  (player_id => players.id)
-#  fk_rails_...  (pro_ranking_set_id => pro_ranking_sets.id)
+#  fk_rails_...  (pro_ranking_set_id => pro_ranking_sets.id) ON DELETE => cascade
 #
 
 class ProRankingPlayer < ApplicationRecord

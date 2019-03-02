@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: players
@@ -55,6 +54,7 @@
 # Indexes
 #
 #  index_players_on_current_team_id  (current_team_id)
+#  index_players_on_fg_id            (fg_id) UNIQUE
 #  index_players_on_mlb_team_id      (mlb_team_id)
 #
 # Foreign Keys

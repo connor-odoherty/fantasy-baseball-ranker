@@ -12,8 +12,9 @@
 #
 # Indexes
 #
-#  index_user_players_on_player_id  (player_id)
-#  index_user_players_on_user_id    (user_id)
+#  index_user_players_on_player_id              (player_id)
+#  index_user_players_on_player_id_and_user_id  (player_id,user_id) UNIQUE
+#  index_user_players_on_user_id                (user_id)
 #
 # Foreign Keys
 #

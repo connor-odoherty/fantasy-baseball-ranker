@@ -11,6 +11,7 @@
 #
 # Indexes
 #
+#  index_unique_on_user_player_and_user_ranking_set   (user_player_id,user_ranking_set_id) UNIQUE
 #  index_user_ranking_players_on_elo_score            (elo_score)
 #  index_user_ranking_players_on_ovr_rank             (ovr_rank)
 #  index_user_ranking_players_on_user_player_id       (user_player_id)

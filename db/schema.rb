@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190301035031) do
+ActiveRecord::Schema.define(version: 20190302013453) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -119,6 +119,7 @@ ActiveRecord::Schema.define(version: 20190301035031) do
     t.datetime "updated_at",                null: false
     t.string   "autocomplete_search_field"
     t.index ["current_team_id"], name: "index_players_on_current_team_id", using: :btree
+    t.index ["fg_id"], name: "index_players_on_fg_id", unique: true, using: :btree
     t.index ["mlb_team_id"], name: "index_players_on_mlb_team_id", using: :btree
   end
 
@@ -130,6 +131,7 @@ ActiveRecord::Schema.define(version: 20190301035031) do
     t.float   "adp"
     t.integer "min_pick"
     t.integer "max_pick"
+    t.index ["player_id", "pro_ranking_set_id"], name: "index_unique_on_player_and_pro_ranking_set", unique: true, using: :btree
     t.index ["player_id"], name: "index_pro_ranking_players_on_player_id", using: :btree
     t.index ["pro_ranking_set_id"], name: "index_pro_ranking_players_on_pro_ranking_set_id", using: :btree
   end
@@ -176,6 +178,7 @@ ActiveRecord::Schema.define(version: 20190301035031) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "tags"
+    t.index ["player_id", "user_id"], name: "index_user_players_on_player_id_and_user_id", unique: true, using: :btree
     t.index ["player_id"], name: "index_user_players_on_player_id", using: :btree
     t.index ["user_id"], name: "index_user_players_on_user_id", using: :btree
   end
@@ -188,6 +191,7 @@ ActiveRecord::Schema.define(version: 20190301035031) do
     t.integer "position"
     t.index ["elo_score"], name: "index_user_ranking_players_on_elo_score", using: :btree
     t.index ["ovr_rank"], name: "index_user_ranking_players_on_ovr_rank", using: :btree
+    t.index ["user_player_id", "user_ranking_set_id"], name: "index_unique_on_user_player_and_user_ranking_set", unique: true, using: :btree
     t.index ["user_player_id"], name: "index_user_ranking_players_on_user_player_id", using: :btree
     t.index ["user_ranking_set_id"], name: "index_user_ranking_players_on_user_ranking_set_id", using: :btree
   end
