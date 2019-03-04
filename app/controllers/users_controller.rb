@@ -12,6 +12,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      Player.all.find_each { |player| @user.user_players.create!(player: player) }
       log_in @user
       flash[:success] = 'Welcome to Duel Rank'
       redirect_to root_url
