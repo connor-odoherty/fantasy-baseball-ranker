@@ -6,7 +6,11 @@
 /* DB SAYS DON'T ADD MORE COLORS. SIMPLICITY IS BEAUTY. */
 body {
   padding-top: 60px;
-  background-color: $surface-light;
+  background-color: $surface-light !important;
+}
+
+.container, .container-fluid {
+  //background-color: $surfacelight;
 }
 
 a {

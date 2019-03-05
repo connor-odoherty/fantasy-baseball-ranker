@@ -1,0 +1,138 @@
+.container-fluid
+  .col-xs-10
+    .row.player-list
+      .col-xs-12 class="#{'draggable-player-list' if !readonly}"
+        table.table.rankings-table
+          thead
+            tr
+              th.ranking-stat
+                ' Rank
+              th.name
+                ' Name
+              th width='4%'
+                ' Team
+              th.stat
+                ' Age
+              th.stat width='6%'
+                ' Pos
+              th.projection-name
+                ' System
+              th.stat.context-stat
+                .batting-header
+                  ' G
+                .pitching-header
+                  ' GS
+              th.stat.context-stat
+                .batting-header
+                  ' PA
+                .pitching-header
+                  ' IP
+              th.stat.fantasy-stat
+                .batting-header
+                  ' R
+                .pitching-header
+                  ' W
+              th.stat.fantasy-stat
+                .batting-header
+                  ' RBI
+                .pitching-header
+                  ' SV
+              th.stat.fantasy-stat
+                .batting-header
+                  ' HR
+                .pitching-header style='font-size: 6px'
+                  ' ERA
+              th.stat.fantasy-stat
+                .batting-header
+                  ' SB
+                .pitching-header style='font-size: 6px'
+                  ' WHIP
+              th.stat.fantasy-stat
+                .batting-header
+                  ' AVG
+                .pitching-header
+                  ' K/9
+              th
+                '
+              th.action-col
+                ' EXP
+              th.action-col
+                ' FG
+              th.action-col
+                ' Util
+          tbody class="#{'draggable-player-list' if !readonly}"
+            = f.fields_for :user_ranking_players, @user_ranking_players do |user_ranking_player_f|
+              - user_ranking_player = user_ranking_player_f.object
+              - user_player = user_ranking_player.user_player
+              - player = user_player.player
+              - batting_projection = player.batting_projections.any? ? player.batting_projections.joins(:projection_system).order('projection_systems.order_index').first : nil
+              - pitching_projection = player.pitching_projections.any? ? player.pitching_projections.joins(:projection_system).order('projection_systems.order_index').first : nil
+              tr.ranking-row
+                = user_ranking_player_f.hidden_field :ovr_rank
+                = user_ranking_player_f.hidden_field :id
+                td.ranking-stat
+                  = user_ranking_player_f.index + 1
+                td
+                  = player.display_name
+                td
+                  = player.mlb_team.short_name
+                td.stat
+                  = player.display_age
+                td.stat
+                  = player.display_positions
+                - if batting_projection.present?
+                  - projection = batting_projection
+                  td.projection-name
+                    = projection.projection_system.name
+                  td.stat.context-stat
+                    = projection.display_games
+                  td.stat.context-stat
+                    = projection.display_plate_appearances
+                  td.stat.fantasy-stat
+                    = projection.display_runs
+                  td.stat.fantasy-stat
+                    = projection.display_runs_batted_in
+                  td.stat.fantasy-stat
+                    = projection.display_home_runs
+                  td.stat.fantasy-stat
+                    = projection.display_stolen_bases
+                  td.stat.fantasy-stat
+                    = projection.display_batting_average
+                - elsif pitching_projection.present?
+                  - projection = pitching_projection
+                  td.projection-name
+                    = projection.projection_system.name
+                  td.stat.context-stat
+                    = projection.display_games_started
+                  td.stat.context-stat
+                    = projection.display_innings_pitched
+                  td.stat.fantasy-stat
+                    = projection.display_wins
+                  td.stat.fantasy-stat
+                    = projection.display_saves
+                  td.stat.fantasy-stat
+                    = projection.display_era
+                  td.stat.fantasy-stat
+                    = projection.display_whip
+                  td.stat.fantasy-stat
+                    = projection.display_k_per_nine
+                td.text-left
+                  '
+                td
+                  - if user_player.notes.present? || user_player.user_player_articles.present?
+                    a.notes-toggle data-toggle="collapse" href="#collapase_user_player_#{user_player.id}" role="button" aria-expanded="false" aria-controls="collapase_user_player_#{user_player.id}"
+                      .before-expand
+                        | +
+                      .after-expand
+                        | -
+                td.text-left
+                  = link_to raw("&nbsp;#{fa_icon 'line-chart'}"), player.fg_link, target: :_blank, class: 'fan-graphs-link'
+                td.action-col
+                  - if readonly
+                    = link_to raw("<i class='fa fa-pencil'></i>"), edit_user_player_path(user_player, redirect_to: user_ranking_set_path(@user_ranking_set, position: @position_filter)), class: ''
+                  - else
+                    i.fa.fa-sort
+
+  .col-xs-2
+    = render 'players/sidebar_filter', path_to_filter: path_to_filter
+

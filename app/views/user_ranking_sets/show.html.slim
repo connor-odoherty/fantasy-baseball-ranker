@@ -8,4 +8,4 @@
     .col-xs-2.text-right
       = button_to @user_ranking_set, method: :delete, class: 'btn btn-danger' do
         ' Delete
-  = render 'rankings', ranking_set: @user_ranking_set, user_ranking_players: @user_ranking_players, path_to_filter: user_ranking_set_path(@user_ranking_set), f: f, readonly: true
+  = render 'table_rankings', ranking_set: @user_ranking_set, user_ranking_players: @user_ranking_players, path_to_filter: user_ranking_set_path(@user_ranking_set), f: f, readonly: true

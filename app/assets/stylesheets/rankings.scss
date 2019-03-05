@@ -1,0 +1,122 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "colors";
+
+table.table.rankings-table {
+  font-size: 12px;
+  margin-bottom: 0px;
+
+  border-collapse:separate;
+  border-spacing:0 7px;
+
+  th, td {
+    padding: 7px 3px;
+    text-align: left;
+  }
+
+  .context-stat {
+    width: 4%;
+  }
+
+  .ranking-stat {
+    width: 3%;
+    text-align: center;
+  }
+
+  th.stat, td.stat, th.action-col {
+    width: 3%
+  }
+
+  .stat, .projection-name {
+    text-align: right;
+  }
+
+  .action-col {
+    text-align: center;
+  }
+
+  th.name {
+    width: 15%
+  }
+
+  tbody {
+
+
+    tr {
+      margin-top: 4px;
+      border-radius: 2px;
+    }
+
+    td {
+      border-top: 0px;
+    }
+  }
+
+  td {
+    background-color: $white;
+  }
+
+  td.fantasy-stat {
+    background-color: $primary-lightest;
+  }
+
+  //th, td {
+  //  padding: 3px;
+  //  //width: 30px;
+  //  //text-align: center;
+  //}
+  //
+  //th {
+  //  padding-bottom: 1px;
+  //  border-bottom-width: 1px;
+  //}
+  //
+  //td {
+  //  padding-top: 1px;
+  //}
+  //
+  //td.highlight {
+  //  background-color: $primary-lightest-opaque;
+  //}
+  //
+  //.border-heavy {
+  //  border-right: 2px solid $surface;
+  //}
+  //
+  //.border-light {
+  //  border-right: .55px solid $surface;
+  //}
+}
+
+//table.table.stats-table {
+//  //table-layout:fixed !important;
+//  font-size: 10px;
+//  margin-bottom: 0px;
+//
+//  th, td {
+//    padding: 3px;
+//    width: 30px;
+//    text-align: center;
+//  }
+//
+//  th {
+//    padding-bottom: 1px;
+//    border-bottom-width: 1px;
+//  }
+//
+//  td {
+//    padding-top: 1px;
+//  }
+//
+//  td.highlight {
+//    background-color: $primary-lightest-opaque;
+//  }
+//
+//  .border-heavy {
+//    border-right: 2px solid $surface;
+//  }
+//
+//  .border-light {
+//    border-right: .55px solid $surface;
+//  }
+//}

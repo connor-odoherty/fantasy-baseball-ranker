@@ -3,7 +3,8 @@ $transparent: .5;
 $transparent-light: .3;
 
 $light: 20%;
-$lightest: 50%;
+$lighter: 50%;
+$lightest: 78%;
 
 // White
 $white: #fff;
@@ -15,6 +16,7 @@ $black: #000;
 // Moment blue
 $primary: #182e4d;
 $primary-light: lighten($primary, $light);
+$primary-lighter: lighten($primary, $lighter);
 $primary-lightest: lighten($primary, $lightest);
 $primary-opaque: transparentize($primary, $transparent);
 $primary-lightest-opaque: transparentize($primary-lightest, $transparent-heavy);
@@ -31,7 +33,8 @@ $surface: #e6e7e8;
 $surface-extra-dark: darken($surface, 100%);
 $surface-dark: darken($surface, 50%);
 $surface-almost-dark: darken($surface, 20%);
-$surface-light: lighten($surface, 7%);
+$surface-light: lighten($surface, 3%);
+$surface-lighter: lighten($surface, 7%);
 $surface-lightest: lighten($surface, $lightest);
 $surface-opaque: transparentize($surface, $transparent);
 $on-surface: $primary;
