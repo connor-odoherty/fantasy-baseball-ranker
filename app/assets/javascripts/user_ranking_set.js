@@ -1,7 +1,7 @@
 document.addEventListener("turbolinks:load", function () {
     $('.draggable-player-list').sortable({
         items: '.ranking-row',
-        containment: 'document',
+        // containment: 'document',
         cursorAt: { right: 100 },
         handle: ".fa-sort",
         // revert: true,
