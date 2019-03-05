@@ -19,37 +19,65 @@
     cursor: inherit;
   }
 
-  .player-card {
-    border-left: 5px solid $sorting;
-    box-shadow: 3px 3px 4px rgba(116, 116, 116, 0.3);
-    cursor: grabbing;
-    border-radius: 0px !important;
-  }
+  //.player-card {
+  //  border-left: 5px solid $sorting;
+  //  box-shadow: 3px 3px 4px rgba(116, 116, 116, 0.3);
+  //  cursor: grabbing;
+  //  border-radius: 0px !important;
+  //}
+  //
+  //.ranking-tab {
+  //  display: none;
+  //  color: $sorting;
+  //}
+}
+//
+//.ui-sortable-placeholder {
+//  border-radius: 0px !important;
+//  border-top: 2px solid $sorting;
+//  border-bottom: 2px solid $sorting;
+//  visibility: visible !important;
+//  background-color: $surface-light;
+//  font-size: 36px;
+//  color: $sorting;
+//  padding-left: 15px;
+//}
 
-  .ranking-tab {
-    display: none;
-    color: $sorting;
-  }
+.ui-sortable-placeholder td {
+  //display: none;
+  //display: table;
+  //width: 100%;
 }
 
-.ui-sortable-placeholder {
-  border-radius: 0px !important;
-  border-top: 2px solid $sorting;
-  border-bottom: 2px solid $sorting;
-  visibility: visible !important;
-  background-color: $surface-light;
-  font-size: 36px;
-  color: $sorting;
-  padding-left: 15px;
+.ui-sortable-placeholder tr {
+  //width: 100%;
+  //border: 10px solid black;
+  //height: 0px;
+  //background-color: white;
+}
+//
+.ui-sortable-helper {
+  //width: 100%;
+  border-spacing: 0 0px;
+  border-left: 2px solid $sorting;
+  display: table;
 }
 
-.ranking-row {
-  .ranking-tab {
-    font-size: 30px;
-    padding-top: 10px;
-  }
-}
+//.ranking-row {
+//  .ranking-tab {
+//    font-size: 30px;
+//    padding-top: 10px;
+//  }
+//}
 
+//.shrink td {
+//  display: none;
+//}
+//
+//.shrink {
+//  width: 100%;
+//  border-left: 2px solid black;
+//}
 
 
 .player-info-container {

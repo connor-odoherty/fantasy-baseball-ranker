@@ -14,6 +14,11 @@ table.table.rankings-table {
     text-align: left;
   }
 
+  th {
+    background-color: $secondary;
+    color: $white;
+    font-weight: 500;
+  }
   .context-stat {
     width: 4%;
   }
@@ -23,8 +28,12 @@ table.table.rankings-table {
     text-align: center;
   }
 
-  th.stat, td.stat, th.action-col {
+  .fantasy-stat, .ranking-stat {
     width: 3%
+  }
+
+  .projection-name {
+    width: 33%;
   }
 
   .stat, .projection-name {
@@ -33,9 +42,10 @@ table.table.rankings-table {
 
   .action-col {
     text-align: center;
+    width: 4%;
   }
 
-  th.name {
+  .name {
     width: 15%
   }
 
@@ -45,6 +55,12 @@ table.table.rankings-table {
     tr {
       margin-top: 4px;
       border-radius: 2px;
+
+      &:hover {
+        td {
+          background-color: $surface-lighter;
+        }
+      }
     }
 
     td {
@@ -56,36 +72,19 @@ table.table.rankings-table {
     background-color: $white;
   }
 
+
   td.fantasy-stat {
     background-color: $primary-lightest;
   }
 
-  //th, td {
-  //  padding: 3px;
-  //  //width: 30px;
-  //  //text-align: center;
-  //}
-  //
-  //th {
-  //  padding-bottom: 1px;
-  //  border-bottom-width: 1px;
-  //}
-  //
-  //td {
-  //  padding-top: 1px;
-  //}
-  //
-  //td.highlight {
-  //  background-color: $primary-lightest-opaque;
-  //}
-  //
-  //.border-heavy {
-  //  border-right: 2px solid $surface;
-  //}
-  //
-  //.border-light {
-  //  border-right: .55px solid $surface;
-  //}
+}
+
+.expanded-notes {
+  background: $white;
+  margin-top: -6px;
+
+  border-spacing: 0 0px;
+
 }
 
 //table.table.stats-table {
