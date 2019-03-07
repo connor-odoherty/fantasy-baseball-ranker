@@ -9,7 +9,7 @@ module StatisticsHelper
     losses:                        { short_name: 'L',            import_map: 'L',        display_type: :count, type: :pitching },
     saves:                         { short_name: 'SV',           import_map: 'SV',       display_type: :count, type: :pitching, optional: true },
     earned_run_average:            { short_name: 'ERA',          import_map: 'ERA',      display_type: :ratio, type: :pitching },
-    innings_pitched:               { short_name: 'IP',           import_map: 'IP',       display_type: :ratio, type: :pitching },
+    innings_pitched:               { short_name: 'IP',           import_map: 'IP',       display_type: :short_ratio, type: :pitching },
     hits_allowed:                  { short_name: 'HA',           import_map: 'H',        display_type: :count, type: :pitching },
     home_runs_allowed:             { short_name: 'HRA',          import_map: 'HR',       display_type: :count, type: :pitching },
     earned_runs_allowed:           { short_name: 'ERa',          import_map: 'ER',       display_type: :count, type: :pitching },
@@ -21,7 +21,7 @@ module StatisticsHelper
     hr_per_nine:                   { short_name: 'HR/9',         import_map: 'HR/9',     display_type: :ratio, type: :pitching },
     k_rate:                        { short_name: 'K%',           import_map: 'K%',       display_type: :percentage, type: :both },
     bb_rate:                       { short_name: 'BB%',          import_map: 'BB%',      display_type: :percentage, type: :both },
-    k_minus_bb:                    { short_name: 'K-BB%',        import_map: 'K_BB%',    display_type: :percentage, type: :pitching },
+    k_minus_bb:                    { short_name: 'K-BB',         import_map: 'K_BB%',    display_type: :percentage, type: :pitching },
     sw_str_rate:                   { short_name: 'SwStr%',       import_map: 'SwStr%',   display_type: :percentage, type: :both },
     babip:                         { short_name: 'BABIP',        import_map: 'BABIP',    display_type: :average, type: :both },
     fielding_independent_pitching: { short_name: 'FIP',          import_map: 'FIP',      display_type: :ratio, type: :pitching },
@@ -80,5 +80,63 @@ module StatisticsHelper
 
   def self.batting_fields_basic
     [:games, :plate_appearances, :runs, :runs_batted_in, :home_runs, :batting_average]
+  end
+
+  def self.batting_basic
+    [:games, :plate_appearances, :runs, :runs_batted_in, :home_runs, :batting_average]
+  end
+
+  def self.batting_advanced
+    [:babip, :on_base_percentage, :weighted_on_base, :slugging_percentage, :on_base_plus_slugging, :iso]
+  end
+
+  def self.batting_plate_discipline
+    [:k_rate, :bb_rate, :sw_str_rate]
+  end
+
+  def self.batting_contact_peripherals
+    [:soft_contact_rate, :medium_contact_rate, :hard_contact_rate]
+  end
+
+  def self.batting_batted_ball_peripherals
+    [:line_drive_rate, :ground_ball_rate, :fly_ball_rate, :hr_to_fly_ball_rate, :infield_fly_ball_rate]
+  end
+
+  def self.batting_directional_peripherals
+    [:pull_rate, :center_rate, :oppo_rate]
+  end
+
+  def self.batting_combined_overview
+    self.batting_basic + self.batting_advanced + self.batting_plate_discipline + self.batting_contact_peripherals + self.batting_batted_ball_peripherals
+  end
+
+  # PITCHING STAT LAYOUTS
+
+  def self.pitching_fields_basic
+    [:games_started, :innings_pitched, :wins, :saves, :earned_run_average, :walks_and_hits_per_ip, :k_per_nine]
+  end
+
+  def self.pitching_combined_overview
+    self.basic_pitching + self.expected_era_peripherals + self.pitching_plate_rates + self.pitching_control_peripherals + self.pitching_contact_peripherals
+  end
+
+  def self.basic_pitching
+    [:games_started, :innings_pitched, :wins, :saves, :earned_run_average, :walks_and_hits_per_ip]
+  end
+
+  def self.expected_era_peripherals
+    [:siera, :fielding_independent_pitching, :expected_fielding_independent_pitching, :left_on_base_rate, :babip]
+  end
+
+  def self.pitching_plate_rates
+    [:k_per_nine, :bb_per_nine, :hr_per_nine]
+  end
+
+  def self.pitching_control_peripherals
+    [:k_rate, :bb_rate, :k_minus_bb, :sw_str_rate]
+  end
+
+  def self.pitching_contact_peripherals
+    [:soft_contact_rate, :medium_contact_rate, :hard_contact_rate]
   end
 end

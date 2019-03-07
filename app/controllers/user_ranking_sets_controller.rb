@@ -91,12 +91,17 @@ class UserRankingSetsController < ApplicationController
   end
 
   def set_user_ranking_players
-    @user_ranking_players = @user_ranking_set.user_ranking_players.order(ovr_rank: :asc).to_a
-    if @position_filter != :all
-      @user_ranking_players = @user_ranking_players.select do |user_ranking_player|
-        user_ranking_player.user_player.player.positions?(@position_filter)
-      end
+    if @position_filter == :all
+      @user_ranking_players = @user_ranking_set.user_ranking_players.order(ovr_rank: :asc)
+    else
+      @user_ranking_players = @user_ranking_set.user_ranking_players.joins(user_player: :player).where('players.positions & ? > 0', Player.bitmask_for_positions(@position_filter))
     end
+    # if @position_filter != :all
+    #   @user_ranking_players = @user_ranking_players.select do |user_ranking_player|
+    #     p 'POSITION FILTER', @position_filter
+    #     user_ranking_player.user_player.player.has_any_positions?(@position_filter)
+    #   end
+    # end
   end
 
   def associate_default_rankings_with_new_ranking_set

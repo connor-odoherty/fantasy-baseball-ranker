@@ -26,7 +26,7 @@ class UserRankingSet < ApplicationRecord
                                                               :season_batting_lines,
                                                               :season_pitching_lines,
                                                               batting_projections: [:projection_system],
-                                                              pitching_projections: [:projection_system]]]).order(ovr_rank: :asc).limit(100)
+                                                              pitching_projections: [:projection_system]]]).order(ovr_rank: :asc).limit(500)
                                   }, dependent: :destroy
   belongs_to :user
 

@@ -9,7 +9,7 @@ module Extensions
     end
 
     def display_as_average
-      number_with_precision(self, precision: 3).to_s.sub!(/^0+/, '')
+      number_with_precision(self, precision: 3).to_s.sub(/^0+/, '')
     end
 
     def display_as_count
@@ -17,11 +17,11 @@ module Extensions
     end
 
     def display_as_ratio
-      number_with_precision(self, precision: 2).to_s.sub!(/^0+/, '')
+      number_with_precision(self, precision: 2).to_s.sub(/^0+/, '')
     end
 
     def display_as_short_ratio
-      number_with_precision(self, precision: 2).to_s.sub!(/^0+/, '')
+      number_with_precision(self, precision: 1).to_s.sub(/^0+/, '')
     end
 
     def display_as_percentage

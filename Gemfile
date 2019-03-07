@@ -263,7 +263,7 @@ gem 'pdf-reader', '~>2.0.0'
 # eAPIS gems
 
 # used to test bitmasking for Aircraft amenities, should be removed later after reverse engineering to use RoleModel
-gem 'bitmask_attributes'
+gem 'bitmask_attributes', git: 'https://github.com/connor-odoherty/bitmask_attributes.git'
 
 # graphing stuff
 gem 'c3-rails', '~> 0.4.11'
