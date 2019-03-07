@@ -2,12 +2,15 @@ class CreateHistoricalDataModel < ActiveRecord::Migration[5.0]
   def change
     create_table :data_seasons do |t|
       t.integer :year
+      t.string :name
       t.string :slug
+      t.integer :order_index, default: 1000
 
       t.timestamps
     end
 
-    add_index :data_seasons, :year, :unique
+    add_index :data_seasons, :year, unique: true
+    add_index :data_seasons, :order_index, unique: true
 
     create_table :season_batting_lines do |t|
       t.integer :player_id
@@ -48,9 +51,6 @@ class CreateHistoricalDataModel < ActiveRecord::Migration[5.0]
       t.integer :player_id
       t.integer :data_season_id
 
-      t.integer :player_id
-      t.integer :projection_system_id
-
       t.float :games
       t.float :games_started
       t.float :wins
@@ -72,16 +72,17 @@ class CreateHistoricalDataModel < ActiveRecord::Migration[5.0]
       t.timestamps
     end
 
-    add_foreign_key :season_batting_lines, :players, column: :player_id, index: { unique: true }
-    add_index :season_batting_lines, :player_id
+    add_foreign_key :season_pitching_lines, :players, column: :player_id, index: { unique: true }
+    add_index :season_pitching_lines, :player_id
 
-    add_foreign_key :season_batting_lines, :data_seasons, column: :data_season_id
-    add_index :season_batting_lines, :data_season_id
+    add_foreign_key :season_pitching_lines, :data_seasons, column: :data_season_id
+    add_index :season_pitching_lines, :data_season_id
 
-    add_index :season_batting_lines, %i[player_id data_season_id], unique: true, name: 'index_batting_line_on_player_and_season'
+    add_index :season_pitching_lines, %i[player_id data_season_id], unique: true, name: 'index_pitching_line_on_player_and_season'
 
 
-    add_index :projection_systems, :slug, :unique
+    add_index :projection_systems, :slug, unique: true
+    add_index :projection_systems, :order_index
 
   end
 end

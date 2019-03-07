@@ -68,9 +68,9 @@ table.table.rankings-table {
     }
   }
 
-  td {
-    background-color: $white;
-  }
+  //td {
+  //  background-color: $white;
+  //}
 
 
   td.fantasy-stat {
@@ -87,35 +87,41 @@ table.table.rankings-table {
 
 }
 
-//table.table.stats-table {
-//  //table-layout:fixed !important;
-//  font-size: 10px;
-//  margin-bottom: 0px;
-//
-//  th, td {
-//    padding: 3px;
-//    width: 30px;
-//    text-align: center;
-//  }
-//
-//  th {
-//    padding-bottom: 1px;
-//    border-bottom-width: 1px;
-//  }
-//
-//  td {
-//    padding-top: 1px;
-//  }
-//
-//  td.highlight {
-//    background-color: $primary-lightest-opaque;
-//  }
-//
-//  .border-heavy {
-//    border-right: 2px solid $surface;
-//  }
-//
-//  .border-light {
-//    border-right: .55px solid $surface;
-//  }
-//}
+.fa-sort {
+  cursor: grab;
+}
+
+.ui-sortable-helper {
+
+  .fa-sort {
+    cursor: inherit;
+  }
+
+  .player-card {
+    border-left: 5px solid $sorting;
+    box-shadow: 3px 3px 4px rgba(116, 116, 116, 0.3);
+    cursor: grabbing;
+    border-radius: 0px !important;
+  }
+
+  .ranking-tab {
+    display: none;
+    color: $sorting;
+  }
+}
+
+.ui-sortable-placeholder {
+  border-radius: 0px !important;
+  border-top: 2px solid $sorting;
+  border-bottom: 2px solid $sorting;
+  visibility: visible !important;
+  background-color: $surface-light;
+  font-size: 36px;
+  color: $sorting;
+  padding-left: 15px;
+}
+
+.ranking-tab {
+  font-size: 30px;
+  padding-top: 10px;
+}

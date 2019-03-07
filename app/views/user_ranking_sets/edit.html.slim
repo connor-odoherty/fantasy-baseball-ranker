@@ -10,4 +10,4 @@
     .col-xs-2.text-right
       = link_to 'Cancel', user_ranking_set_path(@user_ranking_set, position: @position_filter), class: 'btn btn-default'
 
-  = render 'table_rankings', ranking_set: @user_ranking_set, user_ranking_players: @user_ranking_players, path_to_filter: edit_user_ranking_set_path(@user_ranking_set), f: f, readonly: false
+  = render 'rankings', ranking_set: @user_ranking_set, user_ranking_players: @user_ranking_players, path_to_filter: edit_user_ranking_set_path(@user_ranking_set), f: f, readonly: false

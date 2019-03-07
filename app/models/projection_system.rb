@@ -9,6 +9,11 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
+# Indexes
+#
+#  index_projection_systems_on_order_index  (order_index)
+#  index_projection_systems_on_slug         (slug) UNIQUE
+#
 
 class ProjectionSystem < ApplicationRecord
   has_many :batting_projections

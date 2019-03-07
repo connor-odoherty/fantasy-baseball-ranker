@@ -1,4 +1,41 @@
 // Place all the styles related to the Players controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import "colors";
 
+.fan-graphs-link {
+  //font-size: 14px;
+  color: #51a730;
+}
+
+.player-info-container {
+  background: white;
+
+  .title {
+    font-size: 36px;
+  }
+}
+
+.player-card {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+  background: white;
+  border-radius: 4px;
+
+
+  .player-info {
+
+    .card-title {
+      font-size: 18px;
+    }
+
+    .player-essential-info, .player-fantasy-info {
+
+    }
+  }
+
+  .player-notes {
+    font-size: 12px;
+  }
+}
