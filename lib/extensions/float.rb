@@ -20,6 +20,10 @@ module Extensions
       number_with_precision(self, precision: 2).to_s.sub!(/^0+/, '')
     end
 
+    def display_as_short_ratio
+      number_with_precision(self, precision: 2).to_s.sub!(/^0+/, '')
+    end
+
     def display_as_percentage
       number_with_precision(self, precision: 1).to_s.sub(/^0+/, '') + '%'
     end

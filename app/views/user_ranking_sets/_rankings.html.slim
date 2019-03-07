@@ -43,6 +43,8 @@
                       .row
                         .col-xs-8
                           - if player.batting_projections.any?
+                            - # [:games, :plate_appearances, :runs, :runs_batted_in, :home_runs, :batting_average]
+                            - batting_fields = StatisticsHelper.batting_fields_basic
                             .row
                               .col-xs-12
                                 table.table.stats-table
@@ -50,39 +52,17 @@
                                     tr
                                       th
                                         '
-                                      th
-                                        ' G
-                                      th
-                                        ' PA
-                                      th
-                                        ' R
-                                      th
-                                        ' RBI
-                                      th
-                                        ' HR
-                                      th
-                                        ' SB
-                                      th
-                                        ' AVG
+                                      - batting_fields.each do |batting_field|
+                                        th
+                                          = StatisticsHelper.display_short_name(batting_field)
                                   tbody
                                     - player.batting_projections.joins(:projection_system).order('projection_systems.order_index').each do |projection|
                                       tr
                                         td.border-heavy
                                           = projection.projection_system.name
-                                        td
-                                          = projection.display_games
-                                        td
-                                          = projection.display_plate_appearances
-                                        td.highlight
-                                          = projection.display_runs
-                                        td.highlight
-                                          = projection.display_runs_batted_in
-                                        td.highlight
-                                          = projection.display_home_runs
-                                        td.highlight
-                                          = projection.display_stolen_bases
-                                        td.highlight
-                                          = projection.display_batting_average
+                                        - batting_fields.each do |batting_field|
+                                          td
+                                            = projection.display(batting_field)
                           - if player.pitching_projections.any?
                             .row
                               .col-xs-12
@@ -130,6 +110,7 @@
                                         /   = projection.display_bb_per_nine
                         .col-xs-4
                           - if player.season_batting_lines.any?
+                            - batting_fields = StatisticsHelper.batting_fields_basic
                             .row
                               .col-xs-12
                                 table.table.stats-table
@@ -137,23 +118,17 @@
                                     tr
                                       th
                                         '
-                                      th
-                                        ' HR
-                                      th
-                                        ' AVG
-                                      th
-                                        ' Hard%
+                                      - batting_fields.each do |batting_field|
+                                        th
+                                          = StatisticsHelper.display_short_name(batting_field)
                                   tbody
-                                    - player.season_batting_lines.order(year: :asc).each do |season_batting_line|
+                                    - player.season_batting_lines.each do |season_batting_line|
                                       tr
                                         td.border-heavy
                                           = season_batting_line.year
-                                        td.highlight
-                                          = season_batting_line.home_runs.display_as(:count)
-                                        td.highlight
-                                          = season_batting_line.batting_average.display_as(:average)
-                                        td.highlight
-                                          = season_batting_line.hard_contact_rate.display_as(:percentage)
+                                        - batting_fields.each do |batting_field|
+                                          td
+                                            = season_batting_line.display(batting_field)
                     .col-xs-1 style='padding: 0px;'
                       - user_player.active_tags.each do |tag|
                         .ranking-tag.text-center class="#{tag.to_s}-tag"

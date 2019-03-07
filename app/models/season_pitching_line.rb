@@ -48,6 +48,7 @@
 
 class SeasonPitchingLine < ApplicationRecord
   include BuildPlayerStats
+  include HasPlayerStats
 
   belongs_to :player
   belongs_to :data_season

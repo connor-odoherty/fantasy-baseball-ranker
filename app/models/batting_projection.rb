@@ -41,6 +41,7 @@
 
 class BattingProjection < ApplicationRecord
   include ActionView::Helpers::NumberHelper
+  include HasPlayerStats
 
   belongs_to :player
   belongs_to :projection_system
