@@ -908,7 +908,7 @@ DEPENDENCIES
   shrimp!
   slack-ruby-client
   slim-rails (~> 3.1.2)
-  smarter_csv
+  smarter_csv (~> 1.2.0)
   spring (~> 1.6.0)
   sprockets (~> 3.7.2)
   stackprof (~> 0.2.10)

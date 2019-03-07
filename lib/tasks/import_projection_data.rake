@@ -34,11 +34,14 @@ def import_projections_from_system(projection_system_attributes)
 
   player_projections_count = 0
 
-  SmarterCSV.process(projection_system_attributes[:batting_file]).each do |row|
+  options = {
+      header_transformations: [ :none, :keys_as_strings ]
+  }
+  SmarterCSV.process(projection_system_attributes[:batting_file], { downcase_header: false, strings_as_keys: true }).each do |row|
     player_projections_count += 1 if update_batting_projection_with_row(projection_system, row)
   end
 
-  SmarterCSV.process(projection_system_attributes[:pitching_file]).each do |row|
+  SmarterCSV.process(projection_system_attributes[:pitching_file], { downcase_header: false, strings_as_keys: true }).each do |row|
     player_projections_count += 1 if update_pitching_projection_with_row(projection_system, row)
   end
 
