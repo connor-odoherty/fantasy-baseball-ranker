@@ -23,8 +23,10 @@ class UserRankingSet < ApplicationRecord
                                     includes(user_player:
                                                     [:user_player_articles,
                                                      player: [:mlb_team,
+                                                              :season_batting_lines,
+                                                              :season_pitching_lines,
                                                               batting_projections: [:projection_system],
-                                                              pitching_projections: [:projection_system]]]).order(ovr_rank: :asc).limit(500)
+                                                              pitching_projections: [:projection_system]]]).order(ovr_rank: :asc).limit(100)
                                   }, dependent: :destroy
   belongs_to :user
 

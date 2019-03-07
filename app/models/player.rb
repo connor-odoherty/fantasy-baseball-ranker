@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: players
@@ -69,6 +70,8 @@ class Player < ApplicationRecord
   has_many :user_players
   has_many :batting_projections
   has_many :pitching_projections
+  has_many :season_batting_lines
+  has_many :season_pitching_lines
 
   before_save :build_autocomplete_search_field
 

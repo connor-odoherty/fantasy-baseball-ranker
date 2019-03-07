@@ -32,8 +32,8 @@ class UserPlayerArticle < ApplicationRecord
   end
 
   def display_link_text
-    link_text = self.publication.present? ? "(#{self.publication}) " : ''
+    link_text = publication.present? ? "(#{publication}) " : ''
     link_text += title
-    return link_text
+    link_text
   end
 end

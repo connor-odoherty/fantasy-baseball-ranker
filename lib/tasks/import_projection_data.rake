@@ -35,13 +35,13 @@ def import_projections_from_system(projection_system_attributes)
   player_projections_count = 0
 
   options = {
-      header_transformations: [ :none, :keys_as_strings ]
+    header_transformations: %i[none keys_as_strings]
   }
-  SmarterCSV.process(projection_system_attributes[:batting_file], { downcase_header: false, strings_as_keys: true }).each do |row|
+  SmarterCSV.process(projection_system_attributes[:batting_file], downcase_header: false, strings_as_keys: true).each do |row|
     player_projections_count += 1 if update_batting_projection_with_row(projection_system, row)
   end
 
-  SmarterCSV.process(projection_system_attributes[:pitching_file], { downcase_header: false, strings_as_keys: true }).each do |row|
+  SmarterCSV.process(projection_system_attributes[:pitching_file], downcase_header: false, strings_as_keys: true).each do |row|
     player_projections_count += 1 if update_pitching_projection_with_row(projection_system, row)
   end
 
@@ -60,24 +60,24 @@ def update_batting_projection_with_row(projection_system, row)
 
   source_projection_data = {
     games: row_data.data_for(:games),
-      plate_appearances: row_data.data_for(:plate_appearances),
-      at_bats: row_data.data_for(:at_bats),
-      hits: row_data.data_for(:hits),
-      doubles: row_data.data_for(:doubles),
-      triples: row_data.data_for(:triples),
-      home_runs: row_data.data_for(:home_runs),
-      runs: row_data.data_for(:runs),
-      runs_batted_in: row_data.data_for(:runs_batted_in),
-      batting_walks: row_data.data_for(:batting_walks),
-      batting_strikeouts: row_data.data_for(:batting_strikeouts),
-      stolen_bases: row_data.data_for(:stolen_bases),
-      batting_average: row_data.data_for(:batting_average),
-      on_base_percentage: row_data.data_for(:on_base_percentage),
-      slugging_percentage: row_data.data_for(:slugging_percentage),
-      on_base_plus_slugging: row_data.data_for(:on_base_plus_slugging),
-      weighted_on_base: row_data.data_for(:weighted_on_base),
-      wrc_plus: row_data.data_for(:wrc_plus),
-      wins_above_replacement: row_data.data_for(:wins_above_replacement)
+    plate_appearances: row_data.data_for(:plate_appearances),
+    at_bats: row_data.data_for(:at_bats),
+    hits: row_data.data_for(:hits),
+    doubles: row_data.data_for(:doubles),
+    triples: row_data.data_for(:triples),
+    home_runs: row_data.data_for(:home_runs),
+    runs: row_data.data_for(:runs),
+    runs_batted_in: row_data.data_for(:runs_batted_in),
+    batting_walks: row_data.data_for(:batting_walks),
+    batting_strikeouts: row_data.data_for(:batting_strikeouts),
+    stolen_bases: row_data.data_for(:stolen_bases),
+    batting_average: row_data.data_for(:batting_average),
+    on_base_percentage: row_data.data_for(:on_base_percentage),
+    slugging_percentage: row_data.data_for(:slugging_percentage),
+    on_base_plus_slugging: row_data.data_for(:on_base_plus_slugging),
+    weighted_on_base: row_data.data_for(:weighted_on_base),
+    wrc_plus: row_data.data_for(:wrc_plus),
+    wins_above_replacement: row_data.data_for(:wins_above_replacement)
   }
 
   projected_player = player.batting_projections.find_by(projection_system: projection_system)

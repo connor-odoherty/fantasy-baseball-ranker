@@ -106,13 +106,11 @@ class UserRankingSetsController < ApplicationController
     user_ranking_players_values = []
     source_ranking_set.pro_ranking_players.find_each do |pro_ranking_player|
       user_player = current_user.user_players.find_by(player_id: pro_ranking_player.player_id)
-      unless user_player.present?
-        user_player = current_user.user_players.create!(player_id: pro_ranking_player.player_id)
-      end
+      user_player = current_user.user_players.create!(player_id: pro_ranking_player.player_id) unless user_player.present?
 
       next if !user_player.id.present? || !@new_user_ranking_set.id.present? || !ovr_rank_count.present? || !(elo_start_point - pro_ranking_player.ovr_rank).present?
 
-      user_ranking_players_values.push"(#{user_player.id},#{@new_user_ranking_set.id},#{ovr_rank_count},#{elo_start_point - pro_ranking_player.ovr_rank})"
+      user_ranking_players_values.push "(#{user_player.id},#{@new_user_ranking_set.id},#{ovr_rank_count},#{elo_start_point - pro_ranking_player.ovr_rank})"
       ovr_rank_count += 1
 
       # new_user_ranking_player = @new_user_ranking_set.user_ranking_players.create(
