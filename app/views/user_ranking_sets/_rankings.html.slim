@@ -55,14 +55,16 @@
                                         th.stat-col
                                           = StatisticsHelper.display_short_name(batting_field)
                                   tbody
-                                    - player.season_batting_lines.where('season_batting_lines.year > ?', 2016).each do |season_batting_line|
+                                    - player.season_batting_lines.each do |season_batting_line|
+                                      - next if season_batting_line.year < 2017
                                       tr.season-row
                                         td.border-heavy
                                           = season_batting_line.year
                                         - batting_fields.each do |batting_field|
                                           td.stat-col
                                             = season_batting_line.display(batting_field)
-                                    - player.batting_projections.joins(:projection_system).order('projection_systems.order_index').limit(1).each do |projection|
+                                    - projection = player.batting_projections.first
+                                    - if projection.present?
                                       tr.projection-row
                                         td.border-heavy
                                           = projection.projection_system.name
@@ -82,14 +84,16 @@
                                         th.stat-col
                                           = StatisticsHelper.display_short_name(pitching_field)
                                   tbody
-                                    - player.season_pitching_lines.where('season_pitching_lines.year > ?', 2016).each do |season_pitching_line|
+                                    - player.season_pitching_lines.each do |season_pitching_line|
+                                      - next if season_pitching_line.year < 2017
                                       tr.season-row
                                         td.border-heavy
                                           = season_pitching_line.year
                                         - pitching_fields.each do |pitching_field|
                                           td.stat-col
                                             = season_pitching_line.display(pitching_field)
-                                    - player.pitching_projections.joins(:projection_system).order('projection_systems.order_index').limit(1).each do |projection|
+                                    - projection = player.pitching_projections.first
+                                    - if projection.present?
                                       tr.projection-row
                                         td.border-heavy
                                           = projection.projection_system.name
@@ -97,46 +101,7 @@
                                           td.stat-col.highlight
                                             = projection.display(pitching_field)
                         .col-xs-4
-                          / - if player.is_batter? && player.season_batting_lines.any?
-                          /   - batting_fields = StatisticsHelper.batting_fields_basic
-                          /   .row
-                          /     .col-xs-12
-                          /       table.table.stats-table
-                          /         thead
-                          /           tr
-                          /             th
-                          /               '
-                          /             - batting_fields.each do |batting_field|
-                          /               th
-                          /                 = StatisticsHelper.display_short_name(batting_field)
-                          /         tbody
-                          /           - player.season_batting_lines.each do |season_batting_line|
-                          /             tr
-                          /               td.border-heavy
-                          /                 = season_batting_line.year
-                          /               - batting_fields.each do |batting_field|
-                          /                 td
-                          /                   = season_batting_line.display(batting_field)
-                          / - if player.is_pitcher? && player.season_pitching_lines.any?
-                          /   - pitching_fields = StatisticsHelper.pitching_fields_basic
-                          /   .row
-                          /     .col-xs-12
-                          /       table.table.stats-table
-                          /         thead
-                          /           tr
-                          /             th
-                          /               '
-                          /             - pitching_fields.each do |pitching_field|
-                          /               th
-                          /                 = StatisticsHelper.display_short_name(pitching_field)
-                          /         tbody
-                          /           - player.season_pitching_lines.each do |season_pitching_line|
-                          /             tr
-                          /               td.border-heavy
-                          /                 = season_pitching_line.year
-                          /               - pitching_fields.each do |pitching_field|
-                          /                 td
-                          /                   = season_pitching_line.display(pitching_field)
+
                     .col-xs-1 style='padding: 0px;'
                       - user_player.active_tags.each do |tag|
                         .ranking-tag.text-center class="#{tag.to_s}-tag"
@@ -167,7 +132,7 @@
                                   - batting_fields.each do |batting_field|
                                     td.stat-col
                                       = season_batting_line.display(batting_field)
-                              - player.batting_projections.joins(:projection_system).order('projection_systems.order_index').each do |projection|
+                              - player.batting_projections.each do |projection|
                                 tr.projection-row
                                   td.border-heavy
                                     = projection.projection_system.name
@@ -194,7 +159,7 @@
                                   - pitching_fields.each do |pitching_field|
                                     td.stat-col
                                       = season_pitching_line.display(pitching_field)
-                              - player.pitching_projections.joins(:projection_system).order('projection_systems.order_index').each do |projection|
+                              - player.pitching_projections.each do |projection|
                                 tr.projection-row
                                   td.border-heavy
                                     = projection.projection_system.name

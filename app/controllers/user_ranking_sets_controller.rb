@@ -94,7 +94,17 @@ class UserRankingSetsController < ApplicationController
     if @position_filter == :all
       @user_ranking_players = @user_ranking_set.user_ranking_players.order(ovr_rank: :asc)
     else
-      @user_ranking_players = @user_ranking_set.user_ranking_players.joins(user_player: :player).where('players.positions & ? > 0', Player.bitmask_for_positions(@position_filter))
+      # player_set = @user_ranking_set.user_ranking_players.joins(user_player: :player).where('players.positions & ? > 0', Player.bitmask_for_positions(@position_filter))
+      @user_ranking_players = @user_ranking_set.user_ranking_players
+                                  .where('players.positions & ? > 0', Player.bitmask_for_positions(@position_filter))
+                                  .includes(user_player:
+                                                [:user_player_articles,
+                                                 player: [:mlb_team,
+                                                          :season_batting_lines,
+                                                          :season_pitching_lines,
+                                                          batting_projections: [:projection_system],
+                                                          pitching_projections: [:projection_system]]]).references(user_player: :player).order(ovr_rank: :asc)
+      # @user_ranking_players = @user_ranking_set.user_ranking_players.where('players.positions & ? > 0', Player.bitmask_for_positions(@position_filter))
     end
     # if @position_filter != :all
     #   @user_ranking_players = @user_ranking_players.select do |user_ranking_player|
