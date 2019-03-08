@@ -62,7 +62,7 @@
                                         - batting_fields.each do |batting_field|
                                           td.stat-col
                                             = season_batting_line.display(batting_field)
-                                    - projection = player.batting_projections.first
+                                    - projection = select_favorite_projection(player.batting_projections.load)
                                     - if projection.present?
                                       tr.projection-row
                                         td.border-heavy
@@ -91,7 +91,7 @@
                                         - pitching_fields.each do |pitching_field|
                                           td.stat-col
                                             = season_pitching_line.display(pitching_field)
-                                    - projection = player.pitching_projections.first
+                                    - projection = select_favorite_projection(player.pitching_projections.load)
                                     - if projection.present?
                                       tr.projection-row
                                         td.border-heavy
