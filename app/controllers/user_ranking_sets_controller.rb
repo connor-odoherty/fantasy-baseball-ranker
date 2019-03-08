@@ -92,26 +92,24 @@ class UserRankingSetsController < ApplicationController
 
   def set_user_ranking_players
     if @position_filter == :all
-      @user_ranking_players = @user_ranking_set.user_ranking_players.order(ovr_rank: :asc)
+      @user_ranking_players = @user_ranking_set.user_ranking_players.includes(user_player:
+                                                                              [:user_player_articles,
+                                                                               player: [:mlb_team,
+                                                                                        :season_batting_lines,
+                                                                                        :season_pitching_lines,
+                                                                                        batting_projections: [:projection_system],
+                                                                                        pitching_projections: [:projection_system]]]).references(user_player: :player).order(ovr_rank: :asc)
     else
-      # player_set = @user_ranking_set.user_ranking_players.joins(user_player: :player).where('players.positions & ? > 0', Player.bitmask_for_positions(@position_filter))
       @user_ranking_players = @user_ranking_set.user_ranking_players
-                                  .where('players.positions & ? > 0', Player.bitmask_for_positions(@position_filter))
-                                  .includes(user_player:
+                                               .where('players.positions & ? > 0', Player.bitmask_for_positions(@position_filter))
+                                               .includes(user_player:
                                                 [:user_player_articles,
                                                  player: [:mlb_team,
                                                           :season_batting_lines,
                                                           :season_pitching_lines,
                                                           batting_projections: [:projection_system],
                                                           pitching_projections: [:projection_system]]]).references(user_player: :player).order(ovr_rank: :asc)
-      # @user_ranking_players = @user_ranking_set.user_ranking_players.where('players.positions & ? > 0', Player.bitmask_for_positions(@position_filter))
     end
-    # if @position_filter != :all
-    #   @user_ranking_players = @user_ranking_players.select do |user_ranking_player|
-    #     p 'POSITION FILTER', @position_filter
-    #     user_ranking_player.user_player.player.has_any_positions?(@position_filter)
-    #   end
-    # end
   end
 
   def associate_default_rankings_with_new_ranking_set

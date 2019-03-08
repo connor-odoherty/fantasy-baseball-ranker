@@ -25,7 +25,7 @@ class ProRankingSetController < ApplicationController
     @players = ProRankingPlayer.includes(player: [:mlb_team]).where(pro_ranking_set: @pro_ranking_set).rank(:ovr_rank).to_a
     if @position_filter != :all
       @players = @players.select do |pro_ranking_player|
-        pro_ranking_player.player.positions?(@position_filter)
+        pro_ranking_player.player.has_any_positions?(@position_filter)
       end
     end
   end

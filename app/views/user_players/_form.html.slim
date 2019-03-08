@@ -26,7 +26,7 @@
             .col-sm-6
               - tag = selectable_tags[index]
               span.checkbox.checkbox-primary
-                = check_box_tag 'user_player[tags][]', tag, f.object.tags?(tag), id: "user_player_tags_#{tag.to_s}", class: "role_checkbox checkbox-fade", 'data-tag-name' => tag.to_s, disabled: readonly
+                = check_box_tag 'user_player[tags][]', tag, f.object.has_any_tags?(tag), id: "user_player_tags_#{tag.to_s}", class: "role_checkbox checkbox-fade", 'data-tag-name' => tag.to_s, disabled: readonly
                 label for="user_player_tags_#{tag.to_s}"
                   .ranking-tag.text-center class="#{tag.to_s}-tag"
                     = f.object.tag_to_s(tag)
@@ -34,7 +34,7 @@
               - if index + 1 < selectable_tags.length
                 - tag = selectable_tags[index + 1]
                 span.checkbox.checkbox-primary
-                  = check_box_tag 'user_player[tags][]', tag, f.object.tags?(tag), id: "user_player_tags_#{tag.to_s}", class: "role_checkbox checkbox-fade", 'data-tag-name' => tag.to_s, disabled: readonly
+                  = check_box_tag 'user_player[tags][]', tag, f.object.has_any_tags?(tag), id: "user_player_tags_#{tag.to_s}", class: "role_checkbox checkbox-fade", 'data-tag-name' => tag.to_s, disabled: readonly
                   label for="user_player_tags_#{tag.to_s}"
                     .ranking-tag.text-center class="#{tag.to_s}-tag"
                       = f.object.tag_to_s(tag)

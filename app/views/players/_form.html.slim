@@ -21,38 +21,13 @@
             .col-sm-6
               - position = selectable_positions[index]
               span.checkbox.checkbox-primary
-                = check_box_tag 'player[positions][]', position, f.object.positions?(position), id: "user_positions_#{position.to_s}", class: 'role_checkbox checkbox-fade', 'data-position-name' => position.to_s, disabled: readonly
+                = check_box_tag 'player[positions][]', position, f.object.has_any_positions?(position), id: "user_positions_#{position.to_s}", class: 'role_checkbox checkbox-fade', 'data-position-name' => position.to_s, disabled: readonly
                 label for="user_positions_#{position.to_s}"
                   = f.object.position_to_s(position)
             .col-sm-6
               - if index + 1 < selectable_positions.length
                 - position = selectable_positions[index + 1]
                 span.checkbox.checkbox-primary
-                  = check_box_tag 'player[positions][]', position, f.object.positions?(position), id: "user_positions_#{position.to_s}", class: 'role_checkbox checkbox-fade', 'data-position-name' => position.to_s, disabled: readonly
+                  = check_box_tag 'player[positions][]', position, f.object.has_any_positions?(position), id: "user_positions_#{position.to_s}", class: 'role_checkbox checkbox-fade', 'data-position-name' => position.to_s, disabled: readonly
                   label for="user_positions_#{position.to_s}"
                     = f.object.position_to_s(position)
-
-    /
-    / - display_operating_roles = current_user.selectable_operator_roles
-    / - # layout in rows of two  (step(2))
-    / - (0..display_operating_roles.length-1).step(2) do |index|
-    /   .form-group
-    /     .col-sm-3.col-sm-offset-3
-    /       - role = display_operating_roles[index]
-    /       span.checkbox.checkbox-primary class="#{'disable-checkbox' if permissions_readonly}"
-    /         - if permissions_readonly && f.object.has_any_roles?(role)
-    /           - # if the form is submitted, preserve existing roles by using the hidden field
-    /           = hidden_field_tag "user[roles][]", role
-    /         = check_box_tag 'user[roles][]', role, f.object.has_any_roles?(role), disabled: readonly || permissions_readonly, id: "user_roles_#{role.to_s}", class: 'role_checkbox form-control checkbox-fade', 'data-role-name' => role.to_s
-    /         label for="user_roles_#{role.to_s}"
-    /           = f.object.role_to_s(role)
-    /     .col-sm-4
-    /       - if index + 1 < display_operating_roles.length
-    /         - role = display_operating_roles[index+1]
-    /         span.checkbox.checkbox-primary class="#{'disable-checkbox' if permissions_readonly}"
-    /           - if permissions_readonly && f.object.has_any_roles?(role)
-    /             - # if the form is submitted, preserve existing roles by using the hidden field
-    /             = hidden_field_tag "user[roles][]", role
-    /           = check_box_tag 'user[roles][]', role, f.object.has_any_roles?(role), disabled: readonly || permissions_readonly, id: "user_roles_#{role.to_s}", class: 'role_checkbox form-control checkbox-fade', 'data-role-name' => role.to_s
-    /           label for="user_roles_#{role.to_s}"
-    /             = f.object.role_to_s(role)

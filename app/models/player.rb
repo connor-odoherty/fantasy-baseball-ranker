@@ -139,11 +139,11 @@ class Player < ApplicationRecord
   end
 
   def is_pitcher?
-   has_any_positions?(:starting_pitcher, :relief_pitcher)
+    has_any_positions?(:starting_pitcher, :relief_pitcher)
   end
 
   def is_batter?
-   has_any_positions?(:catcher, :first_base, :second_base, :third_base, :short_stop, :outfield)
+    has_any_positions?(:catcher, :first_base, :second_base, :third_base, :short_stop, :outfield)
   end
 
   def fg_link

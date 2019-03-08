@@ -49,7 +49,7 @@ module StatisticsHelper
     on_base_plus_slugging:         { short_name: 'OPS',          import_map: 'OPS',      display_type: :average, type: :batting },
     weighted_on_base:              { short_name: 'wOBA',         import_map: 'wOBA',     display_type: :average, type: :batting },
     wrc_plus:                      { short_name: 'wRC+',         import_map: 'wRC+',     display_type: :count, type: :batting,  optional: true },
-    iso:                           { short_name: 'ISO',          import_map: 'ISO',      display_type: :average, type: :batting,  optional: true },
+    iso:                           { short_name: 'ISO',          import_map: 'ISO',      display_type: :average, type: :batting, optional: true },
     line_drive_rate:               { short_name: 'LD%',          import_map: 'LD%',      display_type: :percentage, type: :batting,  optional: true },
     ground_ball_rate:              { short_name: 'GB%',          import_map: 'GB%',      display_type: :percentage, type: :batting,  optional: true },
     fly_ball_rate:                 { short_name: 'FB%',          import_map: 'FB%',      display_type: :percentage, type: :batting,  optional: true },
@@ -66,11 +66,13 @@ module StatisticsHelper
 
   def self.display_type(attribute_name)
     raise "No display type attributes found for field: #{attribute_name}" unless STATISTICS_MAP[attribute_name].present?
+
     STATISTICS_MAP[attribute_name][:display_type]
   end
 
   def self.display_short_name(attribute_name)
     raise "No display short name attributes found for field: #{attribute_name}" unless STATISTICS_MAP[attribute_name].present? && STATISTICS_MAP[attribute_name][:short_name].present?
+
     STATISTICS_MAP[attribute_name][:short_name]
   end
 
@@ -79,64 +81,64 @@ module StatisticsHelper
   end
 
   def self.batting_fields_basic
-    [:games, :plate_appearances, :runs, :runs_batted_in, :home_runs, :batting_average]
+    %i[games plate_appearances runs runs_batted_in home_runs batting_average]
   end
 
   def self.batting_basic
-    [:games, :plate_appearances, :runs, :runs_batted_in, :home_runs, :batting_average]
+    %i[games plate_appearances runs runs_batted_in home_runs batting_average]
   end
 
   def self.batting_advanced
-    [:babip, :on_base_percentage, :weighted_on_base, :slugging_percentage, :on_base_plus_slugging, :iso]
+    %i[babip on_base_percentage weighted_on_base slugging_percentage on_base_plus_slugging iso]
   end
 
   def self.batting_plate_discipline
-    [:k_rate, :bb_rate, :sw_str_rate]
+    %i[k_rate bb_rate sw_str_rate]
   end
 
   def self.batting_contact_peripherals
-    [:soft_contact_rate, :medium_contact_rate, :hard_contact_rate]
+    %i[soft_contact_rate medium_contact_rate hard_contact_rate]
   end
 
   def self.batting_batted_ball_peripherals
-    [:line_drive_rate, :ground_ball_rate, :fly_ball_rate, :hr_to_fly_ball_rate, :infield_fly_ball_rate]
+    %i[line_drive_rate ground_ball_rate fly_ball_rate hr_to_fly_ball_rate infield_fly_ball_rate]
   end
 
   def self.batting_directional_peripherals
-    [:pull_rate, :center_rate, :oppo_rate]
+    %i[pull_rate center_rate oppo_rate]
   end
 
   def self.batting_combined_overview
-    self.batting_basic + self.batting_advanced + self.batting_plate_discipline + self.batting_contact_peripherals + self.batting_batted_ball_peripherals
+    batting_basic + batting_advanced + batting_plate_discipline + batting_contact_peripherals + batting_batted_ball_peripherals
   end
 
   # PITCHING STAT LAYOUTS
 
   def self.pitching_fields_basic
-    [:games_started, :innings_pitched, :wins, :saves, :earned_run_average, :walks_and_hits_per_ip, :k_per_nine]
+    %i[games_started innings_pitched wins saves earned_run_average walks_and_hits_per_ip k_per_nine]
   end
 
   def self.pitching_combined_overview
-    self.basic_pitching + self.expected_era_peripherals + self.pitching_plate_rates + self.pitching_control_peripherals + self.pitching_contact_peripherals
+    basic_pitching + expected_era_peripherals + pitching_plate_rates + pitching_control_peripherals + pitching_contact_peripherals
   end
 
   def self.basic_pitching
-    [:games_started, :innings_pitched, :wins, :saves, :earned_run_average, :walks_and_hits_per_ip]
+    %i[games_started innings_pitched wins saves earned_run_average walks_and_hits_per_ip]
   end
 
   def self.expected_era_peripherals
-    [:siera, :fielding_independent_pitching, :expected_fielding_independent_pitching, :left_on_base_rate, :babip]
+    %i[siera fielding_independent_pitching expected_fielding_independent_pitching left_on_base_rate babip]
   end
 
   def self.pitching_plate_rates
-    [:k_per_nine, :bb_per_nine, :hr_per_nine]
+    %i[k_per_nine bb_per_nine hr_per_nine]
   end
 
   def self.pitching_control_peripherals
-    [:k_rate, :bb_rate, :k_minus_bb, :sw_str_rate]
+    %i[k_rate bb_rate k_minus_bb sw_str_rate]
   end
 
   def self.pitching_contact_peripherals
-    [:soft_contact_rate, :medium_contact_rate, :hard_contact_rate]
+    %i[soft_contact_rate medium_contact_rate hard_contact_rate]
   end
 end

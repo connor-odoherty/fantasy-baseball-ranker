@@ -55,8 +55,7 @@
                                         th.stat-col
                                           = StatisticsHelper.display_short_name(batting_field)
                                   tbody
-                                    - player.season_batting_lines.each do |season_batting_line|
-                                      - next if season_batting_line.year < 2017
+                                    - sort_by_year(player.season_batting_lines.load, 2017).each do |season_batting_line|
                                       tr.season-row
                                         td.border-heavy
                                           = season_batting_line.year
@@ -84,7 +83,7 @@
                                         th.stat-col
                                           = StatisticsHelper.display_short_name(pitching_field)
                                   tbody
-                                    - player.season_pitching_lines.each do |season_pitching_line|
+                                    - sort_by_year(player.season_pitching_lines.load, 2017).each do |season_pitching_line|
                                       - next if season_pitching_line.year < 2017
                                       tr.season-row
                                         td.border-heavy
@@ -125,7 +124,7 @@
                                   th.stat-col
                                     = StatisticsHelper.display_short_name(batting_field)
                             tbody
-                              - player.season_batting_lines.each do |season_batting_line|
+                              - sort_by_year(player.season_batting_lines).each do |season_batting_line|
                                 tr
                                   td.border-heavy
                                     = season_batting_line.year
@@ -152,7 +151,7 @@
                                   th.stat-col
                                     = StatisticsHelper.display_short_name(pitching_field)
                             tbody
-                              - player.season_pitching_lines.each do |season_pitching_line|
+                              - sort_by_year(player.season_pitching_lines).each do |season_pitching_line|
                                 tr
                                   td.border-heavy
                                     = season_pitching_line.year
