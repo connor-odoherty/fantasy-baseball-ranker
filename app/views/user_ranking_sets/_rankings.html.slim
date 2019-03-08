@@ -52,12 +52,12 @@
                                       th
                                         '
                                       - batting_fields.each do |batting_field|
-                                        th.stat-col
+                                        th.stat-col class="#{StatisticsHelper.cell_width(batting_field)}-col"
                                           = StatisticsHelper.display_short_name(batting_field)
                                   tbody
                                     - sort_by_year(player.season_batting_lines.load, 2017).each do |season_batting_line|
                                       tr.season-row
-                                        td.border-heavy
+                                        td.border-heavy.label-col
                                           = season_batting_line.year
                                         - batting_fields.each do |batting_field|
                                           td.stat-col
@@ -65,7 +65,7 @@
                                     - projection = select_favorite_projection(player.batting_projections.load)
                                     - if projection.present?
                                       tr.projection-row
-                                        td.border-heavy
+                                        td.border-heavy.label-col
                                           = projection.projection_system.name
                                         - batting_fields.each do |batting_field|
                                           td.stat-col.highlight
@@ -77,16 +77,16 @@
                                 table.table.stats-table
                                   thead
                                     tr
-                                      th
+                                      th.label-col
                                         '
                                       - pitching_fields.each do |pitching_field|
-                                        th.stat-col
+                                        th.stat-col class="#{StatisticsHelper.cell_width(pitching_field)}-col"
                                           = StatisticsHelper.display_short_name(pitching_field)
                                   tbody
                                     - sort_by_year(player.season_pitching_lines.load, 2017).each do |season_pitching_line|
                                       - next if season_pitching_line.year < 2017
                                       tr.season-row
-                                        td.border-heavy
+                                        td.border-heavy.label-col
                                           = season_pitching_line.year
                                         - pitching_fields.each do |pitching_field|
                                           td.stat-col
@@ -94,7 +94,7 @@
                                     - projection = select_favorite_projection(player.pitching_projections.load)
                                     - if projection.present?
                                       tr.projection-row
-                                        td.border-heavy
+                                        td.border-heavy.label-col
                                           = projection.projection_system.name
                                         - pitching_fields.each do |pitching_field|
                                           td.stat-col.highlight
@@ -113,54 +113,54 @@
                   .collapse.notes-collapse id="collapase_user_player_#{user_player.id}"
                     - if player.is_batter?
                       - batting_fields = StatisticsHelper.batting_combined_overview
-                      .row
+                      .row style='margin-top: 15px;'
                         .col-xs-12
-                          table.table.stats-table
+                          table.table.stats-table.strong-header.table-hover
                             thead
                               tr
-                                th
+                                th.label-col
                                   '
                                 - batting_fields.each do |batting_field|
-                                  th.stat-col
+                                  th.stat-col class="#{StatisticsHelper.cell_width(batting_field)}-col"
                                     = StatisticsHelper.display_short_name(batting_field)
                             tbody
                               - sort_by_year(player.season_batting_lines).each do |season_batting_line|
                                 tr
-                                  td.border-heavy
+                                  td.border-heavy.label-col
                                     = season_batting_line.year
                                   - batting_fields.each do |batting_field|
                                     td.stat-col
                                       = season_batting_line.display(batting_field)
-                              - player.batting_projections.each do |projection|
+                              - sort_by_order_index(player.batting_projections).each do |projection|
                                 tr.projection-row
-                                  td.border-heavy
+                                  td.border-heavy.label-col
                                     = projection.projection_system.name
                                   - batting_fields.each do |batting_field|
                                     td.stat-col.highlight
                                       = projection.display(batting_field)
                     - if player.is_pitcher?
                       - pitching_fields = StatisticsHelper.pitching_combined_overview
-                      .row
+                      .row style='margin-top: 15px;'
                         .col-xs-12
-                          table.table.stats-table
+                          table.table.stats-table.strong-header.table-hover
                             thead
                               tr
-                                th
+                                th.label-col
                                   '
                                 - pitching_fields.each do |pitching_field|
-                                  th.stat-col
+                                  th.stat-col class="#{StatisticsHelper.cell_width(pitching_field)}-col"
                                     = StatisticsHelper.display_short_name(pitching_field)
                             tbody
                               - sort_by_year(player.season_pitching_lines).each do |season_pitching_line|
                                 tr
-                                  td.border-heavy
+                                  td.border-heavy.label-col
                                     = season_pitching_line.year
                                   - pitching_fields.each do |pitching_field|
                                     td.stat-col
                                       = season_pitching_line.display(pitching_field)
-                              - player.pitching_projections.each do |projection|
+                              - sort_by_order_index(player.pitching_projections).each do |projection|
                                 tr.projection-row
-                                  td.border-heavy
+                                  td.border-heavy.label-col
                                     = projection.projection_system.name
                                   - pitching_fields.each do |pitching_field|
                                     td.stat-col.highlight

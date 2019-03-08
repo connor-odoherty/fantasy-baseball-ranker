@@ -1,0 +1,23 @@
+table.table.stats-table.strong-header.table-hover
+  thead
+    tr
+      th.label-col
+        '
+      - stat_fields.each do |stat_fields|
+        th.stat-col class="#{StatisticsHelper.cell_width(stat_fields)}-col"
+          = StatisticsHelper.display_short_name(stat_fields)
+  tbody
+    - sort_by_year(player_season_lines).each do |player_season_line|
+      tr
+        td.border-heavy.label-col
+          = player_season_line.year
+        - stat_fields.each do |stat_field|
+          td.stat-col
+            = player_season_line.display(stat_field)
+    - sort_by_order_index(player_projections).each do |projection|
+      tr.projection-row
+        td.border-heavy.label-col
+          = projection.projection_system.name
+        - stat_fields.each do |stat_field|
+          td.stat-col.highlight
+            = projection.display(stat_field)

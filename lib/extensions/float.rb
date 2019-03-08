@@ -25,7 +25,7 @@ module Extensions
     end
 
     def display_as_percentage
-      number_with_precision(self, precision: 1).to_s.sub(/^0+/, '') + '%'
+      number_with_precision(self, precision: 1).to_s.sub(/^0+/, '') + ' %'
     end
   end
 end

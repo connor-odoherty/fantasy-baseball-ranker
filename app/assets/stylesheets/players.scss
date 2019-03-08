@@ -42,18 +42,35 @@
 
 table.table.stats-table {
   //table-layout:fixed !important;
-  font-size: 10px;
+  font-size: 12px;
   margin-bottom: 0px;
+
+  th {
+    font-family: 'd-din_expdinexp-bold';
+  }
+
+  td {
+    font-family: 'd-din_expregular';
+    font-weight: 500;
+  }
 
   th, td {
     padding: 3px;
-    width: 30px;
+    //width: 30px;
     text-align: center;
   }
 
   th {
     padding-bottom: 1px;
+    padding-top: 1px;
     border-bottom-width: 1px;
+  }
+
+  &.strong-header {
+    th {
+      background: #808080;
+      color: $white;
+    }
   }
 
   td {
@@ -72,7 +89,29 @@ table.table.stats-table {
     border-right: .55px solid $surface;
   }
 
+  .label-col {
+    text-align: left;
+  }
+
   .stat-col {
     text-align: right;
+  }
+
+  .projection-row {
+    td {
+      background-color: $primary-lightest;
+    }
+  }
+
+  th.small-col {
+    width: 30px;
+  }
+
+  th.medium-col {
+    width: 42px;
+  }
+
+  th.large-col {
+    width: 48px;
   }
 }

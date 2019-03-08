@@ -11,6 +11,12 @@
       .col-xs-4.text-right
         span.strong
           = player.display_positions
+    .row
+      .col-xs-12 style='margin-top: 10px; margin-bottom: 20px'
+        - stat_fields = player.is_pitcher? ? StatisticsHelper.pitching_combined_overview : StatisticsHelper.batting_combined_overview
+        - season_lines = player.is_pitcher? ? player.season_pitching_lines : player.season_batting_lines
+        - player_projections = player.is_pitcher? ? player.pitching_projections : player.batting_projections
+        = render 'players/stat_table', stat_fields: stat_fields, player_season_lines: season_lines, player_projections: player_projections
     .form-group
       .col-xs-2.text-right.strong
         ' Notes:
