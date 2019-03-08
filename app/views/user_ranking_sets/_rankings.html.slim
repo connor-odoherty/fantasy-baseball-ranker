@@ -32,12 +32,22 @@
                         .col-xs-6.text-left
                           = "Age #{player.display_age}"
                       .row
-                        .col-xs-12.text-left style='padding-top: 15px'
-                          a.notes-toggle data-toggle="collapse" href="#collapase_user_player_#{user_player.id}" role="button" aria-expanded="false" aria-controls="collapase_user_player_#{user_player.id}"
-                            .before-expand
-                              | More +
-                            .after-expand
-                              | Less -
+                        .col-xs-6.text-left
+                          table.table.stats-table
+                            thead
+                              th style='width: 30px'
+                                ' Ovr
+                              th style='width: 30px'
+                                ' ADP
+                              th style='width: 30px'
+                                ' Diff
+                            tbody
+                              td
+                                = user_ranking_player.ovr_rank
+                              td
+                                = number_with_precision(player.adp, precision: 1).to_s.sub(/^0+/, '')
+                              td
+                                = user_ranking_player.ovr_rank - player.adp.to_i
                     .col-xs-6.player-fantasy-info
                       .row
                         .col-xs-8
@@ -107,9 +117,20 @@
                           = user_player.tag_to_s(tag)
                     .col-xs-1.text-right
                       - if readonly
-                        = link_to raw("<i class='fa fa-pencil'></i>"), edit_user_player_path(user_player, redirect_to: user_ranking_set_path(@user_ranking_set, position: @position_filter)), class: 'btn btn-default'
+                        .row
+                          .col-xs-12
+                            = link_to raw("<i class='fa fa-pencil'></i>"), edit_user_player_path(user_player, redirect_to: user_ranking_set_path(@user_ranking_set, position: @position_filter)), class: 'btn btn-default'
                       - else
-                        i.fa.fa-sort style='padding-top: 10px'
+                        .row
+                          .col-xs-12
+                            i.fa.fa-sort style='padding-top: 10px'
+                      .row
+                        .col-xs-12.text-right style="padding-top: #{readonly ? '20px' : '30px'}; padding-left: 0px"
+                          a.notes-toggle data-toggle="collapse" href="#collapase_user_player_#{user_player.id}" role="button" aria-expanded="false" aria-controls="collapase_user_player_#{user_player.id}"
+                            .before-expand
+                              | More +
+                            .after-expand
+                              | Less -
                   .collapse.notes-collapse id="collapase_user_player_#{user_player.id}"
                     - if player.is_batter?
                       - batting_fields = StatisticsHelper.batting_combined_overview

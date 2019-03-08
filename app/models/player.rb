@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: players
@@ -51,6 +50,7 @@
 #  created_at                :datetime         not null
 #  updated_at                :datetime         not null
 #  autocomplete_search_field :string
+#  adp                       :float
 #
 # Indexes
 #

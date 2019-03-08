@@ -92,7 +92,7 @@ class UserRankingSetsController < ApplicationController
 
   def set_user_ranking_players
     if @position_filter == :all
-      @user_ranking_players = @user_ranking_set.user_ranking_players.includes(user_player:
+      @user_ranking_players = @user_ranking_set.user_ranking_players.limit(300).includes(user_player:
                                                                               [:user_player_articles,
                                                                                player: [:mlb_team,
                                                                                         :season_batting_lines,

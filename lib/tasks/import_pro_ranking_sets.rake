@@ -10,11 +10,11 @@ task import_nfbc_adp: :environment do
   #   adp_ranking_set.destroy
   # end
 
-  existing_nfbc_adp = ProRankingSet.find_by(slug: 'nfbc_february_adp')
+  existing_nfbc_adp = ProRankingSet.find_by(slug: 'nfbc_march_adp')
   existing_nfbc_adp.destroy if existing_nfbc_adp.present?
   adp_ranking_set = ProRankingSet.create(
     publication_name: 'NFBC',
-    ranking_name: 'February ADP',
+    ranking_name: 'March ADP',
     ranker_name: 'Site',
     url: 'https://playnfbc.shgn.com/adp',
     published_at: DateTime.now
@@ -26,10 +26,12 @@ task import_nfbc_adp: :environment do
   end
 
   row_count = 0
+  count = 0
   CSV.foreach('nfbc_adp_set.csv') do |row|
     row_count += 1
     next if row_count == 1
 
+    p 'ROW HERE:', row
     rank = row[0].to_i
     last_then_first = row[1]
     last_name = last_then_first.split(', ')[0]
@@ -76,4 +78,10 @@ def find_player_match_for_full_name(full_name)
   return Player.find_by(ottoneu_name: full_name) if Player.find_by(ottoneu_name: full_name).present?
 
   nil
+end
+
+task update_players_with_most_recent_adp: :environment do
+  ProRankingSet.last.pro_ranking_players.find_each do |pro_ranking_player|
+    pro_ranking_player.player.update_column(:adp, pro_ranking_player.adp)
+  end
 end
