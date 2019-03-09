@@ -1,0 +1,145 @@
+.container-fluid
+  .col-xs-10
+    .mock-table
+      .actual-row
+        .head-row class="#{'hide-pitching' if !@for_pitching} #{'hide-batting' if !@for_batting}"
+          .col.pos-rank-col Rnk
+          .col.name-col Name
+          .col.team-col Team
+          .col.pos-col Pos
+          .col.tag-col
+          .col.ovr-rank-col Ovr
+          .col.adp-col ADP
+          .col.diff-col
+          .col.proj-name-col Proj
+          .col.stat-col.context-stat
+            .pitching GS
+            .batting G
+          .col.stat-col.context-stat
+            .pitching IP
+            .batting PA
+          .col.stat-col.fantasy-stat
+            .pitching W
+            .batting R
+          .col.stat-col.fantasy-stat
+            .pitching SV
+            .batting RBI
+          .col.stat-col.fantasy-stat
+            .pitching ERA
+            .batting HR
+          .col.stat-col.fantasy-stat
+            .pitching WHIP
+            .batting SB
+          .col.stat-col.fantasy-stat
+            .pitching K/9
+            .batting AVG
+          .col.expand-col
+          .col.handle-col
+    .mock-table id="#{'rankings-table' if !readonly}"
+      = f.fields_for :user_ranking_players, @user_ranking_players do |user_ranking_player_f|
+        - user_ranking_player = user_ranking_player_f.object
+        - user_player = user_ranking_player.user_player
+        - player = user_player.player
+        .actual-row.player-ranking-row
+          = user_ranking_player_f.hidden_field :ovr_rank
+          = user_ranking_player_f.hidden_field :id
+          .mock-row
+            .col.pos-rank-col
+              = user_ranking_player_f.index + 1
+            .col.name-col
+              = player.display_name
+            .col.team-col
+              = player.mlb_team.short_name
+            .col.pos-col
+              = player.display_positions
+            .col.tag-col
+              - user_player.active_tags.each do |tag|
+                span.row-tag class="#{tag.to_s}-tag"
+                  = fa_icon(user_player.tag_to_icon(tag))
+            .col.ovr-rank-col
+              = user_ranking_player.ovr_rank
+            .col.adp-col
+              = number_with_precision(player.adp, precision: 1).to_s.sub(/^0+/, '')
+            .col.diff-col
+              = user_ranking_player.ovr_rank - player.adp.to_i
+            - if player.is_batter?
+              - batting_projection = select_favorite_projection(player.batting_projections.load)
+              .col.proj-name-col
+                = batting_projection&.projection_system&.name
+              .col.stat-col.context-stat
+                = batting_projection&.display_games
+              .col.stat-col.context-stat
+                = batting_projection&.display_plate_appearances
+              .col.stat-col.fantasy-stat
+                = batting_projection&.display_runs
+              .col.stat-col.fantasy-stat
+                = batting_projection&.display_runs_batted_in
+              .col.stat-col.fantasy-stat
+                = batting_projection&.display_home_runs
+              .col.stat-col.fantasy-stat
+                = batting_projection&.display_stolen_bases
+              .col.stat-col.fantasy-stat
+                = batting_projection&.display_batting_average
+            - else
+              - pitching_projection = select_favorite_projection(player.pitching_projections.load)
+              .col.proj-name-col
+                = pitching_projection&.projection_system&.name
+              .col.stat-col.context-stat
+                = pitching_projection&.display_games_started
+              .col.stat-col.context-stat
+                = pitching_projection&.display_innings_pitched
+              .col.stat-col.fantasy-stat
+                = pitching_projection&.display_wins
+              .col.stat-col.fantasy-stat
+                = pitching_projection&.display_saves
+              .col.stat-col.fantasy-stat
+                = pitching_projection&.display_era
+              .col.stat-col.fantasy-stat
+                = pitching_projection&.display_whip
+              .col.stat-col.fantasy-stat
+                = pitching_projection&.display_k_per_nine
+            .col.expand-col
+              a.notes-toggle data-toggle="collapse" href="#collapase_user_player_#{user_player.id}" role="button" aria-expanded="false" aria-controls="collapase_user_player_#{user_player.id}"
+                .before-expand
+                  | More +
+                .after-expand
+                  | Less -
+            .col.handle-col
+              - if readonly
+                = link_to raw("<i class='fa fa-pencil'></i>"), edit_user_player_path(user_player, redirect_to: user_ranking_set_path(@user_ranking_set, position: @position_filter))
+              - else
+                i.fa.fa-sort
+          .collapse.notes-collapse id="collapase_user_player_#{user_player.id}"
+            .container
+              .row
+                .col-xs-12 style='margin-top: 10px; margin-bottom: 20px'
+                  - stat_fields = player.is_pitcher? ? StatisticsHelper.pitching_combined_overview : StatisticsHelper.batting_combined_overview
+                  - season_lines = player.is_pitcher? ? player.season_pitching_lines : player.season_batting_lines
+                  - player_projections = player.is_pitcher? ? player.pitching_projections : player.batting_projections
+                  = render 'players/stat_table', stat_fields: stat_fields, player_season_lines: season_lines, player_projections: player_projections
+            - if user_player.notes.present?
+              .container
+                .row
+                  .col-xs-12.text-left.player-notes style='padding-top: 10px: z-index: 100000'
+                    = user_player.notes
+            - if user_player.user_player_articles.present?
+              .container
+                .row
+                  .col-xs-12.player-article-container.player-notes
+                    - user_player.user_player_articles.each do |article|
+                      .row.player-article style='margin-top: 10px'
+                        .col-xs-3.text-right
+                          - if article.publication.present?
+                            span
+                              = article.publication
+                            span
+                              ' &nbsp;
+                          span
+                            ' 2/20
+                        .col-xs-9.text-left
+                          = link_to article.title, article.article_url, target: :_blank
+                          .article-notes
+                            = article.notes
+
+  .col-xs-2
+    = render 'players/sidebar_filter', path_to_filter: path_to_filter

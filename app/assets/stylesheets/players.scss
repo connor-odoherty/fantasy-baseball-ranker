@@ -116,3 +116,171 @@ table.table.stats-table {
     width: 48px;
   }
 }
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+$table-width: 900px;
+$col-height: 36px;
+$cell-padding: 2px;
+$line-height: 32px;
+$number-font-size: 13px;
+
+.mock-table {
+  //display: table;
+  width: 900px;
+  //border: 1px solid green;
+  font-family: 'd-din_expregular';
+
+
+  .actual-row {
+    display: flex;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    flex-direction: column;
+    width: $table-width;
+    border-radius: 3px;
+    background-color: white;
+  }
+
+  .mock-row {
+    width: $table-width;
+    display: table;
+    width: 100%;
+  }
+
+  .head-row {
+    background-color: black;
+    color: white !important;
+    font-family: 'd-din_expdinexp-bold';
+
+    width: $table-width;
+    display: table;
+
+    .col {
+      color: White !important;
+    }
+  }
+
+  .col {
+    height: $col-height;
+    line-height: $line-height;
+    float: left;
+    vertical-align: middle;
+    padding: 2px;
+    display: inline-block;
+  }
+
+  .container {
+    width: $table-width;
+  }
+
+  .pos-rank-col {
+    width: 42px;
+    text-align: center;
+  }
+
+  .name-col {
+    width: 160px;
+    text-align: left;
+    font-weight: bold;
+  }
+
+  .team-col {
+    width: 50px;
+    color: $surface-dark;
+  }
+
+  .pos-col {
+    width: 60px;
+    color: $surface-dark;
+  }
+
+  .tag-col {
+    width: 60px;
+  }
+
+  .ovr-rank-col {
+    font-size: $number-font-size;
+    width: 35px;
+    text-align: right;
+  }
+
+  .adp-col {
+    font-size: $number-font-size;
+    width: 40px;
+    text-align: right;
+  }
+
+  .diff-col {
+    font-size: $number-font-size;
+    width: 22px;
+    text-align: right;
+  }
+
+  .proj-name-col {
+    font-size: $number-font-size;
+    width: 100px;
+    padding-left: 50px;
+    text-align: left;
+    color: $surface-dark;
+  }
+
+  .stat-col {
+    font-size: $number-font-size;
+    width: 30px;
+    text-align: right;
+  }
+
+  .expand-col {
+    text-align: right;
+    width: 80px;
+  }
+
+  .handle-col {
+    text-align: right;
+    width: 30px;
+  }
+
+  .row-tag {
+    margin-left: 10px;
+    font-size: 18px;
+    font-weight: bold;
+
+    &.draft_target-tag {
+      color: #CA7DF9; //724CF9
+    }
+    &.value_pick-tag {
+      color: #7DBBC3;
+    }
+    &.sleeper_pick-tag {
+      color: #42CAFD; // 00ABE7
+    }
+    &.high_upside-tag {
+      color: #53DD6C; //05F140
+    }
+    &.avoid_player-tag {
+      color: #D3AB9E;
+    }
+    &.health_risk-tag {
+      color: #FF5A5F;
+    }
+    &.young_potential-tag {
+      color: #DAEDBD;
+    }
+    &.risky_pick-tag {
+      color: #DC493A;
+    }
+    &.safe_pick-tag {
+      color: #DC493A;
+    }
+    &.regression_candidate-tag {
+      color: #DC493A;
+    }
+    &.bounceback_candidate-tag {
+      color: #DC493A;
+    }
+  }
+}

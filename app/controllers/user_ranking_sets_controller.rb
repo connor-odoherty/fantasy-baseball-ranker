@@ -78,6 +78,16 @@ class UserRankingSetsController < ApplicationController
                        else
                          :catcher
                        end
+    @for_batting = false
+    @for_pitching = false
+    if @position_filter == :all
+      @for_batting = true
+      @for_pitching = true
+    elsif [:starting_pitcher, :relief_pitcher].include? @position_filter
+      @for_pitching = true
+    else
+      @for_batting = true
+    end
   end
 
   def user_ranking_set_params

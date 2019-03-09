@@ -62,6 +62,23 @@ class UserPlayer < ApplicationRecord
     end
   end
 
+  def tag_to_icon(tag)
+    case tag
+    when :draft_target      then 'bullseye'
+    when :value_pick        then 'Value'
+    when :sleeper_pick      then 'bed'
+    when :high_upside       then 'angle-double-up'
+    when :avoid_player      then 'ban'
+    when :health_risk       then 'plus'
+    when :young_potential   then 'Youth'
+    when :risky_pick        then 'Risky'
+    when :safe_pick         then 'Safe'
+    when :regression_candidate       then 'Regress'
+    when :bounceback_candidate       then 'Rebound'
+    else 'ERROR: Undefined tag'
+    end
+  end
+
   def self.selectable_tags
     %i[draft_target sleeper_pick avoid_player health_risk high_upside]
   end

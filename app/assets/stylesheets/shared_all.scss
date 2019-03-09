@@ -219,3 +219,16 @@ a[aria-expanded=false] .after-expand {
 a:visited[role="button"] {
   color: black !important;
 }
+
+.hide-pitching {
+  .pitching {
+    display: none;
+  }
+}
+
+
+.hide-batting {
+  .pitching {
+    display: none;
+  }
+}
