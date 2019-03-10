@@ -35,7 +35,7 @@
             .batting AVG
           .col.expand-col
           .col.handle-col
-    .mock-table id="#{'rankings-table' if !readonly}"
+    .mock-table id="#{ 'rankings-table' if !readonly }"
       = f.fields_for :user_ranking_players, @user_ranking_players do |user_ranking_player_f|
         - user_ranking_player = user_ranking_player_f.object
         - user_player = user_ranking_player.user_player
