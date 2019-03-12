@@ -83,6 +83,18 @@ class UserPlayer < ApplicationRecord
     %i[draft_target sleeper_pick avoid_player health_risk high_upside]
   end
 
+  def self.ranking_display_tags
+    %i[health_risk avoid_player high_upside sleeper_pick draft_target]
+  end
+
+  def self.draft_status_tags
+    %i[avoid_player sleeper_pick]
+  end
+
+  def self.player_attribute_tags
+    %i[draft_target health_risk high_upside]
+  end
+
   def active_tags
     tags.select { |t| UserPlayer.selectable_tags.include?(t) }
   end

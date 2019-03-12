@@ -24,7 +24,7 @@ document.addEventListener("turbolinks:load", function () {
 
         },
         stop: function(e, ui) {
-            // updateOVRRankingValuesAfterReorder();
+            updateOVRRankingValuesAfterReorder();
             // $.ajax({
             //     url: $(this).data("url"),
             //     type: "PATCH",
@@ -35,6 +35,15 @@ document.addEventListener("turbolinks:load", function () {
         }
     });
 });
+
+function updateOVRRankingValuesAfterReorder() {
+    var offset = parseInt($('#rankings-table').data('offset') || '0');
+    $('.player-ranking-row .pos-rank-col:visible').each(function (index, elem) {
+        var rank = index + 1 + offset;
+        $(elem).text(rank);
+    })
+}
+
 
 // document.addEventListener("turbolinks:load", function () {
 //     $('.draggable-player-list').sortable({
@@ -147,3 +156,5 @@ document.addEventListener("turbolinks:load", function () {
 //
 //     })
 // }
+
+

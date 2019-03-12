@@ -1,5 +1,6 @@
 class UserRankingSetsController < ApplicationController
   before_action :set_position_filer, only: %i[show edit update]
+  before_action :set_pagination
   before_action :set_user_ranking_set, except: %i[index new create]
   before_action :set_user_ranking_players, only: %i[show edit update]
 
@@ -49,7 +50,7 @@ class UserRankingSetsController < ApplicationController
     @user_ranking_set.assign_attributes(new_params)
     @user_ranking_set.updated_at = DateTime.now
     if @user_ranking_set.save
-      redirect_to user_ranking_set_path(@user_ranking_set, position: @position_filter)
+      redirect_to user_ranking_set_path(@user_ranking_set, position: @position_filter, page: @page, per_page: @per_page)
     else
       render :edit
     end
@@ -102,7 +103,7 @@ class UserRankingSetsController < ApplicationController
 
   def set_user_ranking_players
     if @position_filter == :all
-      @user_ranking_players = @user_ranking_set.user_ranking_players.limit(300).includes(user_player:
+      @user_ranking_players = @user_ranking_set.user_ranking_players.paginate(:page => @page, :per_page => @per_page).includes(user_player:
                                                                               [:user_player_articles,
                                                                                player: [:mlb_team,
                                                                                         :season_batting_lines,
@@ -110,7 +111,7 @@ class UserRankingSetsController < ApplicationController
                                                                                         batting_projections: [:projection_system],
                                                                                         pitching_projections: [:projection_system]]]).references(user_player: :player).order(ovr_rank: :asc)
     else
-      @user_ranking_players = @user_ranking_set.user_ranking_players
+      @user_ranking_players = @user_ranking_set.user_ranking_players.paginate(:page => @page, :per_page => @per_page)
                                                .where('players.positions & ? > 0', Player.bitmask_for_positions(@position_filter))
                                                .includes(user_player:
                                                 [:user_player_articles,
@@ -130,7 +131,6 @@ class UserRankingSetsController < ApplicationController
     source_ranking_set.pro_ranking_players.find_each do |pro_ranking_player|
       user_player = current_user.user_players.find_by(player_id: pro_ranking_player.player_id)
       user_player = current_user.user_players.create!(player_id: pro_ranking_player.player_id) unless user_player.present?
-
       next if !user_player.id.present? || !@new_user_ranking_set.id.present? || !ovr_rank_count.present? || !(elo_start_point - pro_ranking_player.ovr_rank).present?
 
       user_ranking_players_values.push "(#{user_player.id},#{@new_user_ranking_set.id},#{ovr_rank_count},#{elo_start_point - pro_ranking_player.ovr_rank})"
@@ -158,5 +158,15 @@ class UserRankingSetsController < ApplicationController
 
   def filter_params
     params.permit(:position)
+  end
+
+  def set_pagination
+    @per_page = params[:per_page]&.to_i
+    @per_page = [10, 20, 30, 50, 100].include?(@per_page) ? @per_page : (@position_filter == :all ? 50 : 30)
+
+    @page = params[:page]&.to_i || 1
+    @page = @page > 0 ? @page : 1
+
+    @offset = (@page - 1) * @per_page
   end
 end

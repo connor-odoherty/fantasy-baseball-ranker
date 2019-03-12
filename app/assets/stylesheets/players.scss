@@ -199,12 +199,17 @@ $number-font-size: 13px;
   }
 
   .tag-col {
-    width: 60px;
+    width: 95px;
+  }
+
+  .draft-tag-col {
+    width: 30px;
+    text-align: right;
   }
 
   .ovr-rank-col {
     font-size: $number-font-size;
-    width: 35px;
+    width: 80px;
     text-align: right;
   }
 
@@ -216,14 +221,14 @@ $number-font-size: 13px;
 
   .diff-col {
     font-size: $number-font-size;
-    width: 22px;
+    width: 28px;
     text-align: right;
   }
 
   .proj-name-col {
     font-size: $number-font-size;
-    width: 100px;
-    padding-left: 50px;
+    width: 70px;
+    padding-left: 20px;
     text-align: left;
     color: $surface-dark;
   }
@@ -245,9 +250,12 @@ $number-font-size: 13px;
   }
 
   .row-tag {
-    margin-left: 10px;
-    font-size: 18px;
+    width: 18px;
+    padding: 2px;
+    font-size: 14px;
     font-weight: bold;
+    display: inline-block;
+    text-align: center;
 
     &.draft_target-tag {
       color: #CA7DF9; //724CF9

@@ -1,4 +1,4 @@
-= form_for @user_ranking_set, url: user_ranking_set_path(position: @position_filter) do |f|
+= form_for @user_ranking_set, url: user_ranking_set_path(position: @position_filter, page: @page, per_page: @per_page) do |f|
   = render 'shared/error_messages', object: f.object
   .row
     .col-xs-8
@@ -8,6 +8,24 @@
       = f.button type: 'submit', class: 'btn btn-primary btn-full-width'
         ' Update
     .col-xs-2.text-right
-      = link_to 'Cancel', user_ranking_set_path(@user_ranking_set, position: @position_filter), class: 'btn btn-default'
+      = link_to 'Cancel', user_ranking_set_path(@user_ranking_set, position: @position_filter, page: @page, per_page: @per_page), class: 'btn btn-default'
 
-  = render 'line_rankings', ranking_set: @user_ranking_set, user_ranking_players: @user_ranking_players, path_to_filter: edit_user_ranking_set_path(@user_ranking_set), f: f, readonly: false
+  .container-fluid
+    .col-xs-10
+      = render 'line_rankings', ranking_set: @user_ranking_set, user_ranking_players: @user_ranking_players, f: f, readonly: false
+    .col-xs-2
+      .row
+        .col-xs-12
+          = will_paginate @user_ranking_players
+      .row
+        .col-xs-12
+          .form-group
+            = select_tag 'per_page_select', options_for_select([10, 20, 30, 50, 100].map {|val| [val, val]}, @per_page)
+      .row
+        .col-xs-12
+          = render 'players/sidebar_filter', path_to_filter: edit_user_ranking_set_path(@user_ranking_set, per_page: @per_page)
+
+javascript:
+  $(document).off('change', '#per_page_select').on('change', '#per_page_select', function () {
+    window.location.href = "#{edit_user_ranking_set_path(@user_ranking_set, position: @position_filter).html_safe}" + '&per_page=' + $(this).val().toString();
+  });
