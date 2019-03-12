@@ -290,3 +290,5 @@ gem 'font-awesome-rails'
 gem 'smarter_csv', '~>1.2.0'
 
 gem 'scout_apm'
+
+gem 'will_paginate', '~> 3.1.1'

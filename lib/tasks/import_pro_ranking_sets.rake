@@ -10,7 +10,7 @@ task import_nfbc_adp: :environment do
   #   adp_ranking_set.destroy
   # end
 
-  existing_nfbc_adp = ProRankingSet.find_by(slug: 'nfbc_march_adp')
+  existing_nfbc_adp = ProRankingSet.find_by(slug: 'nfbc-march-adp')
   existing_nfbc_adp.destroy if existing_nfbc_adp.present?
   adp_ranking_set = ProRankingSet.create(
     publication_name: 'NFBC',
@@ -31,7 +31,6 @@ task import_nfbc_adp: :environment do
     row_count += 1
     next if row_count == 1
 
-    p 'ROW HERE:', row
     rank = row[0].to_i
     last_then_first = row[1]
     last_name = last_then_first.split(', ')[0]

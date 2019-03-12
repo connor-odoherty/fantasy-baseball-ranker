@@ -153,7 +153,7 @@ class UserRankingSetsController < ApplicationController
   end
 
   def nfbc_ranking_set
-    ProRankingSet.find('nfbc-february-adp')
+    ProRankingSet.find('nfbc-march-adp')
   end
 
   def filter_params
