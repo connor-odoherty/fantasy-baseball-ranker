@@ -74,10 +74,10 @@
         .col.draft-tag-col
           - if diff > 50
             .row-tag class="sleeper_pick-tag"
-            = fa_icon('bed')
+              = fa_icon('bed')
           - elsif diff > 15
             .row-tag class="value_pick-tag"
-              = fa_icon('money')
+              = fa_icon('dollar')
           - elsif diff < -15
             .row-tag class="health_risk-tag"
               = fa_icon('ban')
