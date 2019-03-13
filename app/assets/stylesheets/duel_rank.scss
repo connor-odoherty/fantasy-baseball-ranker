@@ -1,0 +1,10 @@
+// Place all the styles related to the DuelRank controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.duel-player-card {
+  min-height: 400px;
+
+  .title {
+    font-size: 20px;
+  }
+}

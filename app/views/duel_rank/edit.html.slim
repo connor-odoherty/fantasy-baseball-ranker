@@ -1,0 +1,21 @@
+.container
+  .row
+    .col-xs-11
+      .row
+        .col-xs-12
+          .row
+            .col-xs-12.duel-choice-container
+              .row
+                .col-xs-6.left-choice
+                  = render 'duel_card', user_player: @left_choice_user_ranking_player.user_player
+                  = link_to 'SELECT', duel_rank_path(@user_ranking_set, position: @position_filter, winning_choice: @left_choice_user_ranking_player, losing_choice: @right_choice_user_ranking_player), method: :patch
+                .col-xs-6.right-choice
+                  = render 'duel_card', user_player: @right_choice_user_ranking_player.user_player
+                  = link_to 'SELECT', duel_rank_path(@user_ranking_set, position: @position_filter, winning_choice: @right_choice_user_ranking_player, losing_choice: @left_choice_user_ranking_player), method: :patch
+    .col-xs-1
+      .row
+        .col-xs-12
+          = link_to 'SHOW', duel_rank_index_path(@user_ranking_set, position: @position_filter), class: "btn btn-full-width btn-default"
+      .row
+        .col-xs-12
+          = render 'players/sidebar_filter', path_to_filter: edit_duel_rank_path(@user_ranking_set, per_page: @per_page)

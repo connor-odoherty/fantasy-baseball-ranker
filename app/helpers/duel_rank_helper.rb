@@ -1,0 +1,2 @@
+module DuelRankHelper
+end

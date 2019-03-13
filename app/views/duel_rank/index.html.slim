@@ -1,0 +1,40 @@
+.container
+  .row
+    .col-xs-11
+      .row.player-list
+        .col-xs-12
+          table.table.rankings-table.table-hover
+            thead
+              tr
+                th
+                  | Rank
+                th
+                  | ELO
+                th
+                  | Name
+                th
+                  | Team
+                th
+                  | Pos
+            tbody
+              - @user_ranking_players.each_with_index do |user_ranking_player, index|
+                - player = user_ranking_player.user_player.player
+                tr
+                  td
+                    = index + 1
+                  td
+                    = user_ranking_player.elo_score
+                  td
+                    = player.display_name
+                  td
+                    = player.mlb_team.short_name
+                  td
+                    = player.display_positions
+
+    .col-xs-1
+      .row
+        .col-xs-12
+          = link_to 'EDIT', edit_duel_rank_path(@user_ranking_set, position: @position_filter), class: "btn btn-full-width btn-default"
+      .row
+        .col-xs-12
+          = render 'players/sidebar_filter', path_to_filter: duel_rank_index_path(@user_ranking_set, per_page: @per_page)

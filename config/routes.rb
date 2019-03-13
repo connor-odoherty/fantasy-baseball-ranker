@@ -27,4 +27,6 @@ Rails.application.routes.draw do
   resources :user_ranking_players
 
   resources :users
+
+  resources :duel_rank
 end

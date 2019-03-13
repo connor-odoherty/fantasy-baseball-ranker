@@ -2,15 +2,15 @@
   .col-xs-12
     = render 'shared/error_messages', object: f.object
     - player = user_player.player
-    / .row.title
-    /   .col-xs-8.text-left
-    /     span.strong
-    /       = player.display_name
-    /     span
-    /       = " - #{player.mlb_team.short_name}"
-    /   .col-xs-4.text-right
-    /     span.strong
-    /       = player.display_positions
+    .row.title
+      .col-xs-8.text-left
+        span.strong
+          = player.display_name
+        span
+          = " - #{player.mlb_team.short_name}"
+      .col-xs-4.text-right
+        span.strong
+          = player.display_positions
     .row
       .col-xs-12 style='margin-top: 10px; margin-bottom: 20px'
         - stat_fields = player.is_pitcher? ? StatisticsHelper.pitching_combined_overview : StatisticsHelper.batting_combined_overview
