@@ -1,13 +1,27 @@
-= form_for(@user_player, url: user_player_path(redirect_to: @redirect_to)) do |f|
-  .container-fluid
+- player = @user_player.player
+.modal-header
+  .modal-title.player-modal-title
     .row
-      .col-xs-10
-        = render 'form', user_player: @user_player, readonly: false, f: f
-      .col-xs-2
-        .row
-          .col-xs-12
-            = f.submit 'SAVE', class: 'btn btn-primary'
-        .row
-          .col-xs-12
-            = link_to 'CANCEL', @redirect_to.present? ? @redirect_to : user_players_path, class: 'btn btn-default btn-full-width'
-x
+      .col-xs-8.text-left
+        span.strong
+          = player.display_name
+        span
+          = " - #{player.mlb_team.short_name}"
+      .col-xs-4.text-right
+        span.strong
+          = player.display_positions
+    button type="button" class="close" data-dismiss="modal" aria-label="Close"
+
+= form_for(@user_player, url: user_player_path(redirect_to: @redirect_to), remote: true, html: {data: {modal: true}}) do |f|
+  .modal-body
+    .container-fluid
+      .row
+        .col-xs-12
+          = render 'form', user_player: @user_player, readonly: false, f: f
+  .modal-footer
+    .row
+      .col-xs-12.pull-right
+        = f.submit 'SAVE', class: 'btn btn-primary pull-right'
+      / .row
+      /   .col-xs-12
+      /     = link_to 'CANCEL', @redirect_to.present? ? @redirect_to : user_players_path, class: 'btn btn-default btn-full-width'

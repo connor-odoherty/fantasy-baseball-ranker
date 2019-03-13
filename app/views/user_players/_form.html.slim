@@ -2,71 +2,76 @@
   .col-xs-12
     = render 'shared/error_messages', object: f.object
     - player = user_player.player
-    .row.title
-      .col-xs-8.text-left
-        span.strong
-          = player.display_name
-        span
-          = " - #{player.mlb_team.short_name}"
-      .col-xs-4.text-right
-        span.strong
-          = player.display_positions
+    / .row.title
+    /   .col-xs-8.text-left
+    /     span.strong
+    /       = player.display_name
+    /     span
+    /       = " - #{player.mlb_team.short_name}"
+    /   .col-xs-4.text-right
+    /     span.strong
+    /       = player.display_positions
     .row
       .col-xs-12 style='margin-top: 10px; margin-bottom: 20px'
         - stat_fields = player.is_pitcher? ? StatisticsHelper.pitching_combined_overview : StatisticsHelper.batting_combined_overview
         - season_lines = player.is_pitcher? ? player.season_pitching_lines : player.season_batting_lines
         - player_projections = player.is_pitcher? ? player.pitching_projections : player.batting_projections
         = render 'players/stat_table', stat_fields: stat_fields, player_season_lines: season_lines, player_projections: player_projections
-    .form-group
-      .col-xs-2.text-right.strong
-        ' Notes:
-      .col-xs-10.text-left
-        = f.text_area :notes, class: 'form-control', disabled: readonly, style: 'min-height: 160px'
-    .form-group
-      .col-xs-2.text-right.strong
-        ' Tags:
-      .col-xs-10
-        - selectable_tags = UserPlayer.selectable_tags
-        - (0..selectable_tags.length- 1).step(2) do |index|
-          .form-group
-            .col-sm-6
-              - tag = selectable_tags[index]
-              span.checkbox.checkbox-primary
-                = check_box_tag 'user_player[tags][]', tag, f.object.has_any_tags?(tag), id: "user_player_tags_#{tag.to_s}", class: "role_checkbox checkbox-fade", 'data-tag-name' => tag.to_s, disabled: readonly
-                label for="user_player_tags_#{tag.to_s}"
-                  .ranking-tag.text-center class="#{tag.to_s}-tag"
-                    = f.object.tag_to_s(tag)
-            .col-sm-6
-              - if index + 1 < selectable_tags.length
-                - tag = selectable_tags[index + 1]
-                span.checkbox.checkbox-primary
-                  = check_box_tag 'user_player[tags][]', tag, f.object.has_any_tags?(tag), id: "user_player_tags_#{tag.to_s}", class: "role_checkbox checkbox-fade", 'data-tag-name' => tag.to_s, disabled: readonly
-                  label for="user_player_tags_#{tag.to_s}"
-                    .ranking-tag.text-center class="#{tag.to_s}-tag"
-                      = f.object.tag_to_s(tag)
-    .form-group
-      .col-xs-2.text-right.strong
-        ' Articles:
-      .col-xs-10.text-left
-        .row
+    .row
+      .col-xs-9
+        .form-group
+          .col-xs-12.text-left.strong
+            ' Notes:
+          .col-xs-12.text-left
+            = f.text_area :notes, class: 'form-control', disabled: readonly, style: 'min-height: 160px'
+      .col-xs-3
+        .form-group
+          .col-xs-12.text-left.strong
+            ' Tags:
           .col-xs-12
-            = f.nested_fields_for :user_player_articles do |paf|
-              .row style='margin-bottom: 20px'
-                .col-xs-12
-                  .row
-                    .col-xs-3
-                      = paf.text_field :publication, placeholder: 'Publication name', class: 'form-control', disabled: readonly
-                    .col-xs-4
-                      = paf.text_field :title, placeholder: 'Article title', class: 'form-control', disabled: readonly
-                    .col-xs-5
-                      = paf.text_field :article_url, placeholder: 'URL', class: 'form-control', disabled: readonly
-                  .row
-                    .col-xs-10
-                      = paf.text_area :notes, placeholder: 'Article notes', class: 'form-control', disabled: readonly
-                    .col-xs-2
-                      - if !readonly
-                        = paf.remove_nested_fields_link 'X', class: 'btn btn-default', data: { confirm: 'Are you sure you want to remove this article?' }
-        .row
-          .col-xs-12
-            - if !readonly
-              = f.add_nested_fields_link :user_player_articles, 'Add article', class: 'btn btn-default'
+            - selectable_tags = UserPlayer.selectable_tags
+            - (0..selectable_tags.length- 1).step(2) do |index|
+              .form-group
+                .col-sm-6
+                  - tag = selectable_tags[index]
+                  span.checkbox.checkbox-primary
+                    = check_box_tag 'user_player[tags][]', tag, f.object.has_any_tags?(tag), id: "user_player_tags_#{tag.to_s}", class: "role_checkbox checkbox-fade", 'data-tag-name' => tag.to_s, disabled: readonly
+                    label.tag-label for="user_player_tags_#{tag.to_s}"
+                      .ranking-tag.text-center class="#{tag.to_s}-tag"
+                        = f.object.tag_to_s(tag)
+                .col-sm-6
+                  - if index + 1 < selectable_tags.length
+                    - tag = selectable_tags[index + 1]
+                    span.checkbox.checkbox-primary
+                      = check_box_tag 'user_player[tags][]', tag, f.object.has_any_tags?(tag), id: "user_player_tags_#{tag.to_s}", class: "role_checkbox checkbox-fade", 'data-tag-name' => tag.to_s, disabled: readonly
+                      label.tag-label for="user_player_tags_#{tag.to_s}"
+                        .ranking-tag.text-center class="#{tag.to_s}-tag"
+                          = f.object.tag_to_s(tag)
+    .row
+      .col-xs-12
+        .form-group
+          .col-xs-12.text-left.strong
+            ' Articles:
+          .col-xs-12.text-left
+            .row
+              .col-xs-12
+                = f.nested_fields_for :user_player_articles do |paf|
+                  .row style='margin-bottom: 20px'
+                    .col-xs-12
+                      .row
+                        .col-xs-3
+                          = paf.text_field :publication, placeholder: 'Publication name', class: 'form-control', disabled: readonly
+                        .col-xs-4
+                          = paf.text_field :title, placeholder: 'Article title', class: 'form-control', disabled: readonly
+                        .col-xs-5
+                          = paf.text_field :article_url, placeholder: 'URL', class: 'form-control', disabled: readonly
+                      .row
+                        .col-xs-10
+                          = paf.text_area :notes, placeholder: 'Article notes', class: 'form-control', disabled: readonly
+                        .col-xs-2
+                          - if !readonly
+                            = paf.remove_nested_fields_link 'X', class: 'btn btn-default', data: { confirm: 'Are you sure you want to remove this article?' }
+            .row
+              .col-xs-12
+                - if !readonly
+                  = f.add_nested_fields_link :user_player_articles, 'Add article', class: 'btn btn-default'

@@ -1,0 +1,13 @@
+$large-modal-width: 1000px;
+.modal {
+  .modal-dialog {
+    &.large-modal {
+      width: $large-modal-width;
+    }
+
+    .modal-content {
+
+
+    }
+  }
+}

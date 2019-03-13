@@ -30,3 +30,59 @@ $(document).on('railsAutocomplete.select', '.autocomplete-xhr-navigate-to', func
     if(data.item.navigate_to)
         $.ajax({url: data.item.navigate_to});
 });
+
+$(document).ready(function(){
+
+    $(document).bind('ajaxError', 'form.edit_user_player', function(event, jqxhr, settings, exception){
+
+        // note: jqxhr.responseJSON undefined, parsing responseText instead
+        $(event.data).render_form_errors( $.parseJSON(jqxhr.responseText) );
+
+    });
+
+});
+
+(function($) {
+
+    $.fn.modal_success = function(){
+        // close modal
+        // this.modal('hide');
+        //
+        // // clear form input elements
+        // // todo/note: handle textarea, select, etc
+        // this.find('form input[type="text"]').val('');
+        //
+        // // clear error state
+        // this.clear_previous_errors();
+    };
+
+    $.fn.render_form_errors = function(errors){
+
+        $form = this;
+        this.clear_previous_errors();
+        model = this.data('model');
+
+        // show error messages in input form-group help-block
+        $('#modal-error-handler').show();
+        // $.each(errors, function(field, messages){
+        //     console.log('Model:', model)
+        //     console.log(field)
+        //     console.log(messages)
+        //     $input = $('input[name="' + model + '[' + field + ']"]');
+        //     $('#modal-error-handler ul').append('<li>' + messages.join(' & ') + '</li>');
+        //     $input.closest('.form-group').addClass('has-error').find('.help-block').html( messages.join(' & ') );
+        // });
+        $.each(errors, function(index, message){
+            $('#modal-error-handler ul').append('<li>' + message + '</li>');
+        });
+
+    };
+
+    $.fn.clear_previous_errors = function(){
+        $('.form-group.has-error', this).each(function(){
+            $('.help-block', $(this)).html('');
+            $(this).removeClass('has-error');
+        });
+    }
+
+}(jQuery));

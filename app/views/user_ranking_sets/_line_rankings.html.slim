@@ -125,7 +125,7 @@
               | Less -
         .col.handle-col
           - if readonly
-            = link_to raw("<i class='fa fa-pencil'></i>"), edit_user_player_path(user_player, redirect_to: user_ranking_set_path(@user_ranking_set, position: @position_filter))
+            = link_to raw("<i class='fa fa-pencil'></i>"), edit_user_player_path(user_player, redirect_to: user_ranking_set_path(@user_ranking_set, position: @position_filter)), data: { modal: true }
           - else
             i.fa.fa-sort
       .collapse.notes-collapse id="collapase_user_player_#{user_player.id}"

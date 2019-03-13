@@ -3,20 +3,26 @@ class UserPlayersController < ApplicationController
   before_action :set_redirect_to
   before_action :set_user_player, except: %i[index autocomplete]
 
+  respond_to :html, :json
+
   def index; end
 
   def show; end
 
   def edit
-    # @user_player.user_player_articles.build if @user_player.user_player_articles.none?
+    respond_modal_with @user_player
   end
 
   def update
     @user_player.assign_attributes(user_player_params)
     if @user_player.save
-      redirect_to @redirect_to.present? ? @redirect_to : user_player_path(@user_player)
+      redirect_to (@redirect_to.present? ? @redirect_to : user_player_path(@user_player))
     else
-      render 'edit'
+      respond_to do |format|
+        format.html { render :edit }
+        format.json { render json: @user_player.errors.full_messages, status: :unprocessable_entity }
+        format.js   { render json: @user_player.errors.full_messages, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -62,6 +68,5 @@ class UserPlayersController < ApplicationController
   def set_redirect_to
     pp params
     @redirect_to = params[:redirect_to]
-    p 'REDIRECT TO', @redirect_to
   end
 end
