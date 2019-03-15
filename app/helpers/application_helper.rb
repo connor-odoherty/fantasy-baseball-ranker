@@ -7,4 +7,12 @@ module ApplicationHelper
     breadcrumbs += '</div>'
     raw breadcrumbs
   end
+
+  def current_action?(query_name)
+    action_name == query_name
+  end
+
+  def current_controller?(query_name)
+    controller_name == query_name
+  end
 end
