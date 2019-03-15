@@ -24,7 +24,9 @@ Rails.application.routes.draw do
       patch :sort
     end
 
-    resources :duel_rank
+    resources :duel_rank do
+      patch 'reset_elo', on: :collection
+    end
   end
   resources :user_ranking_players
 
