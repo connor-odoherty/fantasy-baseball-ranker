@@ -1,9 +1,13 @@
-class DuelRankController < ApplicationController
+class DuelRankController < UserRankingSetsLayoutController
   before_action :set_position_filer
   before_action :set_user_ranking_set, except: %i[new create]
   before_action :set_user_ranking_players, only: %i[index show edit update]
 
   def index
+
+  end
+
+  def show
 
   end
 
@@ -36,11 +40,7 @@ class DuelRankController < ApplicationController
   private
 
   def set_user_ranking_set
-    if params[:id]
-      @user_ranking_set = current_user.user_ranking_sets.find(params[:id])
-    else
-      @user_ranking_set = current_user.user_ranking_sets.order(updated_at: :desc).first
-    end
+    @user_ranking_set = current_user.user_ranking_sets.find(params[:user_ranking_set_id])
   end
 
   def set_user_ranking_players
@@ -59,8 +59,8 @@ class DuelRankController < ApplicationController
   end
 
   def set_position_filer
-    @position_filter = if filter_params[:position].present?
-                         filter_params[:position].to_sym
+    @position_filter = if params[:id].present?
+                         params[:id].to_sym
                        else
                          :catcher
                        end

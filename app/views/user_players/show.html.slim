@@ -1,5 +1,15 @@
 = form_for(@user_player, url: user_player_path) do |f|
+  - player = @user_player.player
   .container-fluid
+    .row.title
+      .col-xs-8.text-left
+        span.strong
+          = player.display_name
+        span
+          = " - #{player.mlb_team.short_name}"
+      .col-xs-4.text-right
+        span.strong
+          = player.display_positions
     .row
       .col-xs-10
         = render 'form', user_player: @user_player, readonly: true, f: f

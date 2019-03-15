@@ -1,17 +1,14 @@
+
 = form_for @user_ranking_set, url: user_ranking_set_path do |f|
   .row
-    .col-xs-8
-      h1
-        = @user_ranking_set.display_name
-    .col-xs-2
-      = link_to 'Edit', edit_user_ranking_set_path(@user_ranking_set, position: @position_filter, page: params[:page], per_page: @per_page), class: 'btn btn-primary btn-full-width'
-    .col-xs-2.text-right
-      = button_to @user_ranking_set, method: :delete, class: 'btn btn-danger' do
-        ' Delete
+    = position_breadcrumbs 'Rankings', @position_filter, :show
   .container-fluid
     .col-xs-10
       = render 'line_rankings', ranking_set: @user_ranking_set, user_ranking_players: @user_ranking_players, f: f, readonly: true
     .col-xs-2
+      .row
+        .col-xs-12
+          = link_to 'Edit', edit_user_ranking_set_path(@user_ranking_set, position: @position_filter, page: params[:page], per_page: @per_page), class: 'btn btn-primary btn-full-width'
       .row
         .col-xs-12
           = will_paginate @user_ranking_players
@@ -19,9 +16,6 @@
         .col-xs-12
           .form-group
             = select_tag 'per_page_select', options_for_select([10, 20, 30, 50, 100].map {|val| [val, val]}, @per_page)
-      .row
-        .col-xs-12
-          = render 'players/sidebar_filter', path_to_filter: user_ranking_set_path(@user_ranking_set, per_page: @per_page)
 
 javascript:
   $(document).off('change', '#per_page_select').on('change', '#per_page_select', function () {

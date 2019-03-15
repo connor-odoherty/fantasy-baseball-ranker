@@ -1,4 +1,4 @@
-class UserRankingSetsController < ApplicationController
+class UserRankingSetsController < UserRankingSetsLayoutController
   before_action :set_position_filer, only: %i[show edit update]
   before_action :set_pagination
   before_action :set_user_ranking_set, except: %i[index new create]

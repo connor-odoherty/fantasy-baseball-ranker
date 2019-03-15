@@ -1,4 +1,4 @@
-.mock-table
+.mock-table style='float: right'
   .actual-row
     .head-row class="#{'hide-pitching' if !@for_pitching} #{'hide-batting' if !@for_batting}"
       .col.pos-rank-col Rnk
@@ -34,7 +34,7 @@
         .batting AVG
       .col.expand-col
       .col.handle-col
-.mock-table id="#{ 'rankings-table' if !readonly }" data-offset="#{@offset}"
+.mock-table style='float: right' id="#{ 'rankings-table' if !readonly }" data-offset="#{@offset}"
   = f.fields_for :user_ranking_players, @user_ranking_players do |user_ranking_player_f|
     - user_ranking_player = user_ranking_player_f.object
     - user_player = user_ranking_player.user_player

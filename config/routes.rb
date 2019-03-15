@@ -23,10 +23,10 @@ Rails.application.routes.draw do
     collection do
       patch :sort
     end
+
+    resources :duel_rank
   end
   resources :user_ranking_players
 
   resources :users
-
-  resources :duel_rank
 end

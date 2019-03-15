@@ -1,0 +1,117 @@
+.row
+  .col-xs-12.text-center.sidebar-title
+    = @user_ranking_set.display_name
+- # Rankings tab
+- on_rankings_page = current_page?(controller: 'user_ranking_sets', action: :edit) || current_page?(controller: 'user_ranking_sets', action: :show)
+- on_duel_rank_page = controller_path.include? 'duel_rank'
+- p 'CONTROLLER PATH:', controller_path
+.row
+  .col-xs-12
+    - if on_rankings_page
+      .collapsible-tab
+        | Rankings
+    - else
+      a.notes-toggle#rankings_collapse_toggle data-toggle="collapse" href="#collapse_rankings_tab" role="button" aria-expanded="#{on_rankings_page}" aria-controls="collapse_rankings_tab"
+        .collapsible-tab
+          | Rankings
+    .collapse.collapse-body#collapse_rankings_tab data-parent="#rankings_collapse_toggle" aria-expanded="#{on_rankings_page}" class="#{'show' if on_rankings_page}"
+      .btn-container
+        - col_width = 12
+        - if current_page?(action: :show) || !on_rankings_page
+          .row
+            .col-xs-12
+              = link_to 'ALL', user_ranking_set_path(@user_ranking_set, position: :all, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :all}"
+            div class="col-xs-#{col_width}"
+              = link_to 'C', user_ranking_set_path(@user_ranking_set, position: :catcher, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :catcher}"
+            div class="col-xs-#{col_width}"
+              = link_to '1B', user_ranking_set_path(@user_ranking_set, position: :first_base, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :first_base}"
+            div class="col-xs-#{col_width}"
+              = link_to '2B', user_ranking_set_path(@user_ranking_set, position: :second_base, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :second_base}"
+            div class="col-xs-#{col_width}"
+              = link_to 'SS', user_ranking_set_path(@user_ranking_set, position: :short_stop, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :short_stop}"
+            div class="col-xs-#{col_width}"
+              = link_to '3B', user_ranking_set_path(@user_ranking_set, position: :third_base, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :third_base}"
+            div class="col-xs-#{col_width}"
+              = link_to 'OF', user_ranking_set_path(@user_ranking_set, position: :outfield, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :outfield}"
+            div class="col-xs-#{col_width}"
+              = link_to 'SP', user_ranking_set_path(@user_ranking_set, position: :starting_pitcher, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :starting_pitcher}"
+            div class="col-xs-#{col_width}"
+              = link_to 'RP', user_ranking_set_path(@user_ranking_set, position: :relief_pitcher, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :relief_pitcher}"
+        - if current_page?(action: :edit)
+          .row
+            .col-xs-12
+              = link_to 'ALL', edit_user_ranking_set_path(@user_ranking_set, position: :all, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :all}"
+            div class="col-xs-#{col_width}"
+              = link_to 'C', edit_user_ranking_set_path(@user_ranking_set, position: :catcher, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :catcher}"
+            div class="col-xs-#{col_width}"
+              = link_to '1B', edit_user_ranking_set_path(@user_ranking_set, position: :first_base, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :first_base}"
+            div class="col-xs-#{col_width}"
+              = link_to '2B', edit_user_ranking_set_path(@user_ranking_set, position: :second_base, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :second_base}"
+            div class="col-xs-#{col_width}"
+              = link_to 'SS', edit_user_ranking_set_path(@user_ranking_set, position: :short_stop, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :short_stop}"
+            div class="col-xs-#{col_width}"
+              = link_to '3B', edit_user_ranking_set_path(@user_ranking_set, position: :third_base, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :third_base}"
+            div class="col-xs-#{col_width}"
+              = link_to 'OF', edit_user_ranking_set_path(@user_ranking_set, position: :outfield, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :outfield}"
+            div class="col-xs-#{col_width}"
+              = link_to 'SP', edit_user_ranking_set_path(@user_ranking_set, position: :starting_pitcher, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :starting_pitcher}"
+            div class="col-xs-#{col_width}"
+              = link_to 'RP', edit_user_ranking_set_path(@user_ranking_set, position: :relief_pitcher, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :relief_pitcher}"
+.row
+  .col-xs-12
+    - p 'IM HERE', on_duel_rank_page
+    - if on_duel_rank_page
+      .collapsible-tab
+        | Duel rank
+    - else
+      a.notes-toggle#duel_rank_collapse_toggle data-toggle="collapse" href="#duel_rank_tab" role="button" aria-expanded="#{on_duel_rank_page}" aria-controls="duel_rank_tab"
+        .collapsible-tab
+          | Duel rank
+    .collapse.collapse-body#duel_rank_tab data-parent="#duel_rank_collapse_toggle" aria-expanded="#{on_duel_rank_page}" class="#{'show' if on_duel_rank_page}"
+      .btn-container
+        - col_width = 12
+        - if current_page?(action: :show) || !on_duel_rank_page
+          .row
+            .col-xs-12
+              = link_to 'ALL', user_ranking_set_duel_rank_path(@user_ranking_set, :all, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :all}"
+            div class="col-xs-#{col_width}"
+              = link_to 'C', user_ranking_set_duel_rank_path(@user_ranking_set, :catcher, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :catcher}"
+            div class="col-xs-#{col_width}"
+              = link_to '1B', user_ranking_set_duel_rank_path(@user_ranking_set, :first_base, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :first_base}"
+            div class="col-xs-#{col_width}"
+              = link_to '2B', user_ranking_set_duel_rank_path(@user_ranking_set, :second_base, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :second_base}"
+            div class="col-xs-#{col_width}"
+              = link_to 'SS', user_ranking_set_duel_rank_path(@user_ranking_set, :short_stop, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :short_stop}"
+            div class="col-xs-#{col_width}"
+              = link_to '3B', user_ranking_set_duel_rank_path(@user_ranking_set, :third_base, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :third_base}"
+            div class="col-xs-#{col_width}"
+              = link_to 'OF', user_ranking_set_duel_rank_path(@user_ranking_set, :outfield, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :outfield}"
+            div class="col-xs-#{col_width}"
+              = link_to 'SP', user_ranking_set_duel_rank_path(@user_ranking_set, :starting_pitcher, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :starting_pitcher}"
+            div class="col-xs-#{col_width}"
+              = link_to 'RP', user_ranking_set_duel_rank_path(@user_ranking_set, :relief_pitcher, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :relief_pitcher}"
+        - else
+          .row
+            .col-xs-12
+              = link_to 'ALL', edit_user_ranking_set_duel_rank_path(@user_ranking_set, :all, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :all}"
+            div class="col-xs-#{col_width}"
+              = link_to 'C', edit_user_ranking_set_duel_rank_path(@user_ranking_set, :catcher, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :catcher}"
+            div class="col-xs-#{col_width}"
+              = link_to '1B', edit_user_ranking_set_duel_rank_path(@user_ranking_set, :first_base, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :first_base}"
+            div class="col-xs-#{col_width}"
+              = link_to '2B', edit_user_ranking_set_duel_rank_path(@user_ranking_set, :second_base, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :second_base}"
+            div class="col-xs-#{col_width}"
+              = link_to 'SS', edit_user_ranking_set_duel_rank_path(@user_ranking_set, :short_stop, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :short_stop}"
+            div class="col-xs-#{col_width}"
+              = link_to '3B', edit_user_ranking_set_duel_rank_path(@user_ranking_set, :third_base, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :third_base}"
+            div class="col-xs-#{col_width}"
+              = link_to 'OF', edit_user_ranking_set_duel_rank_path(@user_ranking_set, :outfield, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :outfield}"
+            div class="col-xs-#{col_width}"
+              = link_to 'SP', edit_user_ranking_set_duel_rank_path(@user_ranking_set, :starting_pitcher, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :starting_pitcher}"
+            div class="col-xs-#{col_width}"
+              = link_to 'RP', edit_user_ranking_set_duel_rank_path(@user_ranking_set, :relief_pitcher, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :relief_pitcher}"
+
+.row style='margin-top: 50px'
+  .col-xs-12
+    = button_to @user_ranking_set, method: :delete, class: 'btn btn-danger' do
+      ' Delete

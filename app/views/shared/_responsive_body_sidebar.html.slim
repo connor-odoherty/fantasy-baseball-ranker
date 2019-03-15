@@ -1,0 +1,15 @@
+#content.content-with-sidebar
+  .container-fluid
+    .row style="height: 100%"
+      .responsive-sidebar class="#{@responsive_sidebar_content_class}"
+        .responsive-sidebar-content
+          = render @responsive_sidebar_content
+
+      #content-with-responsive-sidebar.content-with-responsive-sidebar
+        .content-with-responsive-sidebar-container
+          - flash.each do |message_type, message|
+            .alert class="alert-#{ message_type }"
+              = message
+          = yield
+          = debug(params) if Rails.env.development?
+    = render 'layouts/footer'
