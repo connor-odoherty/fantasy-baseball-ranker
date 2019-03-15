@@ -12,7 +12,7 @@
           = player.display_positions
     .row
       .col-xs-12 style='margin-top: 10px; margin-bottom: 20px'
-        - stat_fields = player.is_pitcher? ? StatisticsHelper.pitching_fields_basic : StatisticsHelper.batting_fields_basic
+        - stat_fields = player.is_pitcher? ? StatisticsHelper.pitching_fields_basic : StatisticsHelper.batting_card_overview
         - season_lines = player.is_pitcher? ? player.season_pitching_lines : player.season_batting_lines
         - player_projections = player.is_pitcher? ? player.pitching_projections : player.batting_projections
         = render 'players/stat_table', stat_fields: stat_fields, player_season_lines: season_lines, player_projections: player_projections

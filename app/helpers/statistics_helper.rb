@@ -126,6 +126,11 @@ module StatisticsHelper
     (batting_basic + batting_advanced + batting_plate_discipline + batting_contact_peripherals + batting_batted_ball_peripherals) - [:ground_ball_rate, :soft_contact_rate, :line_drive_rate, :infield_fly_ball_rate, :line_drive_rate, :medium_contact_rate]
   end
 
+  def self.batting_card_overview
+    (batting_basic + batting_advanced)
+  end
+
+
   # PITCHING STAT LAYOUTS
 
   def self.pitching_fields_basic
