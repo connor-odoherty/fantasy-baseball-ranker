@@ -23,7 +23,7 @@
                             ' &nbsp;&nbsp;&nbsp;
                         .col-xs-8.text-left.card-title style='padding-left: 0px'
                           span.strong
-                            ' #{player.display_name}
+                            = fg_player_link player
                       .row
                         .col-xs-4.text-right
                           = link_to raw("&nbsp;#{fa_icon 'line-chart'}"), player.fg_link, target: :_blank, class: 'fan-graphs-link'

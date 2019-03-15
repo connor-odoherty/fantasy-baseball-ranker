@@ -17,6 +17,13 @@
   }
 }
 
+a.fg-player-link {
+  color: black;
+  &:hover {
+    color: $primary-light;
+  }
+}
+
 .modal-title.player-modal-title {
   font-size: 36px;
 }

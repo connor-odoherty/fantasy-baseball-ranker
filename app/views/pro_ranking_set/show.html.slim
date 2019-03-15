@@ -12,7 +12,10 @@ h1
             .col-xs-11.player-info
               .row
                 .col-xs-12.text-left.card-title
-                  ' #{player.display_name} - #{player.display_team}
+                  span.strong
+                    = fg_player_link player
+                  span
+                    | &nbsp;-&nbsp;#{player.display_team}
               .row.text-left
                 .col-xs-6.player-essential-info
                   .row

@@ -46,7 +46,7 @@
         .col.pos-rank-col
           = user_ranking_player_f.index + 1 + @offset
         .col.name-col
-          = player.display_name
+          = fg_player_link player
           span
             ' &nbsp;
           - UserPlayer.player_attribute_tags.each do |tag|

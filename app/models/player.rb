@@ -98,7 +98,7 @@ class Player < ApplicationRecord
   end
 
   def display_team
-    mlb_team.long_name
+    mlb_team.short_name
   end
 
   def display_age

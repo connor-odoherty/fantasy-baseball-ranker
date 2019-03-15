@@ -15,4 +15,8 @@ module ApplicationHelper
   def current_controller?(query_name)
     controller_name == query_name
   end
+
+  def fg_player_link(player)
+    raw "<a class='fg-player-link' target='_blank' href='#{player.fg_link}'>#{player.display_name}</a>"
+  end
 end

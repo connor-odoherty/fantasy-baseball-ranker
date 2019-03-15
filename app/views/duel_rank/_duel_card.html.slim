@@ -4,9 +4,9 @@
     .row.title
       .col-xs-8.text-left
         span.strong
-          = player.display_name
+          = fg_player_link player
         span
-          = " - #{player.mlb_team.short_name}"
+          | &nbsp;-&nbsp;#{player.display_team}
       .col-xs-4.text-right
         span.strong
           = player.display_positions
