@@ -1,12 +1,11 @@
-.row
-  .col-xs-6
-    h1.text-left
-      = "Home"
-  .col-xs-6
-    h4.text-right
-      = "Signed in as: #{current_user.name}"
-
-.container-fluid
+.container
+  .row
+    .col-xs-6
+      h1.text-left
+        = "Home"
+    .col-xs-6
+      h4.text-right
+        = "Signed in as: #{current_user.name}"
   h3.text-left.danger Your rankings
   - @user_ranking_sets&.each_with_index do |user_ranking_set, index|
     .row.player-card

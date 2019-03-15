@@ -15,6 +15,6 @@ class StaticPagesController < ApplicationController
   end
 
   def set_user_ranking_sets
-    @user_ranking_sets = UserRankingSet.where(user: current_user).all if current_user.present?
+    @user_ranking_sets = current_user.user_ranking_sets if current_user.present?
   end
 end
