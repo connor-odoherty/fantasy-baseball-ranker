@@ -9,7 +9,14 @@ class DuelRankController < UserRankingSetsLayoutController
   end
 
   def show
-
+    if @position_filter == :all
+      @user_ranking_players_in_ranking_order = @user_ranking_set.user_ranking_players.order(ovr_rank: :asc).map(&:id)
+    else
+      @user_ranking_players_in_ranking_order = @user_ranking_set.user_ranking_players
+                                                   .where('players.positions & ? > 0', Player.bitmask_for_positions(@position_filter))
+                                                   .includes(user_player: [player: [:mlb_team] ]).references(user_player: :player)
+                                                   .order(ovr_rank: :asc).map(&:id)
+    end
   end
 
   def edit

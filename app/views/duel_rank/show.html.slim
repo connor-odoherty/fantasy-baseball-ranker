@@ -5,34 +5,49 @@
     .col-xs-10
       .row.player-list
         .col-xs-12
-          table.table.rankings-table.table-hover
+          table.table.basic-table.table-hover
             thead
               tr
-                th
-                  | Rank
-                th
+                th.rank-col
                   | ELO
-                th
-                  | Name
-                th
-                  | Team
-                th
+                th.rank-col
                   | Pos
+                th.info-col
+                  | Name
+                th.short-info-col
+                  | Team
+                th.short-info-col style='width: 20%'
+                  | Pos
+                th.rank-col
+                  | Score
+                th.rank-col
+                  | Ovr
+                th.rank-col
+                  | ADP
+                th.text-right
+                  | Actions
             tbody
               - @user_ranking_players.each_with_index do |user_ranking_player, index|
                 - player = user_ranking_player.user_player.player
                 tr
-                  td
-                    = index + 1
-                  td
-                    = user_ranking_player.elo_score
-                  td
+                  td.rank-col
+                    = index + 1 + @offset
+                  td.rank-col
+                    = @user_ranking_players_in_ranking_order.index(user_ranking_player.id) + 1
+                  td.info-col.strong
                     = fg_player_link player
-                  td
+                  td.short-info-col
                     = player.mlb_team.short_name
-                  td
+                  td.short-info-col style='width: 20%'
                     = player.display_positions
-
+                  td.rank-col
+                    = user_ranking_player.elo_score
+                  td.rank-col
+                    = user_ranking_player.ovr_rank
+                  td.rank-col
+                    = user_ranking_player.user_player.player.adp
+                  td.text-right
+                    = link_to raw("<i class='fa fa-pencil'></i>"), edit_user_player_path(user_ranking_player.user_player, redirect_to: user_ranking_set_duel_rank_path(@user_ranking_set, @position_filter)), data: {modal: true}
     .col-xs-2
       .row
         .col-xs-12
@@ -40,3 +55,15 @@
       .row
         .col-xs-12
           = link_to 'Reset', reset_elo_user_ranking_set_duel_rank_index_path(@user_ranking_set), method: :patch, class: 'btn btn-primary btn-full-width'
+      .row
+        .col-xs-12
+          = will_paginate @user_ranking_players
+      .row
+        .col-xs-12
+          .form-group
+            = select_tag 'per_page_select', options_for_select([10, 20, 30, 50, 100].map {|val| [val, val]}, @per_page)
+
+javascript:
+    $(document).off('change', '#per_page_select').on('change', '#per_page_select', function () {
+        window.location.href = "#{user_ranking_set_duel_rank_path(@user_ranking_set, @position_filter).html_safe}" + '?per_page=' + $(this).val().toString();
+    });

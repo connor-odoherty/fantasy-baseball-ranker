@@ -2,12 +2,40 @@
 @import "bootstrap";
 @import "colors";
 
+table.table.basic-table {
+  background-color: $white;
+  font-family: d-din_expregular;
+
+  th {
+    background-color: $secondary;
+    color: $white;
+    font-weight: 500;
+  }
+
+  .rank-col {
+    text-align: right;
+    width: 4%;
+  }
+
+  .info-col {
+    text-align: left;
+    width: 14%
+  }
+
+  .short-info-col {
+    text-align: left;
+    width: 6%;
+  }
+}
+
+
+
 table.table.rankings-table {
   font-size: 12px;
   margin-bottom: 0px;
 
-  border-collapse:separate;
-  border-spacing:0 7px;
+  //border-collapse:separate;
+  //border-spacing:0 7px;
 
   th, td {
     padding: 7px 3px;
@@ -58,13 +86,13 @@ table.table.rankings-table {
 
       &:hover {
         td {
-          background-color: $surface-lighter;
+          //background-color: $surface-lighter;
         }
       }
     }
 
     td {
-      border-top: 0px;
+      //border-top: 0px;
     }
   }
 
