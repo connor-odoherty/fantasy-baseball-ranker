@@ -7,7 +7,7 @@ $(function() {
         // Load modal dialog from server
         $.get(
             location,
-            data => { $(modal_holder_selector).html(data).find(modal_selector).modal() }
+            function(data){ $(modal_holder_selector).html(data).find(modal_selector).modal() }
     );
         return false;
     });
