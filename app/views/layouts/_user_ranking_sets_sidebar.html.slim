@@ -59,7 +59,6 @@
                 = link_to 'RP', edit_user_ranking_set_path(@user_ranking_set, position: :relief_pitcher, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :relief_pitcher}"
   .row
     .col-xs-12
-      - p 'IM HERE', on_duel_rank_page
       - if on_duel_rank_page
         .collapsible-tab
           | Duel rank
@@ -110,6 +109,13 @@
                 = link_to 'SP', edit_user_ranking_set_duel_rank_path(@user_ranking_set, :starting_pitcher, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :starting_pitcher}"
               div class="col-xs-#{col_width}"
                 = link_to 'RP', edit_user_ranking_set_duel_rank_path(@user_ranking_set, :relief_pitcher, per_page: @per_page), class: "btn btn-full-width btn-default #{'btn-primary' if @position_filter == :relief_pitcher}"
+
+  .row
+    .col-xs-12
+      a href="#{user_ranking_set_config_path(@user_ranking_set)}" role="button"
+        .collapsible-tab
+          | Configuration
+      / = link_to 'Configuration', user_ranking_set_config_path(@user_ranking_set), class: "btn btn-full-width btn-default collapsible-tab"
 
   .row style='margin-top: 50px'
     .col-xs-12

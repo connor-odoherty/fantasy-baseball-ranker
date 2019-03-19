@@ -1,0 +1,9 @@
+= form_for(@user_ranking_set, url: edit_user_ranking_set_config_path(@user_ranking_set)) do |f|
+  .row
+    = position_breadcrumbs 'Configuration', '', :show
+  .row
+    .col-xs-offset-8.col-xs-2.text-right
+      = link_to 'Edit', edit_user_ranking_set_config_path(@user_ranking_set), class: 'btn btn-default btn-full-width'
+  .row
+    .col-xs-12
+      = render 'form', f: f, readonly: true

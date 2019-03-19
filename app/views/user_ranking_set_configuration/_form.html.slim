@@ -1,0 +1,35 @@
+= render 'shared/error_messages', object: f.object
+.row
+  .form-group
+    .col-xs-8.col-xs-offset-2.text-left
+      | Duel Rank ELO configuration
+.row
+  .form-group
+    .col-xs-2.text-right
+      = f.label :elo_init_strategy, 'Initialization'
+    .col-xs-8
+      = f.select :elo_init_strategy, UserRankingSet.elo_init_strategy_options, class: 'form-control', disabled: readonly
+.row
+  .form-group
+    .col-xs-2.text-right
+      = f.label :elo_score_strategy, 'Scoring'
+    .col-xs-8
+      = f.select :elo_score_strategy, UserRankingSet.elo_score_strategy_options, class: 'form-control', disabled: readonly
+.row
+  .form-group
+    .col-xs-2.text-right
+      = f.label :elo_seed, 'Seed value'
+    .col-xs-8
+      = f.number_field :elo_seed, class: 'form-control', disabled: readonly
+.row
+  .form-group
+    .col-xs-2.text-right
+      = f.label :elo_spread, 'Initial spread'
+    .col-xs-8
+      = f.number_field :elo_spread, class: 'form-control', disabled: readonly
+.row
+  .form-group
+    .col-xs-2.text-right
+      = f.label :elo_k_value, 'K-value'
+    .col-xs-8
+      = f.number_field :elo_k_value, class: 'form-control', disabled: readonly

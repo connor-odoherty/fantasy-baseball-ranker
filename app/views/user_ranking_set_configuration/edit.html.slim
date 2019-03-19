@@ -1,0 +1,9 @@
+= form_for(@user_ranking_set, url: user_ranking_set_config_path(@user_ranking_set)) do |f|
+  .row
+    = position_breadcrumbs 'Configuration', '', :edit
+  .row
+    .col-xs-offset-8.col-xs-2.text-right
+      = f.submit 'Save', class: 'btn btn-primary'
+  .row
+    .col-xs-12
+      = render 'form', f: f, readonly: false

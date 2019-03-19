@@ -1,224 +1,178 @@
-.container-fluid
-  .col-xs-10
-    .row.player-list
-      .col-xs-12 class="#{'draggable-player-list' if !readonly}"
-        = f.fields_for :user_ranking_players, @user_ranking_players do |user_ranking_player_f|
-          - user_ranking_player = user_ranking_player_f.object
-          - user_player = user_ranking_player.user_player
-          - player = user_player.player
-          .row.ranking-row id="#{dom_id(player)}" class='player-ranking-form'
-            .col-xs-1.text-center.ranking-tab
-              = user_ranking_player_f.index + 1
-            .col-xs-11
-              .row.player-card
-                = user_ranking_player_f.hidden_field :ovr_rank
-                = user_ranking_player_f.hidden_field :id
-                .col-xs-12
-                  .row
-                    .col-xs-4.player-info
-                      .row
-                        .col-xs-4.text-right style='padding-right: 0px; padding-top: 4px;'
-                          = player.display_positions
-                          span
-                            ' &nbsp;&nbsp;&nbsp;
-                        .col-xs-8.text-left.card-title style='padding-left: 0px'
-                          span.strong
-                            = fg_player_link player
-                      .row
-                        .col-xs-4.text-right
-                          = link_to raw("&nbsp;#{fa_icon 'line-chart'}"), player.fg_link, target: :_blank, class: 'fan-graphs-link'
-                        .col-xs-2.text-left.player-essential-info style='padding-left: 0px'
-                          = player.mlb_team.short_name
-                        .col-xs-6.text-left
-                          = "Age #{player.display_age}"
-                      .row
-                        .col-xs-6.text-left
-                          table.table.stats-table
-                            thead
-                              th style='width: 30px'
-                                ' Ovr
-                              th style='width: 30px'
-                                ' ADP
-                              th style='width: 30px'
-                                ' Diff
-                            tbody
-                              td
-                                = user_ranking_player.ovr_rank
-                              td
-                                = number_with_precision(player.adp, precision: 1).to_s.sub(/^0+/, '')
-                              td
-                                = user_ranking_player.ovr_rank - player.adp.to_i
-                    .col-xs-6.player-fantasy-info
-                      .row
-                        .col-xs-8
-                          - if player.is_batter?
-                            - # [:games, :plate_appearances, :runs, :runs_batted_in, :home_runs, :batting_average]
-                            - batting_fields = StatisticsHelper.batting_fields_basic
-                            .row
-                              .col-xs-12
-                                table.table.stats-table
-                                  thead
-                                    tr
-                                      th
-                                        '
-                                      - batting_fields.each do |batting_field|
-                                        th.stat-col class="#{StatisticsHelper.cell_width(batting_field)}-col"
-                                          = StatisticsHelper.display_short_name(batting_field)
-                                  tbody
-                                    - sort_by_year(player.season_batting_lines.load, 2017).each do |season_batting_line|
-                                      tr.season-row
-                                        td.border-heavy.label-col
-                                          = season_batting_line.year
-                                        - batting_fields.each do |batting_field|
-                                          td.stat-col
-                                            = season_batting_line.display(batting_field)
-                                    - projection = select_favorite_projection(player.batting_projections.load)
-                                    - if projection.present?
-                                      tr.projection-row
-                                        td.border-heavy.label-col
-                                          = projection.projection_system.name
-                                        - batting_fields.each do |batting_field|
-                                          td.stat-col.highlight
-                                            = projection.display(batting_field)
-                          - if player.is_pitcher?
-                            - pitching_fields = StatisticsHelper.pitching_fields_basic
-                            .row
-                              .col-xs-12
-                                table.table.stats-table
-                                  thead
-                                    tr
-                                      th.label-col
-                                        '
-                                      - pitching_fields.each do |pitching_field|
-                                        th.stat-col class="#{StatisticsHelper.cell_width(pitching_field)}-col"
-                                          = StatisticsHelper.display_short_name(pitching_field)
-                                  tbody
-                                    - sort_by_year(player.season_pitching_lines.load, 2017).each do |season_pitching_line|
-                                      - next if season_pitching_line.year < 2017
-                                      tr.season-row
-                                        td.border-heavy.label-col
-                                          = season_pitching_line.year
-                                        - pitching_fields.each do |pitching_field|
-                                          td.stat-col
-                                            = season_pitching_line.display(pitching_field)
-                                    - projection = select_favorite_projection(player.pitching_projections.load)
-                                    - if projection.present?
-                                      tr.projection-row
-                                        td.border-heavy.label-col
-                                          = projection.projection_system.name
-                                        - pitching_fields.each do |pitching_field|
-                                          td.stat-col.highlight
-                                            = projection.display(pitching_field)
-                        .col-xs-4
+.mock-table style='float: right'
+  .actual-row
+    .head-row class="#{'hide-pitching' if !@for_pitching} #{'hide-batting' if !@for_batting}"
+      .col.pos-rank-col Rnk
+      .col.name-col Name
+      .col.team-col Team
+      .col.pos-col Pos
+      / .col.tag-col
+      .col.ovr-rank-col Ovr
+      .col.adp-col ADP
+      .col.diff-col
+      .col.draft-tag-col
+      .col.proj-name-col Proj
+      .col.stat-col.context-stat
+        .pitching GS
+        .batting G
+      .col.stat-col.context-stat
+        .pitching IP
+        .batting PA
+      .col.stat-col.fantasy-stat
+        .pitching W
+        .batting R
+      .col.stat-col.fantasy-stat
+        .pitching SV
+        .batting RBI
+      .col.stat-col.fantasy-stat
+        .pitching ERA
+        .batting HR
+      .col.stat-col.fantasy-stat
+        .pitching WHIP
+        .batting SB
+      .col.stat-col.fantasy-stat
+        .pitching K/9
+        .batting AVG
+      .col.expand-col
+      .col.handle-col
+.mock-table style='float: right' id="#{ 'rankings-table' if !readonly }" data-offset="#{@offset}"
+  = f.fields_for :user_ranking_players, @user_ranking_players do |user_ranking_player_f|
+    - user_ranking_player = user_ranking_player_f.object
+    - user_player = user_ranking_player.user_player
+    - player = user_player.player
+    .actual-row.player-ranking-row
+      = user_ranking_player_f.hidden_field :ovr_rank
+      = user_ranking_player_f.hidden_field :id
+      .mock-row
+        .col.pos-rank-col
+          = user_ranking_player_f.index + 1 + @offset
+        .col.name-col
+          = fg_player_link player
+          span
+            ' &nbsp;
+          - UserPlayer.player_attribute_tags.each do |tag|
+            - if user_player.has_any_tags?([tag])
+              .row-tag class="#{tag.to_s}-tag"
+                = fa_icon(user_player.tag_to_icon(tag))
+        .col.team-col
+          = player.mlb_team.short_name
+        .col.pos-col
+          = player.display_positions
+        / .col.tag-col
+        /   - UserPlayer.ranking_display_tags.each do |tag|
+        /     .row-tag class="#{tag.to_s}-tag"
+        /       - if user_player.has_any_tags? tag
+        /         = fa_icon(user_player.tag_to_icon(tag))
+        /       - else
+        /         ' &nbsp;
+        .col.ovr-rank-col
+          = user_ranking_player.ovr_rank
+        .col.adp-col
+          = player.display_adp
+        - diff = player.adp.to_i - user_ranking_player.ovr_rank
+        .col.diff-col
+          = diff > 0 ? "+#{diff}" : diff
+        .col.draft-tag-col
+          - if diff > 50
+            .row-tag class="sleeper_pick-tag"
+              = fa_icon('bed')
+          - elsif diff > 15
+            .row-tag class="value_pick-tag"
+              = fa_icon('dollar')
+          - elsif diff < -15
+            .row-tag class="health_risk-tag"
+              = fa_icon('ban')
+        - if player.is_batter?
+          - batting_projection = select_favorite_projection(player.batting_projections.load)
+          .col.proj-name-col
+            = batting_projection&.projection_system&.name
+          .col.stat-col.context-stat
+            = batting_projection&.display_games
+          .col.stat-col.context-stat
+            = batting_projection&.display_plate_appearances
+          .col.stat-col.fantasy-stat
+            = batting_projection&.display_runs
+          .col.stat-col.fantasy-stat
+            = batting_projection&.display_runs_batted_in
+          .col.stat-col.fantasy-stat
+            = batting_projection&.display_home_runs
+          .col.stat-col.fantasy-stat
+            = batting_projection&.display_stolen_bases
+          .col.stat-col.fantasy-stat
+            = batting_projection&.display_batting_average
+        - else
+          - pitching_projection = select_favorite_projection(player.pitching_projections.load)
+          .col.proj-name-col
+            = pitching_projection&.projection_system&.name
+          .col.stat-col.context-stat
+            = pitching_projection&.display_games_started
+          .col.stat-col.context-stat
+            = pitching_projection&.display_innings_pitched
+          .col.stat-col.fantasy-stat
+            = pitching_projection&.display_wins
+          .col.stat-col.fantasy-stat
+            = pitching_projection&.display_saves
+          .col.stat-col.fantasy-stat
+            = pitching_projection&.display_era
+          .col.stat-col.fantasy-stat
+            = pitching_projection&.display_whip
+          .col.stat-col.fantasy-stat
+            = pitching_projection&.display_k_per_nine
+        .col.expand-col
+          a.notes-toggle data-toggle="collapse" href="#collapase_user_player_#{user_player.id}" role="button" aria-expanded="false" aria-controls="collapase_user_player_#{user_player.id}"
+            .before-expand
+              | More +
+            .after-expand
+              | Less -
+        .col.handle-col
+          - if readonly
+            = link_to raw("<i class='fa fa-pencil'></i>"), edit_user_player_path(user_player, redirect_to: user_ranking_set_path(@user_ranking_set, position: @position_filter)), data: { modal: true }
+          - else
+            i.fa.fa-sort
+      .collapse.notes-collapse id="collapase_user_player_#{user_player.id}"
+        .container
+          .row
+            .col-xs-12 style='margin-top: 10px; margin-bottom: 20px'
+              - stat_fields = player.is_pitcher? ? StatisticsHelper.pitching_combined_overview : StatisticsHelper.batting_combined_overview
+              - season_lines = player.is_pitcher? ? player.season_pitching_lines : player.season_batting_lines
+              - player_projections = player.is_pitcher? ? player.pitching_projections : player.batting_projections
+              = render 'players/stat_table', stat_fields: stat_fields, player_season_lines: season_lines, player_projections: player_projections
+        - if user_player.notes.present?
+          .container
+            .row
+              .col-xs-12.text-left.player-notes style='padding-top: 10px: z-index: 100000'
+                = user_player.notes
+        - if user_player.user_player_articles.present?
+          .container
+            .row
+              .col-xs-12.player-article-container.player-notes
+                - user_player.user_player_articles.each do |article|
+                  .row.player-article style='margin-top: 10px'
+                    .col-xs-3.text-right
+                      - if article.publication.present?
+                        span
+                          = article.publication
+                        span
+                          ' &nbsp;
+                      span
+                        ' 2/20
+                    .col-xs-9.text-left
+                      = link_to article.title, article.article_url, target: :_blank
+                      .article-notes
+                        = article.notes
 
-                    .col-xs-1 style='padding: 0px;'
-                      - user_player.active_tags.each do |tag|
-                        .ranking-tag.text-center class="#{tag.to_s}-tag"
-                          = user_player.tag_to_s(tag)
-                    .col-xs-1.text-right
-                      - if readonly
-                        .row
-                          .col-xs-12
-                            = link_to raw("<i class='fa fa-pencil'></i>"), edit_user_player_path(user_player, redirect_to: user_ranking_set_path(@user_ranking_set, position: @position_filter)), class: 'btn btn-default'
-                      - else
-                        .row
-                          .col-xs-12
-                            i.fa.fa-sort style='padding-top: 10px'
-                      .row
-                        .col-xs-12.text-right style="padding-top: #{readonly ? '20px' : '30px'}; padding-left: 0px"
-                          a.notes-toggle data-toggle="collapse" href="#collapase_user_player_#{user_player.id}" role="button" aria-expanded="false" aria-controls="collapase_user_player_#{user_player.id}"
-                            .before-expand
-                              | More +
-                            .after-expand
-                              | Less -
-                  .collapse.notes-collapse id="collapase_user_player_#{user_player.id}"
-                    - if player.is_batter?
-                      - batting_fields = StatisticsHelper.batting_combined_overview
-                      .row style='margin-top: 15px;'
-                        .col-xs-12
-                          table.table.stats-table.strong-header.table-hover
-                            thead
-                              tr
-                                th.label-col
-                                  '
-                                - batting_fields.each do |batting_field|
-                                  th.stat-col class="#{StatisticsHelper.cell_width(batting_field)}-col"
-                                    = StatisticsHelper.display_short_name(batting_field)
-                            tbody
-                              - sort_by_year(player.season_batting_lines).each do |season_batting_line|
-                                tr
-                                  td.border-heavy.label-col
-                                    = season_batting_line.year
-                                  - batting_fields.each do |batting_field|
-                                    td.stat-col
-                                      = season_batting_line.display(batting_field)
-                              - sort_by_order_index(player.batting_projections).each do |projection|
-                                tr.projection-row
-                                  td.border-heavy.label-col
-                                    = projection.projection_system.name
-                                  - batting_fields.each do |batting_field|
-                                    td.stat-col.highlight
-                                      = projection.display(batting_field)
-                    - if player.is_pitcher?
-                      - pitching_fields = StatisticsHelper.pitching_combined_overview
-                      .row style='margin-top: 15px;'
-                        .col-xs-12
-                          table.table.stats-table.strong-header.table-hover
-                            thead
-                              tr
-                                th.label-col
-                                  '
-                                - pitching_fields.each do |pitching_field|
-                                  th.stat-col class="#{StatisticsHelper.cell_width(pitching_field)}-col"
-                                    = StatisticsHelper.display_short_name(pitching_field)
-                            tbody
-                              - sort_by_year(player.season_pitching_lines).each do |season_pitching_line|
-                                tr
-                                  td.border-heavy.label-col
-                                    = season_pitching_line.year
-                                  - pitching_fields.each do |pitching_field|
-                                    td.stat-col
-                                      = season_pitching_line.display(pitching_field)
-                              - sort_by_order_index(player.pitching_projections).each do |projection|
-                                tr.projection-row
-                                  td.border-heavy.label-col
-                                    = projection.projection_system.name
-                                  - pitching_fields.each do |pitching_field|
-                                    td.stat-col.highlight
-                                      = projection.display(pitching_field)
-                    - if user_player.notes.present?
-                      .row
-                        .col-xs-12.text-left.player-notes style='padding-top: 10px'
-                          / span.strong
-                          /   | Notes: &nbsp
-                          span
-                            = user_player.notes
-                    - if user_player.user_player_articles.present?
-                      .row
-                        .col-xs-12.player-article-container.player-notes
-                          - user_player.user_player_articles.each do |article|
-                            .row.player-article style='margin-top: 10px'
-                              .col-xs-3.text-right
-                                - if article.publication.present?
-                                  span
-                                    = article.publication
-                                  span
-                                    ' &nbsp;
-                                span
-                                  ' 2/20
-                              .col-xs-9.text-left
-                                = link_to article.title, article.article_url, target: :_blank
-                                .article-notes
-                                  = article.notes
-
-
-
-
-
-  .col-xs-2
-    = render 'players/sidebar_filter', path_to_filter: path_to_filter
-
-javascript:
-  // $('.notes-collapse').bind('shown.bs.collapse', function () {
-  //     console.log('Do it')
-  // });
+/   .col-xs-2
+/     .row
+/       .col-xs-12
+/         = will_paginate @user_ranking_players
+/     .row
+/       .col-xs-12
+/         .form-group
+/           = select_tag 'per_page_select', options_for_select([10, 20, 30, 50, 100].map { |val| [val, val]}, @per_page)
+/     .row
+/       .col-xs-12
+/         = render 'players/sidebar_filter', path_to_filter: path_to_filter
+/
+//javascript:
+//    $(document).on('change', '#per_page_select', function () {
+//        window.location.href = window.location.href + '&per_page' + $(this).val().toString();
+//    });

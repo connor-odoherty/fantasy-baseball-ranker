@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190308063902) do
+ActiveRecord::Schema.define(version: 20190319050750) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -291,8 +291,14 @@ ActiveRecord::Schema.define(version: 20190308063902) do
   create_table "user_ranking_sets", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "ranking_name"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.integer  "elo_k_value",        default: 24
+    t.integer  "elo_spread",         default: 1
+    t.integer  "elo_seed",           default: 2500
+    t.integer  "elo_init_strategy",  default: 0
+    t.integer  "elo_score_strategy", default: 0
+    t.integer  "show_adp_strategy",  default: 0
     t.index ["user_id"], name: "index_user_ranking_sets_on_user_id", using: :btree
   end
 

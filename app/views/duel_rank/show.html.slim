@@ -45,7 +45,7 @@
                   td.rank-col
                     = user_ranking_player.ovr_rank
                   td.rank-col
-                    = user_ranking_player.user_player.player.adp
+                    = user_ranking_player.user_player.player.display_adp
                   td.text-right
                     = link_to raw("<i class='fa fa-pencil'></i>"), edit_user_player_path(user_ranking_player.user_player, redirect_to: user_ranking_set_duel_rank_path(@user_ranking_set, @position_filter)), data: {modal: true}
     .col-xs-2

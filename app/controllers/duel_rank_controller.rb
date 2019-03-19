@@ -31,12 +31,21 @@ class DuelRankController < UserRankingSetsLayoutController
     winning_choice = @user_ranking_set.user_ranking_players.find(params[:winning_choice])
     losing_choice = @user_ranking_set.user_ranking_players.find(params[:losing_choice])
 
-
-    if winning_choice.elo_score < losing_choice.elo_score
-      high_elo = losing_choice.elo_score
-      low_elo = winning_choice.elo_score
-      winning_choice.update_column(:elo_score, high_elo)
-      losing_choice.update_column(:elo_score, low_elo)
+    if @user_ranking_set.elo_scoring?
+      EloRating::k_factor = @user_ranking_set.elo_k_value
+      match = EloRating::Match.new
+      match.add_player(rating: winning_choice.elo_score, winner: true)
+      match.add_player(rating: losing_choice.elo_score)
+      results = match.updated_ratings
+      winning_choice.update_column(:elo_score, results[0])
+      losing_choice.update_column(:elo_score, results[1])
+    elsif @user_ranking_set.swap_scoring?
+      if winning_choice.elo_score < losing_choice.elo_score
+        high_elo = losing_choice.elo_score
+        low_elo = winning_choice.elo_score
+        winning_choice.update_column(:elo_score, high_elo)
+        losing_choice.update_column(:elo_score, low_elo)
+      end
     end
 
     left_offset = rand(@per_page)
@@ -48,10 +57,7 @@ class DuelRankController < UserRankingSetsLayoutController
   end
 
   def reset_elo
-    base = 2200
-    @user_ranking_set.user_ranking_players.order(ovr_rank: :asc).each_with_index do |user_ranking_player, index|
-      user_ranking_player.update!(elo_score: (base - index))
-    end
+    @user_ranking_set.reset_elo_scores
     redirect_to user_ranking_set_duel_rank_path(@user_ranking_set, :catcher)
   end
 

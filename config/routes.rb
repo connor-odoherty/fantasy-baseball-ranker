@@ -27,8 +27,11 @@ Rails.application.routes.draw do
     resources :duel_rank do
       patch 'reset_elo', on: :collection
     end
+
+    resource :config, only: [:show, :edit, :update], controller: :user_ranking_set_configuration
   end
   resources :user_ranking_players
 
   resources :users
+
 end

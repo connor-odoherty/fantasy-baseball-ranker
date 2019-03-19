@@ -65,6 +65,8 @@
 #
 
 class Player < ApplicationRecord
+  include ActionView::Helpers::NumberHelper
+
   belongs_to :mlb_team, class_name: 'ProTeam'
   belongs_to :current_team, class_name: 'ProTeam'
   has_many :user_players
@@ -149,6 +151,11 @@ class Player < ApplicationRecord
   def fg_link
     "https://www.fangraphs.com/statss.aspx?playerid=#{fg_id}"
   end
+
+  def display_adp
+    number_with_precision(self.adp, precision: 1).to_s.sub(/^0+/, '')
+  end
+
 
   def build_autocomplete_search_field
     fields = []

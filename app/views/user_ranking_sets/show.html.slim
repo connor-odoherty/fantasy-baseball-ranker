@@ -1,10 +1,9 @@
-
 = form_for @user_ranking_set, url: user_ranking_set_path do |f|
   .row
     = position_breadcrumbs 'Rankings', @position_filter, :show
   .container-fluid
     .col-xs-10
-      = render 'line_rankings', ranking_set: @user_ranking_set, user_ranking_players: @user_ranking_players, f: f, readonly: true
+      = render 'rankings', ranking_set: @user_ranking_set, user_ranking_players: @user_ranking_players, f: f, readonly: true
     .col-xs-2
       .row
         .col-xs-12
