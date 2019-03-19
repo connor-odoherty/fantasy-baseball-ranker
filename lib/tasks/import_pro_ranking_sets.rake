@@ -80,7 +80,13 @@ def find_player_match_for_full_name(full_name)
 end
 
 task update_players_with_most_recent_adp: :environment do
+  Player.all.update_all(adp: nil)
   ProRankingSet.last.pro_ranking_players.find_each do |pro_ranking_player|
     pro_ranking_player.player.update_column(:adp, pro_ranking_player.adp)
   end
+end
+
+task import_nfbc_adp_and_update_players_with_most_recent_adp: :environment do
+  Rake::Task["import_nfbc_adp"].invoke
+  Rake::Task["update_players_with_most_recent_adp"].invoke
 end
