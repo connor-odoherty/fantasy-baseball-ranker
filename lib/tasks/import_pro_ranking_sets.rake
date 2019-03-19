@@ -27,7 +27,7 @@ task import_nfbc_adp: :environment do
 
   row_count = 0
   count = 0
-  CSV.foreach('nfbc_adp_set.csv') do |row|
+  CSV.foreach('nfbc_adp_set_20190319.csv') do |row|
     row_count += 1
     next if row_count == 1
 
