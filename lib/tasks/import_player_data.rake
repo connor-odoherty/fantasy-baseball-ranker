@@ -36,7 +36,7 @@ task import_player_data: :environment do
   count = 0
 
   row_count = 0
-  CSV.foreach('nfbc_adp_set.csv') do |row|
+  CSV.foreach('nfbc_adp_set_20190319.csv') do |row|
     row_count += 1
     next if row_count == 1
 
@@ -165,7 +165,7 @@ def combined_list_of_positions_from_player_model(player)
   combined_positions = []
   combined_positions += parse_positions(player.mlb_pos)
   combined_positions += parse_positions(player.cbs_pos)
-  combined_positions += parse_positions(player.espn_pos)
+  # combined_positions += parse_positions(player.espn_pos) # list everyone as a catcher
   combined_positions += parse_positions(player.nfbc_pos)
   combined_positions += parse_positions(player.yahoo_pos)
   # combined_positions += parse_positions(player.ottoneu_pos) # Ottoneu lists everyone as RP
