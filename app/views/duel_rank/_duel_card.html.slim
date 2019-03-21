@@ -1,25 +1,27 @@
 .row
-  .col-xs-12.duel-player-card
-    - player = user_player.player
-    .row.title
-      .col-xs-8.text-left
-        span.strong
-          = fg_player_link player
-        span
-          | &nbsp;-&nbsp;#{player.display_team}
-      .col-xs-4.text-right
-        span.strong
-          = player.display_positions
-    .row
-      .col-xs-12 style='margin-top: 10px; margin-bottom: 20px'
-        - stat_fields = player.is_pitcher? ? StatisticsHelper.pitching_fields_basic : StatisticsHelper.batting_card_overview
-        - season_lines = player.is_pitcher? ? player.season_pitching_lines : player.season_batting_lines
-        - player_projections = player.is_pitcher? ? player.pitching_projections : player.batting_projections
-        = render 'players/stat_table', stat_fields: stat_fields, player_season_lines: season_lines, player_projections: player_projections
-    .row
-      .col-xs-12
-        .form-group
-          .col-xs-12.text-left.strong
-            ' Notes:
-          .col-xs-12.text-left.player-note
-            = user_player.notes
+  .col-xs-12
+    .duel-player-card
+      - player = user_player.player
+      .container-fluid
+        .row.title
+          .col-xs-8.text-left
+            span.strong
+              = fg_player_link player
+            span
+              | &nbsp;-&nbsp;#{player.display_team}
+          .col-xs-4.text-right
+            span.strong
+              = player.display_positions
+        .row
+          .col-xs-12 style='margin-top: 10px; margin-bottom: 20px'
+            - stat_fields = player.is_pitcher? ? StatisticsHelper.pitching_fields_basic : StatisticsHelper.batting_card_overview
+            - season_lines = player.is_pitcher? ? player.season_pitching_lines : player.season_batting_lines
+            - player_projections = player.is_pitcher? ? player.pitching_projections : player.batting_projections
+            = render 'players/stat_table', stat_fields: stat_fields, player_season_lines: season_lines, player_projections: player_projections
+        .row
+          .col-xs-12
+            .form-group
+              .col-xs-12.text-left.strong
+                ' Notes:
+              .col-xs-12.text-left.player-note
+                = user_player.notes

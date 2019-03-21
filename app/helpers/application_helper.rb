@@ -19,4 +19,11 @@ module ApplicationHelper
   def fg_player_link(player)
     raw "<a class='fg-player-link' target='_blank' href='#{player.fg_link}'>#{player.display_name}</a>"
   end
+
+  def breadcrumbs(page_name, action)
+    breadcrumbs = "<div class='breadcrumbs-text col-xs-6 text-left'><span class='strong'>#{page_name}</span>"
+    breadcrumbs += ' > Edit' if action == :edit
+    breadcrumbs += '</div>'
+    raw breadcrumbs
+  end
 end

@@ -33,7 +33,7 @@
   .col-xs-1
     .row
       .col-xs-12
-        = link_to 'EDIT', edit_user_ranking_set_duel_rank_path(@user_ranking_set, @position_filter), class: "btn btn-full-width btn-default"
+        = link_to 'EDIT', edit_user_ranking_set_duel_rank_path(@user_ranking_set, @position_filter, per_page: @per_page), class: "btn btn-full-width btn-default"
     / .row
     /   .col-xs-12
     /     = render 'players/sidebar_filter', path_to_filter: user_ranking_set_duel_rank_index_path(@user_ranking_set, per_page: @per_page)
