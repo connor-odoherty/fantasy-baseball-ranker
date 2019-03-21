@@ -102,7 +102,7 @@ class DuelRankController < UserRankingSetsLayoutController
 
   def set_pagination
     @per_page = params[:per_page]&.to_i
-    @per_page = [10, 20, 30, 50, 100].include?(@per_page) ? @per_page : (@position_filter == :all ? 50 : 30)
+    @per_page = [10, 20, 30, 50, 75, 100, 200].include?(@per_page) ? @per_page : (@position_filter == :all ? 50 : 30)
 
     @page = params[:page]&.to_i || 1
     @page = @page > 0 ? @page : 1

@@ -64,6 +64,6 @@
             = per_page_select_dropdown
 
 javascript:
-    $(document).off('change', '#per_page_select').on('change', '#per_page_select', function () {
-        window.location.href = "#{user_ranking_set_duel_rank_path(@user_ranking_set, @position_filter).html_safe}" + '?per_page=' + $(this).val().toString();
-    });
+  $(document).off('change', '#per_page_select').on('change', '#per_page_select', function () {
+    window.location.href = "#{user_ranking_set_duel_rank_path(@user_ranking_set, @position_filter).html_safe}" + '?per_page=' + $(this).val().toString();
+  });

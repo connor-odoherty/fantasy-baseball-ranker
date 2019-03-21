@@ -23,7 +23,7 @@
     .col-xs-2.col-xs-offset-1.text-right
       = per_page_select_dropdown
 
-      javascript:
-        $(document).off('change', '#per_page_select').on('change', '#per_page_select', function () {
-            window.location.href = "#{edit_user_ranking_set_duel_rank_path(@user_ranking_set, @position_filter, page: @page, per_page: @per_page).html_safe}" + '&per_page=' + $(this).val().toString();
-        });
+javascript:
+  $(document).off('change', '#per_page_select').on('change', '#per_page_select', function () {
+    window.location.href = "#{edit_user_ranking_set_duel_rank_path(@user_ranking_set, @position_filter).html_safe}" + '&per_page=' + $(this).val().toString();
+  });
