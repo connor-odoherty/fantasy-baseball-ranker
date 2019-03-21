@@ -164,11 +164,11 @@ end
 def combined_list_of_positions_from_player_model(player)
   combined_positions = []
   combined_positions += parse_positions(player.mlb_pos)
-  combined_positions += parse_positions(player.cbs_pos)
+  # combined_positions += parse_positions(player.cbs_pos) # Listed Roberto Osuna as SP
   # combined_positions += parse_positions(player.espn_pos) # list everyone as a catcher
   combined_positions += parse_positions(player.nfbc_pos)
   combined_positions += parse_positions(player.yahoo_pos)
-  # combined_positions += parse_positions(player.ottoneu_pos) # Ottoneu lists everyone as RP
+  combined_positions += parse_positions(player.ottoneu_pos) # Ottoneu lists everyone as RP
   combined_positions += parse_positions(player.rotowire_pos)
   combined_positions.uniq
 end
