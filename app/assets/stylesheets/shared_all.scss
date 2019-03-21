@@ -147,7 +147,7 @@ $header-height: 50px;
   float: left;
   min-height: calc(100vh - (#{$header-height}));
 
-  position: relative;
+  position: fixed;
   display: inline-block;
 
   .collapsible-tab {
@@ -202,6 +202,7 @@ $header-height: 50px;
 .content-with-responsive-sidebar {
   //@extend .col-xs-11;
   padding-bottom: 15px;
+  margin-left: $responsive-sidebar-width + 5px;
 
   width: calc(100% - #{$responsive-sidebar-width} - 5px);
   float: left;
@@ -337,9 +338,8 @@ a:visited[role="button"] {
   }
 }
 
-
 .hide-batting {
-  .pitching {
+  .batting {
     display: none;
   }
 }

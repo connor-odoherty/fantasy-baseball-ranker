@@ -84,7 +84,7 @@ class UserRankingSetsController < UserRankingSetsLayoutController
     if @position_filter == :all
       @for_batting = true
       @for_pitching = true
-    elsif [:starting_pitcher, :relief_pitcher].include? @position_filter
+    elsif [:starting_pitcher, :relief_pitcher].include?(@position_filter.to_sym)
       @for_pitching = true
     else
       @for_batting = true
@@ -92,7 +92,6 @@ class UserRankingSetsController < UserRankingSetsLayoutController
   end
 
   def user_ranking_set_params
-    pp 'PARAMS', params
     params.require(:user_ranking_set).permit(:id, :ranking_name,
                                              user_ranking_players_attributes: %i[id ovr_rank])
   end
