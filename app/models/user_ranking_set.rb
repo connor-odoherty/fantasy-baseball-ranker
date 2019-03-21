@@ -10,9 +10,9 @@
 #  elo_k_value        :integer          default(24)
 #  elo_spread         :integer          default(1)
 #  elo_seed           :integer          default(2500)
-#  elo_init_strategy  :integer          default(0)
-#  elo_score_strategy :integer          default(0)
-#  show_adp_strategy  :integer          default(0)
+#  elo_init_strategy  :integer          default("linear_decline")
+#  elo_score_strategy :integer          default("elo_scoring")
+#  show_adp_strategy  :integer          default("show_adp_at_all_times")
 #
 # Indexes
 #

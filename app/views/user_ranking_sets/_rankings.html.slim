@@ -1,39 +1,38 @@
 .mock-table style='float: right'
-  .actual-row
-    .head-row class="#{'hide-pitching' if !@for_pitching} #{'hide-batting' if !@for_batting}"
-      .col.pos-rank-col Rnk
-      .col.name-col Name
-      .col.team-col Team
-      .col.pos-col Pos
-      / .col.tag-col
-      .col.ovr-rank-col Ovr
-      .col.adp-col ADP
-      .col.diff-col
-      .col.draft-tag-col
-      .col.proj-name-col Proj
-      .col.stat-col.context-stat
-        .pitching GS
-        .batting G
-      .col.stat-col.context-stat
-        .pitching IP
-        .batting PA
-      .col.stat-col.fantasy-stat
-        .pitching W
-        .batting R
-      .col.stat-col.fantasy-stat
-        .pitching SV
-        .batting RBI
-      .col.stat-col.fantasy-stat
-        .pitching ERA
-        .batting HR
-      .col.stat-col.fantasy-stat
-        .pitching WHIP
-        .batting SB
-      .col.stat-col.fantasy-stat
-        .pitching K/9
-        .batting AVG
-      .col.expand-col
-      .col.handle-col
+  .head-row class="#{'hide-pitching' if !@for_pitching} #{'hide-batting' if !@for_batting}"
+    .col.pos-rank-col Rnk
+    .col.name-col Name
+    .col.team-col Team
+    .col.pos-col Pos
+    / .col.tag-col
+    .col.ovr-rank-col Ovr
+    .col.adp-col ADP
+    .col.diff-col
+    .col.draft-tag-col
+    .col.proj-name-col Proj
+    .col.stat-col.context-stat
+      .pitching GS
+      .batting G
+    .col.stat-col.context-stat
+      .pitching IP
+      .batting PA
+    .col.stat-col.fantasy-stat
+      .pitching W
+      .batting R
+    .col.stat-col.fantasy-stat
+      .pitching SV
+      .batting RBI
+    .col.stat-col.fantasy-stat
+      .pitching ERA
+      .batting HR
+    .col.stat-col.fantasy-stat
+      .pitching WHIP
+      .batting SB
+    .col.stat-col.fantasy-stat
+      .pitching K/9
+      .batting AVG
+    .col.expand-col
+    .col.handle-col
 .mock-table style='float: right' id="#{ 'rankings-table' if !readonly }" data-offset="#{@offset}"
   = f.fields_for :user_ranking_players, @user_ranking_players do |user_ranking_player_f|
     - user_ranking_player = user_ranking_player_f.object
@@ -125,7 +124,7 @@
               | Less -
         .col.handle-col
           - if readonly
-            = link_to raw("<i class='fa fa-pencil'></i>"), edit_user_player_path(user_player, redirect_to: user_ranking_set_path(@user_ranking_set, position: @position_filter)), data: { modal: true }
+            = link_to raw("<i class='fa fa-pencil'></i>"), edit_user_player_path(user_player, redirect_to: user_ranking_set_path(@user_ranking_set, position: @position_filter, per_page: @per_page)), data: { modal: true }
           - else
             i.fa.fa-sort
       .collapse.notes-collapse id="collapase_user_player_#{user_player.id}"

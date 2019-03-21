@@ -150,14 +150,17 @@ $number-font-size: 13px;
   font-family: 'd-din_expregular';
 
 
-  .actual-row {
+  .actual-row, .head-row {
     display: flex;
-    margin-top: 10px;
-    margin-bottom: 10px;
     flex-direction: column;
     width: $table-width;
     border-radius: 3px;
     background-color: white;
+  }
+
+  .actual-row {
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 
   .mock-row {

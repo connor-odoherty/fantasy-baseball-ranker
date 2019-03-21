@@ -1,22 +1,17 @@
 = form_for @user_ranking_set, url: user_ranking_set_path(position: @position_filter, page: @page, per_page: @per_page) do |f|
-  .row
-    = position_breadcrumbs 'Rankings', @position_filter, :edit
   .container-fluid
-    = render 'shared/error_messages', object: f.object
-    .col-xs-10
-      = render 'rankings', ranking_set: @user_ranking_set, user_ranking_players: @user_ranking_players, f: f, readonly: false
-    .col-xs-2
-      .row
-        .col-xs-12
-          = f.button type: 'submit', class: 'btn btn-primary btn-full-width'
-            ' Save
-      .row
-        .col-xs-12
-          = will_paginate @user_ranking_players
-      .row
-        .col-xs-12
-          .form-group
-            = select_tag 'per_page_select', options_for_select([10, 20, 30, 50, 100].map {|val| [val, val]}, @per_page)
+    .row
+      = position_breadcrumbs 'Rankings', @position_filter, :edit
+      = render 'shared/error_messages', object: f.object
+    .row
+      .col-xs-10
+        = render 'rankings', ranking_set: @user_ranking_set, user_ranking_players: @user_ranking_players, f: f, readonly: false
+      .col-xs-2
+        = f.button type: 'submit', class: 'btn btn-primary btn-full-width', style:'margin-top: 0px; margin-bottom: 30px'
+          span
+            = fa_icon('save')
+          '  Save
+        = render 'filter_sidebar', items_to_paginate: @user_ranking_players
 
 javascript:
   $(document).off('change', '#per_page_select').on('change', '#per_page_select', function () {

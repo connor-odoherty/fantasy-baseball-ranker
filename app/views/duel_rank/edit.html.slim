@@ -21,7 +21,7 @@
     = link_to '<<  Results', user_ranking_set_duel_rank_path(@user_ranking_set, @position_filter), class: "btn btn-full-width btn-default"
   .col-xs-4
     .form-group
-      = select_tag 'per_page_select', options_for_select([10, 20, 30, 50, 100].map {|val| [val, val]}, @per_page)
+      = per_page_select_dropdown
   .col-xs-6
     = will_paginate @user_ranking_players
 

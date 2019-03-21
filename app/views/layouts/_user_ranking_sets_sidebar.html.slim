@@ -4,16 +4,21 @@
 - # Rankings tab
 - on_rankings_page = controller_path.include? 'user_ranking_sets'
 - on_duel_rank_page = controller_path.include? 'duel_rank'
+- on_configuration_page = controller_path.include? 'config'
 - unless current_controller?('user_ranking_sets') && current_action?('new')
   .row
     .col-xs-12
       - if on_rankings_page
-        .collapsible-tab
-          | Rankings
+        .collapsible-tab.selected
+          span
+            = fa_icon('list-ol')
+          ' &nbsp;&nbsp;Rank
       - else
         a.notes-toggle#rankings_collapse_toggle data-toggle="collapse" href="#collapse_rankings_tab" role="button" aria-expanded="#{on_rankings_page}" aria-controls="collapse_rankings_tab"
           .collapsible-tab
-            | Rankings
+            span
+              = fa_icon('list-ol')
+            ' &nbsp;&nbsp;Rank
       .collapse.collapse-body#collapse_rankings_tab data-parent="#rankings_collapse_toggle" aria-expanded="#{on_rankings_page}" class="#{'show' if on_rankings_page}"
         .btn-container
           - col_width = 12
@@ -60,12 +65,16 @@
   .row
     .col-xs-12
       - if on_duel_rank_page
-        .collapsible-tab
-          | Duel rank
+        .collapsible-tab.selected
+          span
+            = fa_icon('gavel')
+          ' &nbsp;&nbsp;Duel
       - else
         a.notes-toggle#duel_rank_collapse_toggle data-toggle="collapse" href="#duel_rank_tab" role="button" aria-expanded="#{on_duel_rank_page}" aria-controls="duel_rank_tab"
           .collapsible-tab
-            | Duel rank
+            span
+              = fa_icon('gavel')
+            ' &nbsp;&nbsp;Duel
       .collapse.collapse-body#duel_rank_tab data-parent="#duel_rank_collapse_toggle" aria-expanded="#{on_duel_rank_page}" class="#{'show' if on_duel_rank_page}"
         .btn-container
           - col_width = 12
@@ -113,8 +122,10 @@
   .row
     .col-xs-12
       a href="#{user_ranking_set_config_path(@user_ranking_set)}" role="button"
-        .collapsible-tab
-          | Configuration
+        .collapsible-tab class="#{'selected' if on_configuration_page}"
+          span
+            = fa_icon('wrench')
+          ' &nbsp;&nbsp;Configure
       / = link_to 'Configuration', user_ranking_set_config_path(@user_ranking_set), class: "btn btn-full-width btn-default collapsible-tab"
 
   .row style='margin-top: 50px'

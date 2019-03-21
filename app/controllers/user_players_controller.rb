@@ -66,7 +66,6 @@ class UserPlayersController < ApplicationController
   end
 
   def set_redirect_to
-    pp params
     @redirect_to = params[:redirect_to]
   end
 end
