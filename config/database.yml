@@ -1,7 +1,7 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  username: connorodoherty
+  username: rails_db_user
   password:
   pool: 5
   timeout: 5000

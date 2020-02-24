@@ -36,7 +36,7 @@ task import_player_data: :environment do
   count = 0
 
   row_count = 0
-  CSV.foreach('nfbc_adp_set_20190319.csv') do |row|
+  CSV.foreach('nfbc_adp_set_20200223.csv') do |row|
     row_count += 1
     next if row_count == 1
 
@@ -205,6 +205,8 @@ def parse_positions(position_string)
     when 'OF'
       positions << :outfield
     when 'U'
+      positions << :utility
+    when 'DH'
       positions << :utility
     when 'SP'
       positions << :starting_pitcher

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby '2.5.3'
+ruby '2.5.7'
 gem 'dotenv-rails', groups: %i[development test], require: 'dotenv/rails-now'
 
 gem 'autoprefixer-rails', '~> 6.7'
