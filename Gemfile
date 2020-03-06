@@ -149,7 +149,7 @@ gem 'audited', '~> 4.7.0'
 gem 'RubySunrise', '~> 0.3.1'
 
 gem 'deep_cloneable', '~>2.2.1'
-gem 'devise', '~> 4.4.0'
+gem 'devise', '~> 4.7.1'
 
 gem 'friendly_id', '~> 5.2.0'
 
