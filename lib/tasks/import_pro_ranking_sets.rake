@@ -10,11 +10,11 @@ task import_nfbc_adp: :environment do
   #   adp_ranking_set.destroy
   # end
 
-  existing_nfbc_adp = ProRankingSet.find_by(slug: 'nfbc-march-adp')
+  existing_nfbc_adp = ProRankingSet.find_by(slug: ProRankingSet.current_ranking_slug)
   existing_nfbc_adp.destroy if existing_nfbc_adp.present?
   adp_ranking_set = ProRankingSet.create(
     publication_name: 'NFBC',
-    ranking_name: 'March ADP',
+    ranking_name: 'March ADP 2020',
     ranker_name: 'Site',
     url: 'https://playnfbc.shgn.com/adp',
     published_at: DateTime.now
@@ -27,7 +27,7 @@ task import_nfbc_adp: :environment do
 
   row_count = 0
   count = 0
-  CSV.foreach('nfbc_adp_set_20190319.csv') do |row|
+  CSV.foreach('nfbc_adp_set_20200223.csv') do |row|
     row_count += 1
     next if row_count == 1
 
@@ -44,6 +44,8 @@ task import_nfbc_adp: :environment do
       p "No match found for #{full_name}"
       next
     end
+
+    next if player_match.full_name == "Will Smith"
 
     count += 1
     new_player_rank = adp_ranking_set.pro_ranking_players.build(

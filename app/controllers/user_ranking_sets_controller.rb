@@ -124,7 +124,7 @@ class UserRankingSetsController < UserRankingSetsLayoutController
 
   def associate_default_rankings_with_new_ranking_set
     elo_start_point = 2100
-    source_ranking_set = nfbc_ranking_set
+    source_ranking_set = current_ranking_set
     ovr_rank_count = 1
     user_ranking_players_values = []
     source_ranking_set.pro_ranking_players.find_each do |pro_ranking_player|
@@ -151,8 +151,8 @@ class UserRankingSetsController < UserRankingSetsLayoutController
     true
   end
 
-  def nfbc_ranking_set
-    ProRankingSet.find('nfbc-march-adp')
+  def current_ranking_set
+    ProRankingSet.find_by(slug: ProRankingSet.current_ranking_slug)
   end
 
   def filter_params

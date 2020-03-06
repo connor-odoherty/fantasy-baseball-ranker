@@ -35,4 +35,8 @@ class ProRankingSet < ApplicationRecord
   def publication_and_name_to_slug
     ActiveSupport::Inflector.parameterize("#{publication_name} #{ranking_name}")
   end
+
+  def self.current_ranking_slug
+    'nfbc-march-adp-2020'
+  end
 end
