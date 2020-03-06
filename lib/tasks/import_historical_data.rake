@@ -1,5 +1,5 @@
 task import_all_historical_data: :environment do
-  years_to_import = [2016, 2017, 2018]
+  years_to_import = [2016, 2017, 2018, 2019]
 
   years_to_import.each { |year| import_historical_data_for_year(year) }
 end

@@ -1,7 +1,7 @@
 module StatisticsHelper
   STATISTICS_MAP = {
     games:                         { short_name: 'G',            import_map: 'G',        display_type: :count,       type: :both },
-    wins_above_replacement:        { short_name: 'WAR',          import_map: 'WAR',      display_type: :count,       type: :both },
+    wins_above_replacement:        { short_name: 'WAR',          import_map: 'WAR',      display_type: :count,       type: :both,  optional: true  },
     fangraphs_id:                  { short_name: 'FanGraphs ID', import_map: 'playerid', display_type: :count,       type: :both },
     # G  GS  W  SV  ERA  WHIP  ERA  AVG  K/9  BB/9  K/BB  HR/9  K%  BB%  K-BB%  SwStr%  BABIP  LOB%  FIP  xFIP  SIERA  Soft%  Med%  Hard%  playerid
     games_started:                 { short_name: 'GS',           import_map: 'GS',       display_type: :count,      type: :pitching },

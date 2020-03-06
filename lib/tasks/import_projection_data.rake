@@ -3,11 +3,11 @@
 task import_all_projection_data: :environment do
   projection_systems_attributes = [
     {
-      name: 'Fans',
-      slug: 'fans',
-      order_index: 10,
-      batting_file: 'fans_projections_batting.csv',
-      pitching_file: 'fans_projections_pitching.csv'
+      name: 'ATC',
+      slug: 'atc',
+      order_index: -1,
+      batting_file: 'atc_projections_batting.csv',
+      pitching_file: 'atc_projections_pitching.csv'
     },
     {
       name: 'Steamer',
