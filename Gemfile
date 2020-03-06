@@ -155,7 +155,7 @@ gem 'friendly_id', '~> 5.2.0'
 
 gem 'paperclip', '~> 5.2.0'
 # used to add multiple photos in one download
-gem 'rubyzip', '~> 1.2.1'
+gem 'rubyzip', '~> 1.3.0'
 
 gem 'rails-jquery-autocomplete'
 
