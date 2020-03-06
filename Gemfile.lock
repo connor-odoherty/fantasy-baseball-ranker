@@ -142,9 +142,9 @@ GEM
       debug_inspector (>= 0.0.1)
     bootsnap (1.4.5)
       msgpack (~> 1.0)
-    bootstrap-sass (3.3.7)
+    bootstrap-sass (3.4.1)
       autoprefixer-rails (>= 5.2.1)
-      sass (>= 3.3.4)
+      sassc (>= 2.0.0)
     brakeman (4.8.0)
     browser (2.4.0)
     builder (3.2.4)
@@ -701,6 +701,8 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
+    sassc (2.2.1)
+      ffi (~> 1.9)
     scenic (1.4.1)
       activerecord (>= 4.0.0)
       railties (>= 4.0.0)
@@ -820,7 +822,7 @@ DEPENDENCIES
   bitmask_attributes!
   bootsnap
   bootstrap-datepicker-rails!
-  bootstrap-sass (~> 3.3.6)
+  bootstrap-sass (~> 3.4.1)
   browser (~> 2.4.0)
   bullet
   bundler-audit (~> 0.6.0)
