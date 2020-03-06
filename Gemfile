@@ -26,7 +26,7 @@ gem 'scenic', '~> 1.4.1'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0.0'
 # Bootstrap
-gem 'bootstrap-sass', '~> 3.3.6'
+gem 'bootstrap-sass', '~> 3.4.1'
 
 # Use Uglifier as compressor for JavaScript assets
 # Set to 3.2 for now since the 'copyright' flag in 4.0 has a problem with sprockets
