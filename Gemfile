@@ -177,7 +177,7 @@ platform :ruby do
   gem 'resque-scheduler', '~> 4.3.0'
 end
 
-gem 'administrate', '~>0.10.0'
+gem 'administrate', '~>0.13.0'
 gem 'administrate-field-belongs_to_search', '~>0.4.0'
 gem 'administrate-field-paperclip'
 gem 'jbuilder', '~> 2.0' # seems to be only used for administrate gem
