@@ -90,14 +90,13 @@ task import_player_data: :environment do
       debut: row[26],
       yahoo_id: row[27],
       yahoo_name: row[28],
-      yahoo_pos: row[29],
-      mlb_depth: row[30],
-      ottoneu_id: row[31],
-      ottoneu_name: row[32],
-      ottoneu_pos: row[33],
-      rotowire_id: row[34],
-      rotowire_name: row[35],
-      rotowire_pos: row[36]
+      # yahoo_pos: row[29],
+      ottoneu_id: row[29],
+      ottoneu_name: row[30],
+      ottoneu_pos: row[31],
+      rotowire_id: row[32],
+      rotowire_name: row[33],
+      rotowire_pos: row[34]
     }
 
     source_player_name_pool = [
@@ -212,6 +211,9 @@ def parse_positions(position_string)
       positions << :starting_pitcher
       positions << :pitcher
     when 'RP'
+      positions << :relief_pitcher
+      positions << :pitcher
+    when 'SP/RP'
       positions << :relief_pitcher
       positions << :pitcher
     when 'P'

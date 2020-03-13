@@ -92,7 +92,7 @@ class UserPlayer < ApplicationRecord
   end
 
   def self.player_attribute_tags
-    %i[draft_target health_risk high_upside]
+    %i[draft_target health_risk high_upside avoid_player]
   end
 
   def active_tags

@@ -157,6 +157,11 @@
             = link_to raw("<i class='fa fa-pencil'></i>"), edit_user_player_path(user_player, redirect_to: user_ranking_set_path(@user_ranking_set, position: @position_filter, per_page: @per_page)), data: { modal: true }
           - else
             i.fa.fa-sort
+      - if user_player.notes.present?
+        .container
+          .row
+            .col-xs-12.text-left.player-notes style='padding-top: 10px: z-index: 100000'
+              = user_player.notes
       .collapse.notes-collapse id="collapase_user_player_#{user_player.id}"
         .container
           .row
@@ -165,11 +170,11 @@
               - season_lines = player.is_pitcher? ? player.season_pitching_lines : player.season_batting_lines
               - player_projections = player.is_pitcher? ? player.pitching_projections : player.batting_projections
               = render 'players/stat_table', stat_fields: stat_fields, player_season_lines: season_lines, player_projections: player_projections
-        - if user_player.notes.present?
-          .container
-            .row
-              .col-xs-12.text-left.player-notes style='padding-top: 10px: z-index: 100000'
-                = user_player.notes
+        / - if user_player.notes.present?
+        /   .container
+        /     .row
+        /       .col-xs-12.text-left.player-notes style='padding-top: 10px: z-index: 100000'
+        /         = user_player.notes
         - if user_player.user_player_articles.present?
           .container
             .row
