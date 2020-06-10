@@ -248,7 +248,7 @@ gem 'twilio-ruby', '~> 5.6.0'
 gem 'forecast_io', '~>2.0.2'
 
 # used in avinode email parsing to format address
-gem 'geocoder', '~>1.4.4'
+gem 'geocoder', '~>1.6.1'
 
 # handle database uniq constraint validations and turns them into freindly active record errors
 gem 'rescue_unique_constraint', '~> 1.4.0'
