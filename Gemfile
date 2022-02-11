@@ -58,7 +58,7 @@ gem 'nested_form_fields', '~> 0.8.1'
 gem 'newrelic_rpm', '~> 4.2.0'
 
 # Use puma as the app server
-gem 'puma', '~> 3.11.0'
+gem 'puma', '~> 4.3.11'
 
 gem 'attr_encrypted', '~> 3.0.0'
 gem 'bundler-audit', '~> 0.6.0'
