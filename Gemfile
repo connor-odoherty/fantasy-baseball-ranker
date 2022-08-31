@@ -195,7 +195,7 @@ gem 'validates_timeliness', '~> 4.0'
 
 # GCal sync
 gem 'google-api-client', '~>0.22'
-gem 'omniauth', '~> 1.4.1'
+gem 'omniauth', '~> 1.9.2'
 gem 'omniauth-google-oauth2', '~> 0.5.1'
 
 # 2 factor
